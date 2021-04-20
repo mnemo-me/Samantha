@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_today"
+    app:startDestination="@id/navigation_today">
+
+    <fragment
+        android:id="@+id/navigation_clients"
+        android:name="com.mnemo.samantha.ui.clients.ClientsFragment"
+        android:label="fragment_clients"
+        tools:layout="@layout/fragment_clients" />
+    <fragment
+        android:id="@+id/navigation_today"
+        android:name="com.mnemo.samantha.ui.current_day.CurrentDayFragment"
+        android:label="fragment_current_day"
+        tools:layout="@layout/fragment_current_day" />
+    <fragment
+        android:id="@+id/navigation_month"
+        android:name="com.mnemo.samantha.ui.month_schedule.MonthlyScheduleFragment"
+        android:label="fragment_month_schedule"
+        tools:layout="@layout/fragment_monthly_schedule" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.mnemo.samantha.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_statistics"
+        android:name="com.mnemo.samantha.ui.statistics.StatisticsFragment"
+        android:label="StatisticsFragment" />
+</navigation>

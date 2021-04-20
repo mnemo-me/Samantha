@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/default_padding"
+    android:paddingEnd="@dimen/default_padding"
+    android:paddingTop="@dimen/default_padding"
+    android:paddingBottom="@dimen/default_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/month_schedule_header_mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/month_schedule_header_tue"
+        android:text="@string/monday"/>
+
+    <TextView
+        android:id="@+id/month_schedule_header_tue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/month_schedule_header_mon"
+        app:layout_constraintEnd_toStartOf="@id/month_schedule_header_wed"
+        android:text="@string/tuesday"/>
+
+    <TextView
+        android:id="@+id/month_schedule_header_wed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/month_schedule_header_tue"
+        app:layout_constraintEnd_toStartOf="@id/month_schedule_header_thu"
+        android:text="@string/wednesday"/>
+
+    <TextView
+        android:id="@+id/month_schedule_header_thu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/month_schedule_header_wed"
+        app:layout_constraintEnd_toStartOf="@id/month_schedule_header_fri"
+        android:text="@string/thursday"/>
+
+    <TextView
+        android:id="@+id/month_schedule_header_fri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/month_schedule_header_thu"
+        app:layout_constraintEnd_toStartOf="@id/month_schedule_header_sat"
+        android:text="@string/friday"/>
+
+    <TextView
+        android:id="@+id/month_schedule_header_sat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/month_schedule_header_fri"
+        app:layout_constraintEnd_toStartOf="@id/month_schedule_header_sun"
+        android:text="@string/saturday"/>
+
+    <TextView
+        android:id="@+id/month_schedule_header_sun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/month_schedule_header_sat"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/Sunday"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

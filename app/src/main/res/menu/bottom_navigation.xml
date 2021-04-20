@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_today"
+        android:title="@string/today_schedule"/>
+
+    <item
+        android:id="@+id/navigation_month"
+        android:title="@string/month_schedule"/>
+
+    <item
+        android:id="@+id/navigation_clients"
+        android:title="@string/clients"/>
+
+    <item
+        android:id="@+id/navigation_statistics"
+        android:title="@string/statistics"/>
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:title="@string/profile"/>
+
+</menu>

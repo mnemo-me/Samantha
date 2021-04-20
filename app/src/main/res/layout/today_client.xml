@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="client"
+            type="com.mnemo.samantha.data.Client"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/today_client_panel_height">
+
+        <TextView
+            android:id="@+id/today_client_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="14:00"/>
+
+        <ImageView
+            android:id="@+id/today_client_avatar"
+            android:layout_width="@dimen/today_client_image_height"
+            android:layout_height="@dimen/today_client_image_height"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/today_client_time"
+            android:background="@drawable/circle_bg"
+            android:outlineProvider="background"
+            tools:src="@drawable/samantha"
+            android:src="@drawable/samantha"/>
+
+        <TextView
+            android:id="@+id/today_client_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/today_client_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Samantha"/>
+
+        <ImageView
+            android:id="@+id/today_client_phone_call"
+            android:layout_width="@dimen/phone_call_height"
+            android:layout_height="@dimen/phone_call_height"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@drawable/outline_settings_phone_black_36"
+            android:src="@drawable/outline_settings_phone_black_36"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
