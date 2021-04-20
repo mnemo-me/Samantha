@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_clients" />
     <fragment
         android:id="@+id/navigation_today"
-        android:name="com.mnemo.samantha.ui.current_day.CurrentDayFragment"
+        android:name="com.mnemo.samantha.ui.current_day.TodayFragment"
         android:label="fragment_current_day"
-        tools:layout="@layout/fragment_current_day" />
+        tools:layout="@layout/fragment_today" />
     <fragment
         android:id="@+id/navigation_month"
         android:name="com.mnemo.samantha.ui.month_schedule.MonthlyScheduleFragment"

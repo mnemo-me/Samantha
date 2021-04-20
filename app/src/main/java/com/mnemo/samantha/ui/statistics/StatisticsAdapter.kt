@@ -78,7 +78,7 @@ class StatisticsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun bind(annualRevenue: String){
 
-            binding.statisticsHeaderAnnualRevenue.text = annualRevenue.toString()
+            binding.statisticsHeaderAnnualRevenue.text = annualRevenue
         }
 
         companion object{
