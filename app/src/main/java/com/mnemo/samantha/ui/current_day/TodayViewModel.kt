@@ -3,7 +3,7 @@ package com.mnemo.samantha.ui.current_day
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mnemo.samantha.data.Client
+import com.mnemo.samantha.repository.database.entity.Client
 
 class TodayViewModel : ViewModel() {
 

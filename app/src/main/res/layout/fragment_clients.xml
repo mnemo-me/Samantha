@@ -4,6 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.clients.ClientsFragment">
 
+    <data>
+        <variable
+            name="ClientsViewModel"
+            type="com.mnemo.samantha.ui.clients.ClientsViewModel" />
+
+    </data>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clients_list"
         android:layout_width="match_parent"

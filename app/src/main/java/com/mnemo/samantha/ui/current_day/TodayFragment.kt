@@ -15,18 +15,18 @@ class TodayFragment : Fragment() {
     private lateinit var binding: FragmentTodayBinding
     private lateinit var viewModel: TodayViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
 
         viewModel = ViewModelProvider(this).get(TodayViewModel::class.java)
 
         val adapter = TodayClientsAdapter()
+        binding.todaySchedule.adapter = adapter
+
         viewModel.todaySchedule.observe(viewLifecycleOwner, {todaySchedule ->
             adapter.todaySchedule = todaySchedule
         })
-
-        binding.todaySchedule.adapter = adapter
 
         return binding.root
     }

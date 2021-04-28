@@ -3,7 +3,7 @@ package com.mnemo.samantha.ui.statistics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mnemo.samantha.data.MonthlyStatistics
+import com.mnemo.samantha.repository.database.entity.MonthlyStatistics
 import com.mnemo.samantha.databinding.MonthlyStatisticsBinding
 import com.mnemo.samantha.databinding.StatisticsHeaderBinding
 

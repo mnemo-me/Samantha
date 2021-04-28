@@ -10,22 +10,37 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientsBinding
+import com.mnemo.samantha.repository.database.SamanthaDatabase
 
 class ClientsFragment : Fragment() {
 
     private lateinit var binding: FragmentClientsBinding
     private lateinit var viewModel: ClientsViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        // View binding
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_clients, container, false)
 
-        viewModel = ViewModelProvider(this).get(ClientsViewModel::class.java)
+
+        // Create ViewModel via Factory and bind it to View
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = SamanthaDatabase.getInstance(application).clientDao
+
+        val viewModelFactory = ClientsViewModelFactory(dataSource)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ClientsViewModel::class.java)
+
+        binding.lifecycleOwner = this
+
+        binding.clientsViewModel = viewModel
+
+
+
+
 
         val adapter = ClientsAdapter()
-        viewModel.clients.observe(viewLifecycleOwner, {clients ->
-            adapter.clients = clients
-        })
 
         val layoutManager = GridLayoutManager(context, 3)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -40,6 +55,10 @@ class ClientsFragment : Fragment() {
         binding.clientsList.layoutManager = layoutManager
 
         binding.clientsList.adapter = adapter
+
+        viewModel.clients.observe(viewLifecycleOwner, {clients ->
+            adapter.clients = clients
+        })
 
 
         return binding.root

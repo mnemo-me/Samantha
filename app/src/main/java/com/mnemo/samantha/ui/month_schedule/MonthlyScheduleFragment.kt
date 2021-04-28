@@ -15,18 +15,19 @@ class MonthlyScheduleFragment : Fragment() {
     private lateinit var binding: FragmentMonthlyScheduleBinding
     private lateinit var viewModel: MonthlyScheduleViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_monthly_schedule, container, false)
 
         viewModel = ViewModelProvider(this).get(MonthlyScheduleViewModel::class.java)
 
         val adapter = MonthlyScheduleAdapter()
+
+        binding.monthScheduleSchedule.adapter = adapter
+
         viewModel.days.observe(viewLifecycleOwner, {days ->
             adapter.days = days
         })
-
-        binding.monthScheduleSchedule.adapter = adapter
 
         return binding.root
     }

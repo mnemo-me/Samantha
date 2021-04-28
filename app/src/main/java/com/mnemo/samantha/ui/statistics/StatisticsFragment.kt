@@ -15,23 +15,19 @@ class StatisticsFragment : Fragment() {
     private lateinit var binding: FragmentStatisticsBinding
     private lateinit var viewModel: StatisticsViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_statistics, container, false)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_statistics, container, false)
 
         viewModel = ViewModelProvider(this).get(StatisticsViewModel::class.java)
 
         val adapter = StatisticsAdapter()
+
+        binding.statistics.adapter = adapter
+
         viewModel.statistics.observe(viewLifecycleOwner, {statistics ->
             adapter.statistics = statistics
         })
-
-        binding.statistics.adapter = adapter
 
         return binding.root
     }

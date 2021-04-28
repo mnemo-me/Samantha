@@ -3,7 +3,7 @@ package com.mnemo.samantha.ui.statistics
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mnemo.samantha.data.MonthlyStatistics
+import com.mnemo.samantha.repository.database.entity.MonthlyStatistics
 
 class StatisticsViewModel : ViewModel() {
 
@@ -16,7 +16,9 @@ class StatisticsViewModel : ViewModel() {
         _statistics.value!!.add(StatisticsAdapter.DataItem.Header("240 000.00 р"))
 
         for (i in 1..12){
-            _statistics.value!!.add(StatisticsAdapter.DataItem.MonthlyStatisticsItem(MonthlyStatistics(123, 2021, "March", 20, 48, 40000)))
+            _statistics.value!!.add(StatisticsAdapter.DataItem.MonthlyStatisticsItem(
+                MonthlyStatistics(123, 2021, "March", 20, 48, 40000)
+            ))
         }
     }
 }

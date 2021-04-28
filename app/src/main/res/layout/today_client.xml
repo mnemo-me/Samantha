@@ -6,7 +6,7 @@
     <data>
         <variable
             name="client"
-            type="com.mnemo.samantha.data.Client"/>
+            type="com.mnemo.samantha.repository.database.entity.Client"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

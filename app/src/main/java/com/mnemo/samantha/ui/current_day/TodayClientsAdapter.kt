@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.R
-import com.mnemo.samantha.data.Client
+import com.mnemo.samantha.repository.database.entity.Client
 import com.mnemo.samantha.databinding.TodayClientBinding
 import java.lang.ClassCastException
 
@@ -57,11 +57,11 @@ class TodayClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val client = item.value
 
             if (client != null) {
-                binding.todayClientName.text = client.name
+                binding.todayClientName.text = client.clientName
 
                 binding.todayClientAvatar.clipToOutline = true
 
-                if (client.phone == null) {
+                if (client.clientPhoneNumber == null) {
 
                 }
             }

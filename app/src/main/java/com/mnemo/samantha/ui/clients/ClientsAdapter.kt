@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.R
-import com.mnemo.samantha.data.Client
+import com.mnemo.samantha.repository.database.entity.Client
 import com.mnemo.samantha.databinding.ClientsClientBinding
 import java.lang.ClassCastException
 
@@ -55,7 +55,7 @@ class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             binding.clientsClientAvatar.clipToOutline = true
 
-            binding.clientsClientName.text = client.name
+            binding.clientsClientName.text = client.clientName
         }
 
         companion object{
@@ -89,7 +89,7 @@ class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         abstract val id: Long
 
         data class ClientItem(val client: Client) : DataItem() {
-            override val id = client.id
+            override val id = client.clientId
         }
 
         object Header : DataItem() {

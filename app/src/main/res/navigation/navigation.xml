@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/navigation_today"
         android:name="com.mnemo.samantha.ui.current_day.TodayFragment"
-        android:label="fragment_current_day"
+        android:label="fragment_today"
         tools:layout="@layout/fragment_today" />
     <fragment
         android:id="@+id/navigation_month"
