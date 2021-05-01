@@ -4,13 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="client"
+            type="com.mnemo.samantha.repository.database.entity.Client" />
+        <variable
+            name="clickListener"
+            type="com.mnemo.samantha.ui.clients.ClientsAdapter.ClientClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding">
+        android:padding="@dimen/default_padding"
+        android:onClick="@{() -> clickListener.onClick(client)}">
 
         <ImageView
             android:id="@+id/clients_client_avatar"
@@ -32,6 +38,7 @@
             app:layout_constraintTop_toBottomOf="@id/clients_client_avatar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{client.clientName}"
             tools:text="Samantha"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

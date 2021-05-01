@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.clients.client_edit.ClientEditFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.mnemo.samantha.ui.clients.client_edit.ClientEditVewModel"/>
+        <variable
+            name="client"
+            type="com.mnemo.samantha.repository.database.entity.Client" />
+    </data>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/client_edit_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/three_quarters_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/outline_arrow_back_black_24"/>
+
+            <TextView
+                android:id="@+id/client_edit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/edit_client_info"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/client_edit_back_button"
+                app:layout_constraintEnd_toStartOf="@id/client_edit_done_button"/>
+
+            <ImageView
+                android:id="@+id/client_edit_done_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/three_quarters_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/outline_done_black_24"/>
+
+            <ImageView
+                android:id="@+id/client_edit_avatar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginTop="36dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toBottomOf="@id/client_edit_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                android:background="@drawable/circle_bg"
+                android:outlineProvider="background"
+                android:src="@drawable/samantha"
+                tools:src="@drawable/samantha"/>
+
+            <TextView
+                android:id="@+id/client_edit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/client_edit_avatar"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/double_padding"
+                android:text="@string/client_name"/>
+
+            <EditText
+                android:id="@+id/client_edit_text_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/client_edit_name"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginTop="@dimen/half_padding"
+                android:text="@{client.clientName}"/>
+
+            <TextView
+                android:id="@+id/client_edit_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/client_edit_text_name"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:text="@string/phone_number"/>
+
+            <EditText
+                android:id="@+id/client_edit_text_phone_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/client_edit_phone_number"
+                android:layout_marginTop="@dimen/half_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:text="@{client.clientPhoneNumber}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

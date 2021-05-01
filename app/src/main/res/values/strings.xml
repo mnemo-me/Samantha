@@ -16,24 +16,18 @@
 
     <string name="add_new_client">Add new client</string>
     <string name="edit">Edit</string>
+    <string name="client_info">Client info</string>
+    <string name="edit_client_info">Edit client info</string>
     <string name="history">History</string>
     <string name="client_name">Client name</string>
     <string name="phone_number">Phone number</string>
+    <string name="client_info_updated">Client info updated</string>
+    <string name="client_added_to_list">Client added to list</string>
+    <string name="client_removed_from_list">Client removed from list</string>
 
     <string name="annual_revenue">Annual revenue</string>
     <string name="working_days">Working days</string>
     <string name="revenue">Revenue</string>
-
-
-
-
-
-
-
-
-
-
-
 
 
     <!-- TODO: Remove or change this placeholder text -->

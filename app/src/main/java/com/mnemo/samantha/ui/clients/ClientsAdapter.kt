@@ -1,26 +1,38 @@
 package com.mnemo.samantha.ui.clients
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mnemo.samantha.R
 import com.mnemo.samantha.repository.database.entity.Client
 import com.mnemo.samantha.databinding.ClientsClientBinding
+import com.mnemo.samantha.databinding.ClientsHeaderBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.ClassCastException
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ClientsAdapter(val addNewClientClickListener: AddNewClientClickListener, val clickListener: ClientClickListener): ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHolder>(ClientsAdapter.ClientsDiffCallback()) {
 
-    var clients = mutableListOf<DataItem>()
-        set(value){
-            field = value
-            notifyDataSetChanged()
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+    fun addHeaderAndSubmitList(clients: List<Client>?){
+        adapterScope.launch {
+            val items = when(clients){
+                null -> listOf(DataItem.Header)
+                else -> listOf(DataItem.Header) + clients.map{DataItem.ClientItem(it)}
+            }
+            withContext(Dispatchers.Main){
+                submitList(items)
+            }
         }
 
-    override fun getItemCount(): Int = clients.size
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
@@ -33,9 +45,13 @@ class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when(holder){
+            is HeaderHolder -> {
+                holder.bind(addNewClientClickListener)
+            }
+
             is ViewHolder -> {
-                val clientItem = clients[position] as DataItem.ClientItem
-                holder.bind(clientItem.client)
+                val clientItem = getItem(position) as DataItem.ClientItem
+                holder.bind(clientItem.client, clickListener)
             }
         }
 
@@ -51,11 +67,11 @@ class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolder private constructor (val binding: ClientsClientBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(client: Client){
+        fun bind(client: Client, clickListener: ClientClickListener){
 
             binding.clientsClientAvatar.clipToOutline = true
-
-            binding.clientsClientName.text = client.clientName
+            binding.client = client
+            binding.clickListener = clickListener
         }
 
         companion object{
@@ -69,15 +85,20 @@ class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class HeaderHolder private constructor(view: View): RecyclerView.ViewHolder(view){
+    class HeaderHolder private constructor(val binding: ClientsHeaderBinding): RecyclerView.ViewHolder(binding.root){
+
+        fun bind(clickListener: AddNewClientClickListener){
+
+            binding.clickListener = clickListener
+        }
 
         companion object{
             fun from(parent: ViewGroup): HeaderHolder{
 
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.clients_header, parent, false)
+                val binding = ClientsHeaderBinding.inflate(layoutInflater, parent, false)
 
-                return HeaderHolder(view)
+                return HeaderHolder(binding)
             }
         }
     }
@@ -95,5 +116,24 @@ class ClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         object Header : DataItem() {
             override val id = Long.MIN_VALUE
         }
+    }
+
+    class ClientsDiffCallback : DiffUtil.ItemCallback<DataItem>(){
+        override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    // Click listeners
+    class ClientClickListener(val clickListener: (clientId: Long) -> Unit){
+        fun onClick(client: Client) = clickListener(client.clientId)
+    }
+
+    class AddNewClientClickListener(val clickListener: () -> Unit){
+        fun onClick() = clickListener()
     }
 }

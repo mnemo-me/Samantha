@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.clients.client_info.ClientInfoFragment">
+
+    <data>
+        <variable
+            name="client"
+            type="com.mnemo.samantha.repository.database.entity.Client" />
+        <variable
+            name="viewModel"
+            type="com.mnemo.samantha.ui.clients.client_info.ClientInfoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/client_info_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/three_quarters_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/outline_arrow_back_black_24"/>
+
+        <TextView
+            android:id="@+id/client_info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/client_info_back_button"
+            app:layout_constraintEnd_toStartOf="@id/client_info_remove"
+            android:text="@string/client_info"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/client_info_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/three_quarters_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/outline_delete_black_24"/>
+
+        <ImageView
+            android:id="@+id/client_info_avatar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/double_padding"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintTop_toBottomOf="@id/client_info_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/client_info_vertical_guideline"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1"
+            android:background="@drawable/circle_bg"
+            android:outlineProvider="background"
+            android:src="@drawable/samantha"
+            tools:src="@drawable/samantha"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/client_info_vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/client_info_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintTop_toTopOf="@id/client_info_avatar"
+            app:layout_constraintStart_toEndOf="@id/client_info_vertical_guideline"
+            app:layout_constraintBottom_toTopOf="@id/client_info_phone_number"
+            android:text="@{client.clientName}"
+            tools:text="Samantha"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/client_info_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/client_info_vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@id/client_info_name"
+            android:text="@{client.clientPhoneNumber}"
+            tools:text="+7 900 000 00 00"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/client_info_edit_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/client_info_vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/client_info_line"
+            android:text="@string/edit"/>
+
+        <View
+            android:id="@+id/client_info_line"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/client_info_avatar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/client_info_line"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginStart="@dimen/default_padding"
+            android:text="@string/history"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

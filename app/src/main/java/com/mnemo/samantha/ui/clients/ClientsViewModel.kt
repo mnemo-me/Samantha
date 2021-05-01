@@ -9,23 +9,18 @@ import kotlinx.coroutines.*
 
 class ClientsViewModel(val database: ClientDAO) : ViewModel() {
 
-    private val _clients = MutableLiveData<MutableList<ClientsAdapter.DataItem>>()
-    val clients : LiveData<MutableList<ClientsAdapter.DataItem>>
-    get() = _clients
+    val clients = database.getAll()
+    //val clients : LiveData<List<Client>>
+    //get() = _clients
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
     init {
-        _clients.value = mutableListOf()
-        _clients.value?.add(ClientsAdapter.DataItem.Header)
 
         uiScope.launch {
 
-            _clients.value?.addAll(getClientsFromDatabase().value.orEmpty().map { client ->
-                ClientsAdapter.DataItem.ClientItem(client)
-            })
         }
     }
 

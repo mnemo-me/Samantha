@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientsBinding
@@ -19,8 +22,9 @@ class ClientsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        // View binding
+        // Bind View
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_clients, container, false)
+        val view = binding.root
 
 
         // Create ViewModel via Factory and bind it to View
@@ -37,10 +41,14 @@ class ClientsFragment : Fragment() {
         binding.clientsViewModel = viewModel
 
 
-
-
-
-        val adapter = ClientsAdapter()
+        // Create adapter for RecycleView
+        val adapter = ClientsAdapter(
+            ClientsAdapter.AddNewClientClickListener { ->
+                view.findNavController().navigate(R.id.action_navigation_clients_to_clientEditFragment)
+            },
+                ClientsAdapter.ClientClickListener {clientId ->
+                    view.findNavController().navigate(R.id.action_navigation_clients_to_clientInfoFragment, bundleOf("client_id" to clientId))
+                })
 
         val layoutManager = GridLayoutManager(context, 3)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -57,10 +65,11 @@ class ClientsFragment : Fragment() {
         binding.clientsList.adapter = adapter
 
         viewModel.clients.observe(viewLifecycleOwner, {clients ->
-            adapter.clients = clients
+            adapter.addHeaderAndSubmitList(clients)
         })
 
 
-        return binding.root
+        return view
     }
+
 }

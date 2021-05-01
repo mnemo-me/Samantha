@@ -1,6 +1,7 @@
 package com.mnemo.samantha.repository.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -17,7 +18,7 @@ interface ClientDAO {
     fun update(client: Client)
 
     @Query("SELECT * FROM clients_table WHERE clientId = :key")
-    fun get(key: Long): Client
+    fun get(key: Long): LiveData<Client>
 
     @Query("DELETE FROM clients_table WHERE clientId = :key")
     fun remove(key: Long)

@@ -9,7 +9,14 @@
         android:id="@+id/navigation_clients"
         android:name="com.mnemo.samantha.ui.clients.ClientsFragment"
         android:label="fragment_clients"
-        tools:layout="@layout/fragment_clients" />
+        tools:layout="@layout/fragment_clients" >
+        <action
+            android:id="@+id/action_navigation_clients_to_clientInfoFragment"
+            app:destination="@id/clientInfoFragment" />
+        <action
+            android:id="@+id/action_navigation_clients_to_clientEditFragment"
+            app:destination="@id/clientEditFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_today"
         android:name="com.mnemo.samantha.ui.current_day.TodayFragment"
@@ -29,4 +36,26 @@
         android:id="@+id/navigation_statistics"
         android:name="com.mnemo.samantha.ui.statistics.StatisticsFragment"
         android:label="StatisticsFragment" />
+    <fragment
+        android:id="@+id/clientInfoFragment"
+        android:name="com.mnemo.samantha.ui.clients.client_info.ClientInfoFragment"
+        android:label="fragment_client_info"
+        tools:layout="@layout/fragment_client_info" >
+        <argument
+            android:name="client_id"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_clientInfoFragment_to_clientEditFragment"
+            app:destination="@id/clientEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/clientEditFragment"
+        android:name="com.mnemo.samantha.ui.clients.client_edit.ClientEditFragment"
+        android:label="fragment_client_edit"
+        tools:layout="@layout/fragment_client_edit" >
+        <argument
+            android:name="client_id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 </navigation>

@@ -1,6 +1,5 @@
 package com.mnemo.samantha.ui.clients
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mnemo.samantha.repository.database.dao.ClientDAO
