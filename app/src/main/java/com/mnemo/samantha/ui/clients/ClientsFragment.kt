@@ -38,7 +38,7 @@ class ClientsFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        binding.clientsViewModel = viewModel
+        binding.viewModel = viewModel
 
 
         // Create adapter for RecycleView

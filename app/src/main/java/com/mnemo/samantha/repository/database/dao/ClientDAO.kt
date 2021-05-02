@@ -17,11 +17,11 @@ interface ClientDAO {
     @Update
     fun update(client: Client)
 
-    @Query("SELECT * FROM clients_table WHERE clientId = :key")
-    fun get(key: Long): LiveData<Client>
+    @Query("SELECT * FROM clients_table WHERE clientId = :clientId")
+    fun get(clientId: Long): LiveData<Client>
 
-    @Query("DELETE FROM clients_table WHERE clientId = :key")
-    fun remove(key: Long)
+    @Query("DELETE FROM clients_table WHERE clientId = :clientId")
+    fun remove(clientId: Long)
 
     @Query("SELECT * FROM clients_table ORDER BY clientId ASC")
     fun getAll(): LiveData<List<Client>>

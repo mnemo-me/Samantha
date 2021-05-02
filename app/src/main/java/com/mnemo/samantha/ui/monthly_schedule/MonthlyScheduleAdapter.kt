@@ -1,4 +1,4 @@
-package com.mnemo.samantha.ui.month_schedule
+package com.mnemo.samantha.ui.monthly_schedule
 
 import android.view.LayoutInflater
 import android.view.View

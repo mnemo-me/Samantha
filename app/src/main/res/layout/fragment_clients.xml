@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="ClientsViewModel"
+            name="viewModel"
             type="com.mnemo.samantha.ui.clients.ClientsViewModel" />
 
     </data>

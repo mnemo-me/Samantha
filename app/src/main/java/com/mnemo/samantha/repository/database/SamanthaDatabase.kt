@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.mnemo.samantha.repository.database.dao.AppointmentDAO
 import com.mnemo.samantha.repository.database.dao.ClientDAO
+import com.mnemo.samantha.repository.database.entity.Appointment
 import com.mnemo.samantha.repository.database.entity.Client
 
-@Database(entities = [Client::class], version = 1, exportSchema = false)
+@Database(entities = [Client::class, Appointment::class], version = 1, exportSchema = false)
 abstract class SamanthaDatabase : RoomDatabase() {
 
     abstract val clientDao: ClientDAO
+    abstract val appointmentDAO: AppointmentDAO
 
     companion object{
 

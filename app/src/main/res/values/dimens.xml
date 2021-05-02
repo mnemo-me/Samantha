@@ -7,8 +7,8 @@
     <dimen name="three_quarters_padding">12dp</dimen>
     <dimen name="double_padding">32dp</dimen>
 
-    <dimen name="today_client_panel_height">72dp</dimen>
-    <dimen name="today_client_image_height">48dp</dimen>
+    <dimen name="appointment_panel_height">72dp</dimen>
+    <dimen name="appointment_client_image_height">48dp</dimen>
     <dimen name="time_text_height">48dp</dimen>
     <dimen name="phone_call_height">36dp</dimen>
 

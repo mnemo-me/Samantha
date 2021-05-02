@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appointment_panel_height"
+        android:background="@color/blue_background">
+
+        <TextView
+            android:id="@+id/appointment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="14:00"/>
+
+        <ImageView
+            android:id="@+id/appointment_client_avatar"
+            android:layout_width="@dimen/appointment_client_image_height"
+            android:layout_height="@dimen/appointment_client_image_height"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/appointment_time"
+            android:background="@drawable/circle_bg"
+            android:outlineProvider="background"
+            android:src="@drawable/outline_account_circle_white_48"/>
+
+        <TextView
+            android:id="@+id/appointment_client_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/appointment_client_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Samantha"/>
+
+        <ImageView
+            android:id="@+id/appointment_client_button"
+            android:layout_width="@dimen/phone_call_height"
+            android:layout_height="@dimen/phone_call_height"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/outline_remove_white_48"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

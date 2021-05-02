@@ -24,9 +24,13 @@
         tools:layout="@layout/fragment_today" />
     <fragment
         android:id="@+id/navigation_month"
-        android:name="com.mnemo.samantha.ui.month_schedule.MonthlyScheduleFragment"
+        android:name="com.mnemo.samantha.ui.monthly_schedule.MonthlyScheduleFragment"
         android:label="fragment_month_schedule"
-        tools:layout="@layout/fragment_monthly_schedule" />
+        tools:layout="@layout/fragment_monthly_schedule" >
+        <action
+            android:id="@+id/action_navigation_month_to_dayScheduleFragment"
+            app:destination="@id/dayScheduleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.mnemo.samantha.ui.profile.ProfileFragment"
@@ -58,4 +62,9 @@
             app:argType="long"
             android:defaultValue="0L" />
     </fragment>
+    <fragment
+        android:id="@+id/dayScheduleFragment"
+        android:name="com.mnemo.samantha.ui.monthly_schedule.day_schedule.DayScheduleFragment"
+        android:label="fragment_day_schedule"
+        tools:layout="@layout/fragment_day_schedule" />
 </navigation>

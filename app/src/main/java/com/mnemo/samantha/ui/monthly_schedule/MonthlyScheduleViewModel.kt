@@ -1,4 +1,4 @@
-package com.mnemo.samantha.ui.month_schedule
+package com.mnemo.samantha.ui.monthly_schedule
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

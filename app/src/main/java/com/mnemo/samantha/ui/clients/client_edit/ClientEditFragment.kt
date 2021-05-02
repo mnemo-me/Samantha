@@ -1,6 +1,7 @@
 package com.mnemo.samantha.ui.clients.client_edit
 
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class ClientEditFragment : Fragment() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_client_edit, container, false)
         val view = binding.root
         binding.clientEditAvatar.clipToOutline = true
+        binding.clientEditTextPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
 
         // Create ViewModel via Factory

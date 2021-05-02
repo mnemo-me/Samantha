@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/today_client_panel_height">
+        android:layout_height="@dimen/appointment_panel_height">
 
         <TextView
             android:id="@+id/today_client_time"
@@ -26,8 +26,8 @@
 
         <ImageView
             android:id="@+id/today_client_avatar"
-            android:layout_width="@dimen/today_client_image_height"
-            android:layout_height="@dimen/today_client_image_height"
+            android:layout_width="@dimen/appointment_client_image_height"
+            android:layout_height="@dimen/appointment_client_image_height"
             android:scaleType="centerCrop"
             android:layout_marginStart="@dimen/default_padding"
             app:layout_constraintTop_toTopOf="parent"
