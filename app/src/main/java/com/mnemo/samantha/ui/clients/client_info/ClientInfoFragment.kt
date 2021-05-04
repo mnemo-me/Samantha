@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientInfoBinding
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 
 
@@ -35,9 +36,9 @@ class ClientInfoFragment : Fragment() {
 
         val clientId = requireArguments().get("client_id") as Long
 
-        val dataSource = SamanthaDatabase.getInstance(application).clientDao
+        val repository = Repository.getInstance(application)
 
-        val viewModelFactory = ClientInfoViewModelFactory(clientId, dataSource)
+        val viewModelFactory = ClientInfoViewModelFactory(clientId, repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientInfoViewModel::class.java)
 

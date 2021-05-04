@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -28,17 +28,12 @@ class MonthlyScheduleFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MonthlyScheduleViewModel::class.java)
 
 
-        // Create adapter for GridView
-        val adapter = MonthlyScheduleAdapter()
+        // Setup CalendarView
+        binding.monthlyScheduleCalendar.setOnDateChangeListener { calendarView, year, month, date ->
+            view.findNavController().navigate(R.id.action_navigation_month_to_dayScheduleFragment,
+                bundleOf("year" to year, "month" to month, "date" to date))
+        }
 
-        binding.monthScheduleSchedule.adapter = adapter
-        binding.monthScheduleSchedule.onItemClickListener = AdapterView.OnItemClickListener { parent, itemView, position, id ->
-            view.findNavController().navigate(R.id.action_navigation_month_to_dayScheduleFragment) }
-
-
-        viewModel.days.observe(viewLifecycleOwner, {days ->
-            adapter.days = days
-        })
 
 
         return view

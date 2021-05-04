@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.monthly_schedule.day_schedule.add_client_dialog.AddClientDialogFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_client_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</layout>

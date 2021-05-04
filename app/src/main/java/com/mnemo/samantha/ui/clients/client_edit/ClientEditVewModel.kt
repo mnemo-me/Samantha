@@ -3,6 +3,7 @@ package com.mnemo.samantha.ui.clients.client_edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.CoroutineScope
@@ -10,10 +11,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ClientEditVewModel(val clientId: Long, val database: ClientDAO) : ViewModel() {
+class ClientEditVewModel(val clientId: Long, val repository: Repository) : ViewModel() {
 
     // Client (back property)
-    private var _client = database.get(clientId)
+    private var _client = repository.getClient(clientId)
     val client : LiveData<Client>
         get() = _client
 
@@ -34,9 +35,9 @@ class ClientEditVewModel(val clientId: Long, val database: ClientDAO) : ViewMode
     fun updateClientInfo(client : Client){
         CoroutineScope(Dispatchers.IO).launch {
             if (clientId != 0L) {
-                database.update(client)
+                repository.updateClientInfo(client)
             }else{
-                database.insert(Client(clientName = client.clientName, clientPhoneNumber = client.clientPhoneNumber))
+                repository.addClient(Client(clientName = client.clientName, clientPhoneNumber = client.clientPhoneNumber))
             }
         }
     }

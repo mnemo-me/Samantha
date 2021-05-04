@@ -17,7 +17,12 @@ import java.lang.ClassCastException
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class ClientsAdapter(val addNewClientClickListener: AddNewClientClickListener, val clickListener: ClientClickListener): ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHolder>(ClientsAdapter.ClientsDiffCallback()) {
+class ClientsAdapter(): ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHolder>(ClientsAdapter.ClientsDiffCallback()) {
+
+
+    lateinit var addNewClientClickListener : AddNewClientClickListener
+    lateinit var clickListener : ClientClickListener
+
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 

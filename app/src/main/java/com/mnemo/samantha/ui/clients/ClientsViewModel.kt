@@ -3,13 +3,14 @@ package com.mnemo.samantha.ui.clients
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.*
 
-class ClientsViewModel(val database: ClientDAO) : ViewModel() {
+class ClientsViewModel(val repository: Repository) : ViewModel() {
 
-    val clients = database.getAll()
+    val clients = repository.getClientList()
     //val clients : LiveData<List<Client>>
     //get() = _clients
 
@@ -34,16 +35,9 @@ class ClientsViewModel(val database: ClientDAO) : ViewModel() {
     }
 
 
-    // Functions that communicating with database
-    private suspend fun getClientsFromDatabase(): LiveData<List<Client>>{
-        return withContext(Dispatchers.IO){
-            database.getAll()
-        }
-    }
-
     private suspend fun addClientToDatabase(client: Client){
         withContext(Dispatchers.IO){
-            database.insert(client)
+            repository.addClient(client)
         }
     }
 

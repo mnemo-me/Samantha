@@ -2,14 +2,15 @@ package com.mnemo.samantha.ui.clients.client_info
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.*
 
-class ClientInfoViewModel(val clientId: Long, val database: ClientDAO): ViewModel() {
+class ClientInfoViewModel(val clientId: Long, val repository: Repository): ViewModel() {
 
     // Client (back property)
-    private var _client = database.get(clientId)
+    private var _client = repository.getClient(clientId)
     val client : LiveData<Client>
     get() = _client
 
@@ -19,9 +20,9 @@ class ClientInfoViewModel(val clientId: Long, val database: ClientDAO): ViewMode
 
 
 
-    fun removeClient(key: Long){
+    fun removeClient(clientId: Long){
         CoroutineScope(Dispatchers.IO).launch {
-            database.remove(key)
+            repository.removeClient(clientId)
         }
     }
 

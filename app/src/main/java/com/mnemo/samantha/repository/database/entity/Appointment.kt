@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "appointments_table")
 data class Appointment (
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var appointmentId: Long = 0L,
 
     @ColumnInfo(name = "appointment_tIme")
-    var appointmentTime : Long,
+    var appointmentTime : Int,
 
-    @ColumnInfo(name = "appointment_day")
-    var appointmentDay : Int,
+    @ColumnInfo(name = "appointment_date")
+    var appointmentDate : Int,
 
     @ColumnInfo(name = "appointment_month")
     var appointmentMonth : Int,
@@ -23,8 +23,8 @@ data class Appointment (
     var appointmentYear : Int,
 
     @ColumnInfo(name = "appointment_client_id")
-    var appointmentClient : Long,
+    var appointmentClient : Long?,
 
-    @ColumnInfo(name = "appoitment_summary_cost")
-    var appointmentSummaryCost : Int
+    @ColumnInfo(name = "appointment_summary_cost")
+    var appointmentSummaryCost : Int?
 )

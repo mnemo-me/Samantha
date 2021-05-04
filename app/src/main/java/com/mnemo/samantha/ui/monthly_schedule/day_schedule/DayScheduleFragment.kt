@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.SamanthaDatabase
+import com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog.AddClientDialogFragment
 
 class DayScheduleFragment : Fragment() {
 
@@ -20,14 +24,20 @@ class DayScheduleFragment : Fragment() {
 
         // Bind View
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_day_schedule, container, false)
+        val view = binding.root
+
+        // Get date parameters from bundle
+        val year = requireArguments().getInt("year")
+        val month = requireArguments().getInt("month")
+        val date = requireArguments().getInt("date")
 
 
         // Create ViewModel via Factory and bind it to View
         val application = requireNotNull(this.activity).application
 
-        val dataSource = SamanthaDatabase.getInstance(application).appointmentDAO
+        val repository = Repository.getInstance(application)
 
-        val viewModelFactory = DayScheduleViewModelFactory(dataSource)
+        val viewModelFactory = DayScheduleViewModelFactory(year, month, date, repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(DayScheduleViewModel::class.java)
 
@@ -40,12 +50,25 @@ class DayScheduleFragment : Fragment() {
         val adapter = DayScheduleAdapter()
         binding.dayScheduleSchedule.adapter = adapter
 
+        // Adapter click listeners
+        adapter.addClientClickListener = DayScheduleAdapter.AddClientClickListener{appointmentId ->
+            view.findNavController().navigate(R.id.action_dayScheduleFragment_to_addClientDialogFragment, bundleOf("appointment_id" to appointmentId))
+        }
+
+        adapter.buttonClickListener = DayScheduleAdapter.ButtonClickListener {appointmentId, clientId ->
+            viewModel.addClient(appointmentId, clientId, null)
+        }
+
+        adapter.editScheduleClickListener = DayScheduleAdapter.EditScheduleClickListener {
+
+        }
+
         viewModel.appointments.observe(viewLifecycleOwner, { appointments ->
             adapter.addHeaderAndSubmitList(appointments)
         })
 
 
-        return binding.root
+        return view
     }
 
 }

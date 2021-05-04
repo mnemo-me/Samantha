@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientEditBinding
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.repository.database.entity.Client
 
@@ -32,11 +33,11 @@ class ClientEditFragment : Fragment() {
         // Create ViewModel via Factory
         val application = requireNotNull(this.activity).application
 
-        val clientId = requireArguments().get("client_id") as Long
+        val clientId = requireArguments().getLong("client_id")
 
-        val dataSource = SamanthaDatabase.getInstance(application).clientDao
+        val repository = Repository.getInstance(application)
 
-        val viewModelFactory = ClientEditViewModelFactory(clientId, dataSource)
+        val viewModelFactory = ClientEditViewModelFactory(clientId, repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientEditVewModel::class.java)
 

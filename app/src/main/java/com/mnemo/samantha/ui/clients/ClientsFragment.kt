@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientsBinding
+import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 
 class ClientsFragment : Fragment() {
@@ -30,9 +31,9 @@ class ClientsFragment : Fragment() {
         // Create ViewModel via Factory and bind it to View
         val application = requireNotNull(this.activity).application
 
-        val dataSource = SamanthaDatabase.getInstance(application).clientDao
+        val repository = Repository.getInstance(application)
 
-        val viewModelFactory = ClientsViewModelFactory(dataSource)
+        val viewModelFactory = ClientsViewModelFactory(repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientsViewModel::class.java)
 
@@ -42,13 +43,15 @@ class ClientsFragment : Fragment() {
 
 
         // Create adapter for RecycleView
-        val adapter = ClientsAdapter(
-            ClientsAdapter.AddNewClientClickListener { ->
-                view.findNavController().navigate(R.id.action_navigation_clients_to_clientEditFragment)
-            },
-                ClientsAdapter.ClientClickListener {clientId ->
-                    view.findNavController().navigate(R.id.action_navigation_clients_to_clientInfoFragment, bundleOf("client_id" to clientId))
-                })
+        val adapter = ClientsAdapter()
+
+        adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener { ->
+            view.findNavController().navigate(R.id.action_navigation_clients_to_clientEditFragment)
+        }
+
+        adapter.clickListener = ClientsAdapter.ClientClickListener {clientId ->
+            view.findNavController().navigate(R.id.action_navigation_clients_to_clientInfoFragment, bundleOf("client_id" to clientId))
+        }
 
         val layoutManager = GridLayoutManager(context, 3)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

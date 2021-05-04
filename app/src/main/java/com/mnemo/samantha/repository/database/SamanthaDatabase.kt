@@ -36,4 +36,21 @@ abstract class SamanthaDatabase : RoomDatabase() {
             }
         }
     }
+
+    // Clients
+    fun getClient(clientId: Long) = clientDao.get(clientId)
+
+    fun updateClientInfo(client: Client) = clientDao.update(client)
+
+    fun addClient(client: Client) =  clientDao.insert(client)
+
+    fun removeClient(clientId: Long) = clientDao.remove(clientId)
+
+    fun getClientList() = clientDao.getAll()
+
+
+    // Schedule
+    fun getDaySchedule(date: Int, month: Int, year: Int) = appointmentDAO.getDaySchedule(date, month, year)
+
+    fun bookClient(appointmentId: Long, clientId: Long?, serviceCost: Int?) = appointmentDAO.bookClient(appointmentId, clientId, serviceCost)
 }

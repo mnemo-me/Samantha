@@ -14,6 +14,10 @@
     <string name="saturday">Sat</string>
     <string name="Sunday">Sun</string>
 
+
+    <string name="free_time">Free time</string>
+
+    <string name="add_client">Add client</string>
     <string name="add_new_client">Add new client</string>
     <string name="edit">Edit</string>
     <string name="client_info">Client info</string>
