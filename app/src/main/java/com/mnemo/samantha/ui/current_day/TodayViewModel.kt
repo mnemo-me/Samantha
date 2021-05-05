@@ -1,22 +1,23 @@
 package com.mnemo.samantha.ui.current_day
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mnemo.samantha.repository.database.entity.Client
+import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.repository.database.entity.Appointment
+import java.util.*
 
-class TodayViewModel : ViewModel() {
+class TodayViewModel(val repository: Repository) : ViewModel() {
 
-    private val _todaySchedule = MutableLiveData<LinkedHashMap<Int, Client?>>()
-    val todaySchedule : LiveData<LinkedHashMap<Int, Client?>>
-    get() = _todaySchedule
+    var todayClients : LiveData<List<Appointment>>
 
     init {
-        _todaySchedule.value = linkedMapOf()
-        _todaySchedule.value!![-1] = null
 
-        for(i in 1..24){
-            _todaySchedule.value!![13 + i] = Client(123,"Samantha $i", "")
-        }
+        val calendar = Calendar.getInstance()
+
+        val date = calendar.get(Calendar.DATE)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+
+        todayClients = repository.getTodayClients(date, month, year)
     }
 }

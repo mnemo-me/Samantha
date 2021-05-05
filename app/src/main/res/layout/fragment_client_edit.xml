@@ -89,7 +89,7 @@
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
-                android:text="@{client.clientName}"/>
+                android:text="@{client.name}"/>
 
             <TextView
                 android:id="@+id/client_edit_phone_number"
@@ -113,7 +113,7 @@
                 android:layout_marginTop="@dimen/half_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:text="@{client.clientPhoneNumber}"/>
+                android:text="@{client.phoneNumber}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

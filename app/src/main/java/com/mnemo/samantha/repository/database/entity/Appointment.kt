@@ -1,30 +1,38 @@
 package com.mnemo.samantha.repository.database.entity
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+
+const val APPOINTMENT_STATE_BREAK = -1
+const val APPOINTMENT_STATE_FREE = 0
+const val APPOINTMENT_STATE_BUSY = 1
 
 @Entity(tableName = "appointments_table")
 data class Appointment (
 
-    @PrimaryKey
-    var appointmentId: Long = 0L,
+    @PrimaryKey(autoGenerate = false)
+    var id: Long = 0L,
 
-    @ColumnInfo(name = "appointment_tIme")
-    var appointmentTime : Int,
+    @ColumnInfo(name = "time")
+    var time : Int,
 
-    @ColumnInfo(name = "appointment_date")
-    var appointmentDate : Int,
+    @ColumnInfo(name = "date")
+    var date : Int,
 
-    @ColumnInfo(name = "appointment_month")
-    var appointmentMonth : Int,
+    @ColumnInfo(name = "month")
+    var month : Int,
 
-    @ColumnInfo(name = "appointment_year")
-    var appointmentYear : Int,
+    @ColumnInfo(name = "year")
+    var year : Int,
 
-    @ColumnInfo(name = "appointment_client_id")
-    var appointmentClient : Long?,
+    @Embedded(prefix = "client_")
+    var client: Client,
 
-    @ColumnInfo(name = "appointment_summary_cost")
-    var appointmentSummaryCost : Int?
+    @ColumnInfo(name = "service_cost")
+    var serviceCost : Int?,
+
+    @ColumnInfo(name = "state")
+    var state: Int
 )

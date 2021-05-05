@@ -1,7 +1,6 @@
 package com.mnemo.samantha.repository.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -17,12 +16,18 @@ interface ClientDAO {
     @Update
     fun update(client: Client)
 
-    @Query("SELECT * FROM clients_table WHERE clientId = :clientId")
-    fun get(clientId: Long): LiveData<Client>
+    @Query("SELECT * FROM clients_table WHERE id = :id")
+    fun getClient(id: Long): Client
 
-    @Query("DELETE FROM clients_table WHERE clientId = :clientId")
-    fun remove(clientId: Long)
+    @Query("SELECT * FROM clients_table ORDER BY id DESC LIMIT 1")
+    fun getLastAddedClient() : Client
 
-    @Query("SELECT * FROM clients_table ORDER BY clientId ASC")
+    @Query("SELECT * FROM clients_table WHERE id = :id")
+    fun get(id: Long): LiveData<Client>
+
+    @Query("DELETE FROM clients_table WHERE id = :id")
+    fun remove(id: Long)
+
+    @Query("SELECT * FROM clients_table ORDER BY id ASC")
     fun getAll(): LiveData<List<Client>>
 }

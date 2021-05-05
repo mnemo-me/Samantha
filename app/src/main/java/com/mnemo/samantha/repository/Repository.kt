@@ -2,6 +2,7 @@ package com.mnemo.samantha.repository
 
 import android.content.Context
 import com.mnemo.samantha.repository.database.SamanthaDatabase
+import com.mnemo.samantha.repository.database.entity.Appointment
 import com.mnemo.samantha.repository.database.entity.Client
 
 class Repository(val database: SamanthaDatabase) {
@@ -43,7 +44,15 @@ class Repository(val database: SamanthaDatabase) {
     // Schedule
     fun getDaySchedule(date: Int, month: Int, year: Int) = database.getDaySchedule(date, month, year)
 
-    fun bookClient(appointmentId: Long, clientId: Long?, serviceCost: Int?) = database.bookClient(appointmentId, clientId, serviceCost)
+    fun getTodayClients(date: Int, month: Int, year: Int) = database.getTodayClients(date, month, year)
+
+    fun addAppointment(appointment: Appointment) = database.addAppointment(appointment)
+
+    fun updateAppointmentState(appointmentId: Long, appointmentState: Int) = database.updateAppointmentState(appointmentId, appointmentState)
+
+    fun bookClient(appointmentId: Long, clientId: Long, serviceCost: Int?) = database.bookClient(appointmentId, clientId, serviceCost)
+
+    fun bookNewClient(appointmentId: Long, serviceCost: Int?) = database.bookNewClient(appointmentId, serviceCost)
 
 
 }

@@ -115,7 +115,7 @@ class ClientsAdapter(): ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHo
         abstract val id: Long
 
         data class ClientItem(val client: Client) : DataItem() {
-            override val id = client.clientId
+            override val id = client.id
         }
 
         object Header : DataItem() {
@@ -123,6 +123,7 @@ class ClientsAdapter(): ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHo
         }
     }
 
+    // DiffUtil Callback
     class ClientsDiffCallback : DiffUtil.ItemCallback<DataItem>(){
         override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem.id == newItem.id
@@ -135,7 +136,7 @@ class ClientsAdapter(): ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHo
 
     // Click listeners
     class ClientClickListener(val clickListener: (clientId: Long) -> Unit){
-        fun onClick(client: Client) = clickListener(client.clientId)
+        fun onClick(client: Client) = clickListener(client.id)
     }
 
     class AddNewClientClickListener(val clickListener: () -> Unit){

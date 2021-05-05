@@ -13,6 +13,8 @@ import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
 import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.SamanthaDatabase
+import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
+import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
 import com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog.AddClientDialogFragment
 
 class DayScheduleFragment : Fragment() {
@@ -51,12 +53,15 @@ class DayScheduleFragment : Fragment() {
         binding.dayScheduleSchedule.adapter = adapter
 
         // Adapter click listeners
-        adapter.addClientClickListener = DayScheduleAdapter.AddClientClickListener{appointmentId ->
-            view.findNavController().navigate(R.id.action_dayScheduleFragment_to_addClientDialogFragment, bundleOf("appointment_id" to appointmentId))
+        adapter.clickListener = DayScheduleAdapter.ClickListener{appointmentId, appointmentState ->
+            if (appointmentState == APPOINTMENT_STATE_FREE) {
+                view.findNavController().navigate(R.id.action_dayScheduleFragment_to_addClientDialogFragment, bundleOf("appointment_id" to appointmentId)
+                )
+            }
         }
 
-        adapter.buttonClickListener = DayScheduleAdapter.ButtonClickListener {appointmentId, clientId ->
-            viewModel.addClient(appointmentId, clientId, null)
+        adapter.buttonClickListener = DayScheduleAdapter.ButtonClickListener {appointmentId, appointmentState ->
+            viewModel.updateAppointmentState(appointmentId, appointmentState)
         }
 
         adapter.editScheduleClickListener = DayScheduleAdapter.EditScheduleClickListener {

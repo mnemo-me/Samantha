@@ -35,9 +35,11 @@ class ClientEditFragment : Fragment() {
 
         val clientId = requireArguments().getLong("client_id")
 
+        val appointmentId = requireArguments().getLong("appointment_id")
+
         val repository = Repository.getInstance(application)
 
-        val viewModelFactory = ClientEditViewModelFactory(clientId, repository)
+        val viewModelFactory = ClientEditViewModelFactory(clientId, appointmentId, repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientEditVewModel::class.java)
 

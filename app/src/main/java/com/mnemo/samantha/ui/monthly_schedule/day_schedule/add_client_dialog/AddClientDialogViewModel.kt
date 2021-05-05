@@ -10,7 +10,7 @@ class AddClientDialogViewModel(val appointmentId: Long, val repository: Reposito
 
     val clients = repository.getClientList()
 
-    fun bookClient(clientId: Long?, serviceCost: Int?){
+    fun bookClient(clientId: Long, serviceCost: Int?){
        CoroutineScope(Dispatchers.IO).launch{
            repository.bookClient(appointmentId, clientId, serviceCost)
        }

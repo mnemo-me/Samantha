@@ -1,26 +1,41 @@
 package com.mnemo.samantha.ui.current_day
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mnemo.samantha.R
-import com.mnemo.samantha.repository.database.entity.Client
 import com.mnemo.samantha.databinding.TodayClientBinding
+import com.mnemo.samantha.databinding.TodayClientsHeaderBinding
+import com.mnemo.samantha.repository.database.entity.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.ClassCastException
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class TodayClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TodayClientsAdapter: ListAdapter<TodayClientsAdapter.DataItem, RecyclerView.ViewHolder>(TodayClientsAdapter.AppointmentDiffCallback()){
 
-    var todaySchedule = linkedMapOf<Int, Client?>()
-    set(value){
-        field = value
-        notifyDataSetChanged()
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+    lateinit var buttonClickListener: ButtonClickListener
+
+
+    fun addHeaderAndSubmitList(appointments : List<Appointment>?){
+        adapterScope.launch {
+            val items = when(appointments){
+                null -> listOf(DataItem.Header)
+                else -> listOf(DataItem.Header) + appointments.map { DataItem.AppointmentItem(it) }
+            }
+            withContext(Dispatchers.Main){
+                submitList(items)
+            }
+        }
     }
 
-    override fun getItemCount() = todaySchedule.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
@@ -32,64 +47,93 @@ class TodayClientsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        when(holder){
+        when (holder){
+            is HeaderHolder -> {
+                holder.bind()
+            }
+
             is ViewHolder -> {
-                val item = todaySchedule.entries.toTypedArray()[position]
-                holder.bind(item)
+                val appointmentItem = getItem(position) as DataItem.AppointmentItem
+                holder.bind(appointmentItem.appointment, buttonClickListener)
             }
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(position){
+        return when (position){
             0 -> ITEM_VIEW_TYPE_HEADER
             else -> ITEM_VIEW_TYPE_ITEM
         }
     }
 
-    class ViewHolder private constructor(val binding: TodayClientBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: MutableMap.MutableEntry<Int, Client?>) {
-            val time = item.key
-            binding.todayClientTime.text = time.toString() + ":00"
+    class ViewHolder private constructor(val binding: TodayClientBinding) : RecyclerView.ViewHolder(binding.root){
 
-            val client = item.value
+        fun bind(appointment: Appointment, buttonClickListener: ButtonClickListener){
 
-            if (client != null) {
-                binding.todayClientName.text = client.clientName
+            binding.appointment = appointment
 
-                binding.todayClientAvatar.clipToOutline = true
+            binding.todayClientAvatar.clipToOutline = true
 
-                if (client.clientPhoneNumber == null) {
-
-                }
-            }
         }
 
-        companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+
+        companion object{
+            fun from(parent: ViewGroup) : ViewHolder{
 
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = TodayClientBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding);
+                return ViewHolder(binding)
             }
         }
-
     }
 
-    class HeaderHolder private constructor(view: View): RecyclerView.ViewHolder(view){
+    class HeaderHolder private constructor(val binding: TodayClientsHeaderBinding) : RecyclerView.ViewHolder(binding.root){
+
+        fun bind(){
+
+        }
 
         companion object{
-            fun from(parent: ViewGroup): HeaderHolder{
+            fun from(parent: ViewGroup) : HeaderHolder{
 
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.today_clients_header, parent, false)
+                val binding = TodayClientsHeaderBinding.inflate(layoutInflater, parent, false)
 
-                return HeaderHolder(view)
+                return HeaderHolder(binding)
             }
         }
     }
 
+
+
+    sealed class DataItem{
+
+        abstract val id : Long
+
+        data class AppointmentItem(val appointment: Appointment) : DataItem(){
+            override val id = appointment.id
+        }
+
+        object Header : DataItem(){
+            override val id = Long.MIN_VALUE
+        }
+    }
+
+    class AppointmentDiffCallback : DiffUtil.ItemCallback<DataItem>(){
+        override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+
+    // Button click listener
+    class ButtonClickListener(val clickListener: (clientPhoneNumber: String) -> Unit){
+        fun onClick(clientPhoneNumber : String) = clickListener(clientPhoneNumber)
+    }
 }

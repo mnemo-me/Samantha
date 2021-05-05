@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mnemo.samantha.R
@@ -25,6 +27,7 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
 
         // Bind View
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.dialog_fragment_add_client, container, false)
+        val view = binding.root
 
 
         // Create ViewModel via Factory
@@ -42,7 +45,9 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
         // Create adapter for RecycleView
         val adapter = ClientsAdapter()
 
-        adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener {  }
+        adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener {
+            parentFragment?.view?.findNavController()?.navigate(R.id.action_addClientDialogFragment_to_clientEditFragment, bundleOf("appointment_id" to appointmentId))
+        }
 
         adapter.clickListener = ClientsAdapter.ClientClickListener {clientId ->
             viewModel.bookClient(clientId, 700)
@@ -59,6 +64,6 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
             adapter.addHeaderAndSubmitList(clients)
         })
 
-        return binding.root
+        return view
     }
 }

@@ -61,6 +61,10 @@
             android:name="client_id"
             app:argType="long"
             android:defaultValue="0L" />
+        <argument
+            android:name="appointment_id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/dayScheduleFragment"
@@ -88,5 +92,8 @@
         <argument
             android:name="appointment_id"
             app:argType="long" />
+        <action
+            android:id="@+id/action_addClientDialogFragment_to_clientEditFragment"
+            app:destination="@id/clientEditFragment" />
     </dialog>
 </navigation>

@@ -8,8 +8,8 @@
             name="appointment"
             type="com.mnemo.samantha.repository.database.entity.Appointment" />
         <variable
-            name="addClientClickListener"
-            type="com.mnemo.samantha.ui.monthly_schedule.day_schedule.DayScheduleAdapter.AddClientClickListener" />
+            name="clickListener"
+            type="com.mnemo.samantha.ui.monthly_schedule.day_schedule.DayScheduleAdapter.ClickListener" />
     </data>
 
 
@@ -17,7 +17,7 @@
         android:id="@+id/appointment_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/appointment_panel_height"
-        android:onClick="@{() -> addClientClickListener.onClick(appointment)}"
+        android:onClick="@{() -> clickListener.onClick(appointment)}"
         tools:background="@color/blue_background">
 
         <TextView

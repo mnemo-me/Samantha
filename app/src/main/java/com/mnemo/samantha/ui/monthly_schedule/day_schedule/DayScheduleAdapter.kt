@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.AppointmentBinding
 import com.mnemo.samantha.databinding.DayScheduleHeaderBinding
+import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BREAK
+import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
+import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
 import com.mnemo.samantha.repository.database.entity.Appointment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,16 +21,13 @@ import kotlinx.coroutines.withContext
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-private const val APPOINTMENT_STATE_BREAK = -1
-private const val APPOINTMENT_STATE_FREE = 0
-private const val APPOINTMENT_STATE_BUSY = 1
 
-class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView.ViewHolder>(AppointmentDiffCallback()) {
+open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView.ViewHolder>(AppointmentDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
 
-    lateinit var addClientClickListener : AddClientClickListener
+    lateinit var clickListener : ClickListener
     lateinit var buttonClickListener: ButtonClickListener
     lateinit var editScheduleClickListener : EditScheduleClickListener
 
@@ -62,7 +62,7 @@ class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView
 
             is ViewHolder -> {
                 val appointmentItem = getItem(position) as DataItem.AppointmentItem
-                holder.bind(appointmentItem.appointment, addClientClickListener, buttonClickListener)
+                holder.bind(appointmentItem.appointment, clickListener, buttonClickListener)
             }
         }
     }
@@ -77,40 +77,40 @@ class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView
 
     class ViewHolder private constructor(val binding: AppointmentBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(appointment: Appointment, addClientClickListener: AddClientClickListener, buttonClickListener: ButtonClickListener){
+        fun bind(appointment: Appointment, clickListener: ClickListener, buttonClickListener: ButtonClickListener){
 
             binding.appointment = appointment
-            binding.addClientClickListener = addClientClickListener
+            binding.clickListener = clickListener
 
             binding.appointmentClientAvatar.clipToOutline = true
-            binding.appointmentTime.text = appointment.appointmentTime.toString()
+            binding.appointmentTime.text = appointment.time.toString()
 
-            // Appointment state
-            val appointmentState = when(appointment.appointmentClient){
-                null -> APPOINTMENT_STATE_BREAK
-                0L -> APPOINTMENT_STATE_FREE
-                else -> APPOINTMENT_STATE_BUSY
+            initAppointmentState(appointment.state)
+
+            // Bind client info
+            if (appointment.state == APPOINTMENT_STATE_BUSY) {
+                binding.appointmentClientName.text = appointment.client.name
+                binding.appointmentClientAvatar.setImageResource(R.drawable.samantha)
             }
 
-            initAppointmentState(appointmentState)
+            // Button click listener
+            binding.appointmentClientButton.setOnClickListener {
 
-            binding.appointmentClientButton.setOnClickListener(View.OnClickListener {
-
-                when(appointmentState){
+                when (appointment.state) {
                     APPOINTMENT_STATE_BREAK -> {
                         initAppointmentState(APPOINTMENT_STATE_FREE)
-                        buttonClickListener.onClick(appointment.appointmentId, 0L)
+                        buttonClickListener.onClick(appointment.id, APPOINTMENT_STATE_FREE)
                     }
                     APPOINTMENT_STATE_FREE -> {
                         initAppointmentState(APPOINTMENT_STATE_BREAK)
-                        buttonClickListener.onClick(appointment.appointmentId, null)
+                        buttonClickListener.onClick(appointment.id, APPOINTMENT_STATE_BREAK)
                     }
                     APPOINTMENT_STATE_BUSY -> {
                         initAppointmentState(APPOINTMENT_STATE_FREE)
-                        buttonClickListener.onClick(appointment.appointmentId, 0L)
+                        buttonClickListener.onClick(appointment.id, APPOINTMENT_STATE_FREE)
                     }
                 }
-            })
+            }
         }
 
         // Setup view based on appointment state
@@ -133,8 +133,6 @@ class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView
                 APPOINTMENT_STATE_BUSY -> {
                     binding.appointmentBackground.setBackgroundResource(R.color.white)
                     binding.appointmentClientAvatar.visibility = View.VISIBLE
-                    binding.appointmentClientAvatar.setImageResource(R.drawable.samantha)
-                    //binding.appointmentClientName.setText(R.string.add_client)
                     binding.appointmentClientButton.setImageResource(R.drawable.outline_close_black_24)
                 }
             }
@@ -175,7 +173,7 @@ class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView
         abstract val id : Long
 
         data class AppointmentItem(val appointment: Appointment) : DataItem(){
-            override val id = appointment.appointmentId
+            override val id = appointment.id
         }
 
         object Header : DataItem(){
@@ -195,12 +193,12 @@ class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, RecyclerView
 
 
     // Click listeners
-    class AddClientClickListener(val clickListener: (appointmentId: Long) -> Unit){
-        fun onClick(appointment: Appointment) = clickListener(appointment.appointmentId)
+    class ClickListener(val clickListener: (appointmentId: Long, appointmentState: Int) -> Unit){
+        fun onClick(appointment: Appointment) = clickListener(appointment.id, appointment.state)
     }
 
-    class ButtonClickListener(val clickListener: (appointmentId: Long, clientId : Long?) -> Unit){
-        fun onClick(appointmentId: Long, clientId: Long?) = clickListener(appointmentId, clientId)
+    class ButtonClickListener(val clickListener: (appointmentId: Long, appointmentState : Int) -> Unit){
+        fun onClick(appointmentId: Long, appointmentState: Int) = clickListener(appointmentId, appointmentState)
     }
 
     class EditScheduleClickListener(val clickListener: () -> Unit){

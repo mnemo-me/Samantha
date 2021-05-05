@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ClientEditVewModel(val clientId: Long, val repository: Repository) : ViewModel() {
+class ClientEditVewModel(val clientId: Long, val appointmentId: Long, val repository: Repository) : ViewModel() {
 
     // Client (back property)
     private var _client = repository.getClient(clientId)
@@ -37,10 +37,15 @@ class ClientEditVewModel(val clientId: Long, val repository: Repository) : ViewM
             if (clientId != 0L) {
                 repository.updateClientInfo(client)
             }else{
-                repository.addClient(Client(clientName = client.clientName, clientPhoneNumber = client.clientPhoneNumber))
+                repository.addClient(Client(name = client.name, phoneNumber = client.phoneNumber))
+            }
+
+            if (appointmentId != 0L){
+                repository.bookNewClient(appointmentId, 700)
             }
         }
     }
+
 
 
     override fun onCleared() {

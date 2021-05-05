@@ -16,12 +16,18 @@ interface AppointmentDAO {
     @Update
     fun update(appointment: Appointment)
 
-    @Query("UPDATE appointments_table SET appointment_client_id = :clientId, appointment_summary_cost = :appointSummaryCost WHERE appointmentId = :appointmentId")
-    fun bookClient(appointmentId: Long, clientId: Long?, appointSummaryCost: Int?)
+    @Query("UPDATE appointments_table SET client_id = 0, client_name = \"\", client_phone_number = \"\", state = :state WHERE id = :id")
+    fun updateAppointmentState(id: Long, state: Int)
 
-    @Query("DELETE FROM appointments_table WHERE appointmentId = :appointmentId")
-    fun remove(appointmentId: Long)
+    @Query("UPDATE appointments_table SET client_id = :clientId, client_name = :clientName, client_phone_number = :clientPhoneNumber, service_cost = :serviceCost, state = :state WHERE id = :id")
+    fun bookClient(id: Long, clientId: Long, clientName: String, clientPhoneNumber: String, serviceCost: Int?, state: Int)
 
-    @Query("SELECT * FROM appointments_table WHERE appointment_date = :date AND appointment_month = :month AND appointment_year = :year ORDER BY appointment_time ASC")
+    @Query("DELETE FROM appointments_table WHERE id = :id")
+    fun remove(id: Long)
+
+    @Query("SELECT * FROM appointments_table WHERE date = :date AND month = :month AND year = :year ORDER BY time ASC")
     fun getDaySchedule(date: Int, month: Int, year: Int) : LiveData<List<Appointment>>
+
+    @Query("SELECT * FROM appointments_table WHERE date = :date AND month = :month AND year = :year AND state = :state")
+    fun getTodayClients(date: Int, month: Int, year: Int, state: Int) : LiveData<List<Appointment>>
 }

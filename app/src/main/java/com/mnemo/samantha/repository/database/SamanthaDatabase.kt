@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mnemo.samantha.repository.database.dao.AppointmentDAO
 import com.mnemo.samantha.repository.database.dao.ClientDAO
+import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
 import com.mnemo.samantha.repository.database.entity.Appointment
 import com.mnemo.samantha.repository.database.entity.Client
 
@@ -52,5 +53,19 @@ abstract class SamanthaDatabase : RoomDatabase() {
     // Schedule
     fun getDaySchedule(date: Int, month: Int, year: Int) = appointmentDAO.getDaySchedule(date, month, year)
 
-    fun bookClient(appointmentId: Long, clientId: Long?, serviceCost: Int?) = appointmentDAO.bookClient(appointmentId, clientId, serviceCost)
+    fun getTodayClients(date: Int, month: Int, year: Int) = appointmentDAO.getTodayClients(date, month, year, APPOINTMENT_STATE_BUSY)
+
+    fun addAppointment(appointment: Appointment) = appointmentDAO.insert(appointment)
+
+    fun updateAppointmentState(appointmentId: Long, appointmentState: Int) = appointmentDAO.updateAppointmentState(appointmentId, appointmentState)
+
+    fun bookClient(appointmentId: Long, clientId: Long, serviceCost: Int?){
+        val client = clientDao.getClient(clientId)
+        appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, serviceCost, APPOINTMENT_STATE_BUSY)
+    }
+
+    fun bookNewClient(appointmentId: Long, serviceCost: Int?){
+        val client = clientDao.getLastAddedClient()
+        appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, serviceCost, APPOINTMENT_STATE_BUSY)
+    }
 }
