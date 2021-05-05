@@ -55,4 +55,15 @@ class Repository(val database: SamanthaDatabase) {
     fun bookNewClient(appointmentId: Long, serviceCost: Int?) = database.bookNewClient(appointmentId, serviceCost)
 
 
+    // Statistics
+    fun getWorkingYears() = database.getWorkingYears()
+
+    fun getWorkingMonths(year: Int) = database.getWorkingMonths(year)
+
+    fun getWorkingDaysCount(month: Int, year: Int) = database.getWorkingDaysCount(month, year)
+
+    fun getClientsCount(month: Int, year: Int) = database.getClientsCount(month, year)
+
+    fun getMonthRevenue(month: Int, year: Int) = database.getMonthRevenue(month, year)
+
 }

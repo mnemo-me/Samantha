@@ -1,9 +1,12 @@
 package com.mnemo.samantha.repository.database
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.mnemo.samantha.repository.data.Statistics
 import com.mnemo.samantha.repository.database.dao.AppointmentDAO
 import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
@@ -68,4 +71,17 @@ abstract class SamanthaDatabase : RoomDatabase() {
         val client = clientDao.getLastAddedClient()
         appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, serviceCost, APPOINTMENT_STATE_BUSY)
     }
+
+
+    // Statistics
+    fun getWorkingYears() = appointmentDAO.getWorkingYears()
+
+    fun getWorkingMonths(year: Int) = appointmentDAO.getWorkingMonths(year)
+
+    fun getWorkingDaysCount(month: Int, year: Int) = appointmentDAO.getWorkingDaysCount(month, year)
+
+    fun getClientsCount(month: Int, year: Int) = appointmentDAO.getClientsCount(month, year)
+
+    fun getMonthRevenue(month: Int, year: Int) = appointmentDAO.getMonthRevenue(month, year)
+
 }

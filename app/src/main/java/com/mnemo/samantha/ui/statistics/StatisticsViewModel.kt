@@ -1,24 +1,44 @@
 package com.mnemo.samantha.ui.statistics
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mnemo.samantha.repository.database.entity.MonthlyStatistics
+import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.repository.data.Statistics
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class StatisticsViewModel : ViewModel() {
+class StatisticsViewModel(val repository: Repository) : ViewModel() {
 
-    private val _statistics = MutableLiveData<MutableList<StatisticsAdapter.DataItem>>()
-    val statistics : LiveData<MutableList<StatisticsAdapter.DataItem>>
-    get() = _statistics
+    val statistics = MutableLiveData<MutableList<Statistics>>()
 
     init {
-        _statistics.value = mutableListOf()
-        _statistics.value!!.add(StatisticsAdapter.DataItem.Header("240 000.00 р"))
 
-        for (i in 1..12){
-            _statistics.value!!.add(StatisticsAdapter.DataItem.MonthlyStatisticsItem(
-                MonthlyStatistics(123, 2021, "March", 20, 48, 40000)
-            ))
+        val statisticsValue = mutableListOf<Statistics>()
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val workingYears = repository.getWorkingYears()
+
+            workingYears.forEach { year ->
+                val workingMonths = repository.getWorkingMonths(year)
+
+                workingMonths.forEach { month ->
+
+                    val workingDaysCount = repository.getWorkingDaysCount(month, year)
+                    val clientsCount = repository.getClientsCount(month, year)
+                    val revenue = repository.getMonthRevenue(month, year)
+
+                    withContext(Dispatchers.Main) {
+                        statisticsValue.add(Statistics(month, year, workingDaysCount, clientsCount, revenue))
+                    }
+                }
+            }
+
+            withContext(Dispatchers.Main){
+                statistics.value = statisticsValue
+            }
         }
     }
 }

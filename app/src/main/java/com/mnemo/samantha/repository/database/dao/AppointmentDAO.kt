@@ -30,4 +30,19 @@ interface AppointmentDAO {
 
     @Query("SELECT * FROM appointments_table WHERE date = :date AND month = :month AND year = :year AND state = :state")
     fun getTodayClients(date: Int, month: Int, year: Int, state: Int) : LiveData<List<Appointment>>
+
+    @Query("SELECT DISTINCT year FROM appointments_table")
+    fun getWorkingYears() : List<Int>
+
+    @Query("SELECT DISTINCT month FROM appointments_table WHERE year = :year")
+    fun getWorkingMonths(year: Int) : List<Int>
+
+    @Query("SELECT COUNT (DISTINCT date) FROM appointments_table WHERE month = :month AND year = :year")
+    fun getWorkingDaysCount(month: Int, year: Int) : Int
+
+    @Query("SELECT COUNT (DISTINCT client_id) FROM appointments_table WHERE month = :month AND year = :year AND client_id != 0")
+    fun getClientsCount(month: Int, year: Int) : Int
+
+    @Query("SELECT SUM (service_cost) FROM appointments_table WHERE month = :month AND year = :year")
+    fun getMonthRevenue(month: Int, year: Int) : Long
 }
