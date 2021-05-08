@@ -26,10 +26,20 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-
     lateinit var clickListener : ClickListener
     lateinit var buttonClickListener: ButtonClickListener
     lateinit var editScheduleClickListener : EditScheduleClickListener
+
+    // Date info for header
+    private var _date: Int  = 0
+    private var _month: String = ""
+    private var _dayOfTheWeek: String = ""
+
+    fun setDate(date: Int, month: String, dayOfWeek: String){
+        _date = date
+        _month = month
+        _dayOfTheWeek = dayOfWeek
+    }
 
 
     fun addHeaderAndSubmitList(appointments : List<Appointment>?){
@@ -57,7 +67,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
         when (holder){
             is HeaderHolder -> {
-                holder.bind(editScheduleClickListener)
+                holder.bind(_date, _month, _dayOfTheWeek, editScheduleClickListener)
             }
 
             is ViewHolder -> {
@@ -117,7 +127,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
         private fun initAppointmentState(appointmentState: Int){
             when (appointmentState){
                 APPOINTMENT_STATE_BREAK -> {
-                    binding.appointmentBackground.setBackgroundResource(R.color.grey_background)
+                    binding.appointmentBackground.setBackgroundResource(R.color.ash)
                     binding.appointmentClientAvatar.visibility = View.INVISIBLE
                     binding.appointmentClientName.text = ""
                     binding.appointmentClientButton.setImageResource(R.drawable.outline_add_white_24)
@@ -151,7 +161,8 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
     class HeaderHolder private constructor(val binding: DayScheduleHeaderBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(editScheduleClickListener: EditScheduleClickListener){
+        fun bind(date: Int, month: String, dayOfWeek: String, editScheduleClickListener: EditScheduleClickListener){
+            binding.dayScheduleDay.text = "$dayOfWeek, $date $month"
             binding.editScheduleClickListener = editScheduleClickListener
         }
 

@@ -15,15 +15,21 @@ import java.util.*
 
 class DayScheduleViewModel(val year: Int, val month: Int, val date: Int, val repository: Repository) : ViewModel() {
 
+    private val calendar = Calendar.getInstance()
+
+    val monthText : String
+    val dayOfWeek : String
+
+
     private var _appointments = repository.getDaySchedule(date, month, year)
     val appointments : LiveData<List<Appointment>>
     get() = _appointments
 
 
     init {
-
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, date)
+        calendar.set(year, month, date, 0, 0, 0)
+        monthText = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 
 
 /*

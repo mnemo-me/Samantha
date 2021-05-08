@@ -1,23 +1,22 @@
 package com.mnemo.samantha.ui.current_day
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.entity.Appointment
 import java.util.*
 
 class TodayViewModel(val repository: Repository) : ViewModel() {
 
-    var todayClients : LiveData<List<Appointment>>
+    private val calendar = Calendar.getInstance()
 
-    init {
+    val date = calendar.get(Calendar.DATE)
 
-        val calendar = Calendar.getInstance()
+    private val _month = calendar.get(Calendar.MONTH)
+    val month  = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 
-        val date = calendar.get(Calendar.DATE)
-        val month = calendar.get(Calendar.MONTH)
-        val year = calendar.get(Calendar.YEAR)
+    private val year = calendar.get(Calendar.YEAR)
 
-        todayClients = repository.getTodayClients(date, month, year)
-    }
+    val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+
+    var todayClients = repository.getTodayClients(date, _month, year)
+
 }

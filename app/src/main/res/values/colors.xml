@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="awesome_red">#FF0000</color>
+    <color name="awesome_purple">#727dbf</color>
+    <color name="awesome_orange">#E89271</color>
+    <color name="ash">#a498a4</color>
+    <color name="paint_it_black">#1f242a</color>
+
     <color name="grey_background">#b0bec5</color>
     <color name="blue_background">#90caf9</color>
     <color name="purple_background">#FFBB86FC</color>
