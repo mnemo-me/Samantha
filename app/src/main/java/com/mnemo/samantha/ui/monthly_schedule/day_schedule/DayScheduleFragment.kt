@@ -50,6 +50,8 @@ class DayScheduleFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = DayScheduleAdapter()
+        adapter.setDate(viewModel.date, viewModel.monthText, viewModel.dayOfWeek)
+
         binding.dayScheduleSchedule.adapter = adapter
 
         // Adapter click listeners

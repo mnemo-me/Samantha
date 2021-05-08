@@ -34,7 +34,7 @@ class TodayFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = TodayClientsAdapter()
-
+        adapter.setDate(viewModel.date, viewModel.month, viewModel.dayOfWeek)
         adapter.buttonClickListener = TodayClientsAdapter.ButtonClickListener {  }
 
         binding.todaySchedule.adapter = adapter
