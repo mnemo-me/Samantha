@@ -23,18 +23,7 @@ class TodayClientsAdapter: ListAdapter<TodayClientsAdapter.DataItem, RecyclerVie
 
     lateinit var buttonClickListener: ButtonClickListener
 
-
-    // Date info for header
-    private var _date: Int  = 0
-    private var _month: String = ""
-    private var _dayOfTheWeek: String = ""
-
-    fun setDate(date: Int, month: String, dayOfWeek: String){
-        _date = date
-        _month = month
-        _dayOfTheWeek = dayOfWeek
-    }
-
+    lateinit var dateText: String
 
     fun addHeaderAndSubmitList(appointments : List<Appointment>?){
         adapterScope.launch {
@@ -61,7 +50,7 @@ class TodayClientsAdapter: ListAdapter<TodayClientsAdapter.DataItem, RecyclerVie
 
         when (holder){
             is HeaderHolder -> {
-                holder.bind(_date, _month, _dayOfTheWeek)
+                holder.bind(dateText)
             }
 
             is ViewHolder -> {
@@ -103,8 +92,8 @@ class TodayClientsAdapter: ListAdapter<TodayClientsAdapter.DataItem, RecyclerVie
 
     class HeaderHolder private constructor(val binding: TodayClientsHeaderBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(date: Int, month: String, dayOfWeek: String){
-            binding.todayClientsHeaderTitle.text = "$dayOfWeek, $date $month"
+        fun bind(dateText: String){
+            binding.todayClientsHeaderTitle.text = dateText
         }
 
         companion object{

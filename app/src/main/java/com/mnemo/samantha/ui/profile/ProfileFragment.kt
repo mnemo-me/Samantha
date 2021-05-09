@@ -19,6 +19,8 @@ class ProfileFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
+        binding.profileAvatar.clipToOutline = true
+
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         return binding.root

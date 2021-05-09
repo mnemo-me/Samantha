@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_profile_navigation"
+    app:startDestination="@id/editProfileFragment">
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.edit_profile_info.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_selectRegionFragment"
+            app:destination="@id/selectRegionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addServiceFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.services.add_service.AddServiceFragment"
+        android:label="fragment_add_service"
+        tools:layout="@layout/fragment_add_service" />
+    <fragment
+        android:id="@+id/createScheduleFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.create_schedule.CreateScheduleFragment"
+        android:label="fragment_create_schedule"
+        tools:layout="@layout/fragment_create_schedule" />
+    <fragment
+        android:id="@+id/selectRegionFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.select_region.SelectRegionFragment"
+        android:label="fragment_select_region"
+        tools:layout="@layout/fragment_select_region" >
+        <argument
+            android:name="master_name"
+            app:argType="string" />
+        <argument
+            android:name="master_profession"
+            app:argType="string" />
+        <argument
+            android:name="master_phone_number"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_selectRegionFragment_to_servicesFragment"
+            app:destination="@id/servicesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/servicesFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.services.ServicesFragment"
+        android:label="fragment_services"
+        tools:layout="@layout/fragment_services" >
+        <action
+            android:id="@+id/action_servicesFragment_to_createScheduleFragment"
+            app:destination="@id/createScheduleFragment" />
+        <action
+            android:id="@+id/action_servicesFragment_to_addServiceFragment"
+            app:destination="@id/addServiceFragment" />
+    </fragment>
+</navigation>

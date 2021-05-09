@@ -1,5 +1,6 @@
 package com.mnemo.samantha.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -7,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.ActivityMainBinding
+import com.mnemo.samantha.ui.create_profile.CreateProfileActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,5 +24,14 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.bottomNavigationBar.setupWithNavController(navController)
+
+        createProfile()
+    }
+
+
+    // Start create profile activity
+    fun createProfile(){
+        val intent = Intent(this, CreateProfileActivity::class.java)
+        startActivity(intent)
     }
 }

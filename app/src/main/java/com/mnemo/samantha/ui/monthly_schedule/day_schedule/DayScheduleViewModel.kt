@@ -1,24 +1,20 @@
 package com.mnemo.samantha.ui.monthly_schedule.day_schedule
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.dao.AppointmentDAO
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
 import com.mnemo.samantha.repository.database.entity.Appointment
-import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DayScheduleViewModel(val year: Int, val month: Int, val date: Int, val repository: Repository) : ViewModel() {
 
     private val calendar = Calendar.getInstance()
 
-    val monthText : String
-    val dayOfWeek : String
+    val dateText : String
 
 
     private var _appointments = repository.getDaySchedule(date, month, year)
@@ -28,8 +24,7 @@ class DayScheduleViewModel(val year: Int, val month: Int, val date: Int, val rep
 
     init {
         calendar.set(year, month, date, 0, 0, 0)
-        monthText = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-        dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        dateText = SimpleDateFormat("EEEE, MMM d", Locale.getDefault()).format(calendar.time)
 
 
 /*

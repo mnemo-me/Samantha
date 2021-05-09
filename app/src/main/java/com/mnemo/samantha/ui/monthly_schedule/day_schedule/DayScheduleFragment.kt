@@ -12,10 +12,7 @@ import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.SamanthaDatabase
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
 import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
-import com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog.AddClientDialogFragment
 
 class DayScheduleFragment : Fragment() {
 
@@ -50,8 +47,7 @@ class DayScheduleFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = DayScheduleAdapter()
-        adapter.setDate(viewModel.date, viewModel.monthText, viewModel.dayOfWeek)
-
+        adapter.dateText = viewModel.dateText
         binding.dayScheduleSchedule.adapter = adapter
 
         // Adapter click listeners

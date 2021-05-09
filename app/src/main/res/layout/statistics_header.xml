@@ -11,6 +11,7 @@
             android:id="@+id/statistics_header_annual_revenue_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/ash"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/default_padding"

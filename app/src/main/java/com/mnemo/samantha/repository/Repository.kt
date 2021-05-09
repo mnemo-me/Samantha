@@ -28,6 +28,9 @@ class Repository(val database: SamanthaDatabase) {
         }
     }
 
+    // Profile
+    fun checkProfile() = database.checkProfile()
+
 
     // Clients
     fun getClient(clientId: Long) = database.getClient(clientId)

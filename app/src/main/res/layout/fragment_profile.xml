@@ -1,11 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/profile_avatar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/double_padding"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/profile_vertical_guideline"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1"
+            android:background="@drawable/circle_bg"
+            android:outlineProvider="background"
+            android:src="@drawable/samantha"
+            tools:src="@drawable/samantha"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/profile_vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintTop_toTopOf="@id/profile_avatar"
+            app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintBottom_toTopOf="@id/profile_phone_number"
+            android:text="Samantha"
+            tools:text="Samantha"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/profile_profession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            android:text="bartender"
+            tools:text="bartender"/>
+
+        <TextView
+            android:id="@+id/profile_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/half_padding"
+            app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@id/profile_profession"
+            android:text="+7 900 000 00 00"
+            tools:text="+7 900 000 00 00"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_edit_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/ash"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            app:layout_constraintTop_toBottomOf="@id/profile_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/edit_profile"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_portfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"/>
+
+        <TextView
+            android:id="@+id/profile_services_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ash"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_portfolio"
+            android:text="@string/services"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_services_text"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

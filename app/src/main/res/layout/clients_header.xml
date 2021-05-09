@@ -14,8 +14,8 @@
         android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginTop="@dimen/half_padding"
         android:text="@string/add_new_client"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/ash"
         android:onClick="@{() -> clickListener.onClick()}"/>
 
 </layout>

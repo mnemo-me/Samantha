@@ -30,17 +30,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
     lateinit var buttonClickListener: ButtonClickListener
     lateinit var editScheduleClickListener : EditScheduleClickListener
 
-    // Date info for header
-    private var _date: Int  = 0
-    private var _month: String = ""
-    private var _dayOfTheWeek: String = ""
-
-    fun setDate(date: Int, month: String, dayOfWeek: String){
-        _date = date
-        _month = month
-        _dayOfTheWeek = dayOfWeek
-    }
-
+    lateinit var dateText: String
 
     fun addHeaderAndSubmitList(appointments : List<Appointment>?){
         adapterScope.launch {
@@ -67,7 +57,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
         when (holder){
             is HeaderHolder -> {
-                holder.bind(_date, _month, _dayOfTheWeek, editScheduleClickListener)
+                holder.bind(dateText, editScheduleClickListener)
             }
 
             is ViewHolder -> {
@@ -161,8 +151,8 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
     class HeaderHolder private constructor(val binding: DayScheduleHeaderBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(date: Int, month: String, dayOfWeek: String, editScheduleClickListener: EditScheduleClickListener){
-            binding.dayScheduleDay.text = "$dayOfWeek, $date $month"
+        fun bind(dateText: String, editScheduleClickListener: EditScheduleClickListener){
+            binding.dayScheduleDay.text = dateText
             binding.editScheduleClickListener = editScheduleClickListener
         }
 

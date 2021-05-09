@@ -89,6 +89,7 @@
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
+                android:background="@drawable/edit_text_field"
                 android:text="@{client.name}"/>
 
             <TextView
@@ -113,6 +114,7 @@
                 android:layout_marginTop="@dimen/half_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
+                android:background="@drawable/edit_text_field"
                 android:text="@{client.phoneNumber}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

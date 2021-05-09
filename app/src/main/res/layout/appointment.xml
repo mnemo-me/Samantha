@@ -12,60 +12,68 @@
             type="com.mnemo.samantha.ui.monthly_schedule.day_schedule.DayScheduleAdapter.ClickListener" />
     </data>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/appointment_background"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appointment_panel_height"
-        android:onClick="@{() -> clickListener.onClick(appointment)}"
-        tools:background="@color/blue_background">
+        android:layout_height="@dimen/appointment_panel_height">
 
-        <TextView
-            android:id="@+id/appointment_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_padding"
-            android:layout_marginEnd="@dimen/default_padding"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="14:00"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/appointment_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> clickListener.onClick(appointment)}"
+            tools:background="@color/blue_background">
 
-        <ImageView
-            android:id="@+id/appointment_client_avatar"
-            android:layout_width="@dimen/appointment_client_image_height"
-            android:layout_height="@dimen/appointment_client_image_height"
-            android:scaleType="centerCrop"
-            android:layout_marginStart="@dimen/default_padding"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/appointment_time"
-            android:background="@drawable/circle_bg"
-            android:outlineProvider="background"
-            tools:src="@drawable/outline_account_circle_white_48"/>
+            <TextView
+                android:id="@+id/appointment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="14:00"/>
 
-        <TextView
-            android:id="@+id/appointment_client_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_padding"
-            android:layout_marginEnd="@dimen/default_padding"
-            app:layout_constraintStart_toEndOf="@id/appointment_client_avatar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@string/add_client"/>
+            <ImageView
+                android:id="@+id/appointment_client_avatar"
+                android:layout_width="@dimen/appointment_client_image_height"
+                android:layout_height="@dimen/appointment_client_image_height"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="@dimen/default_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/appointment_time"
+                android:background="@drawable/circle_bg"
+                android:outlineProvider="background"
+                tools:src="@drawable/outline_account_circle_white_48"/>
 
-        <ImageView
-            android:id="@+id/appointment_client_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
-            android:layout_marginEnd="@dimen/three_quarters_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@drawable/outline_remove_white_24"/>
+            <TextView
+                android:id="@+id/appointment_client_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                app:layout_constraintStart_toEndOf="@id/appointment_client_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="@string/add_client"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/appointment_client_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/three_quarters_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/outline_remove_white_24"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
 
 </layout>
