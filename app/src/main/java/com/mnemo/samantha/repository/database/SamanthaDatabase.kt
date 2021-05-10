@@ -7,19 +7,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mnemo.samantha.repository.data.Statistics
-import com.mnemo.samantha.repository.database.dao.AppointmentDAO
-import com.mnemo.samantha.repository.database.dao.ClientDAO
-import com.mnemo.samantha.repository.database.dao.MasterDAO
-import com.mnemo.samantha.repository.database.dao.ServiceDAO
+import com.mnemo.samantha.repository.database.dao.*
 import com.mnemo.samantha.repository.database.entity.*
 
-@Database(entities = [Master::class, Client::class, Appointment::class, Service::class], version = 1, exportSchema = false)
+@Database(entities = [Master::class, Client::class, Appointment::class, Service::class, ScheduleTemplate::class], version = 1, exportSchema = false)
 abstract class SamanthaDatabase : RoomDatabase() {
 
     abstract val masterDAO: MasterDAO
     abstract val clientDao: ClientDAO
     abstract val appointmentDAO: AppointmentDAO
     abstract val serviceDAO: ServiceDAO
+    abstract val scheduleTemplateDAO: ScheduleTemplateDAO
 
     companion object{
 
@@ -102,5 +100,21 @@ abstract class SamanthaDatabase : RoomDatabase() {
     fun addService(service: Service) = serviceDAO.insert(service)
 
     fun updateService(service: Service) = serviceDAO.update(service)
+
+
+    // Schedule
+    fun getSchedule() = scheduleTemplateDAO.get()
+
+    fun addSchedule(scheduleTemplate: ScheduleTemplate) = scheduleTemplateDAO.insert(scheduleTemplate)
+
+    fun updateSchedule(scheduleTemplate: ScheduleTemplate) = scheduleTemplateDAO.update(scheduleTemplate)
+
+    fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int){
+        for (i in 1..days){
+            for (y in scheduleTemplate.workingTimeStart..scheduleTemplate.workingTimeEnd step scheduleTemplate.timeSector) {
+                addAppointment(Appointment(time = y, date = i, month = month, year = year, client = Client(name = "", phoneNumber = ""), serviceCost = null, state = APPOINTMENT_STATE_FREE))
+            }
+        }
+    }
 
 }

@@ -53,5 +53,11 @@
     <string name="service_updated">Service updated</string>
     <string name="service_added">Service added</string>
     <string name="edit_service">Edit service</string>
+    <string name="working_time">WORKING TIME</string>
+    <string name="begin">Begin</string>
+    <string name="end">End</string>
+    <string name="break_time">BREAK</string>
+    <string name="sector">SECTOR</string>
+    <string name="shedule_updated">Schedule updated</string>
 
 </resources>

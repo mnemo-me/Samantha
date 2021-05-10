@@ -4,6 +4,7 @@ import android.content.Context
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.repository.database.entity.Appointment
 import com.mnemo.samantha.repository.database.entity.Client
+import com.mnemo.samantha.repository.database.entity.ScheduleTemplate
 import com.mnemo.samantha.repository.database.entity.Service
 
 class Repository(val database: SamanthaDatabase) {
@@ -81,5 +82,15 @@ class Repository(val database: SamanthaDatabase) {
     fun addService(service: Service) = database.addService(service)
 
     fun updateService(service: Service) = database.updateService(service)
+
+
+    // Schedule
+    fun getSchedule() = database.getSchedule()
+
+    fun addSchedule(scheduleTemplate: ScheduleTemplate) = database.addSchedule(scheduleTemplate)
+
+    fun updateSchedule(scheduleTemplate: ScheduleTemplate) = database.updateSchedule(scheduleTemplate)
+
+    fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int) = database.applyScheduleTemplate(scheduleTemplate, days, month, year)
 
 }

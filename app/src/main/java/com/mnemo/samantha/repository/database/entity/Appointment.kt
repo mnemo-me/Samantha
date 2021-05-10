@@ -12,7 +12,7 @@ const val APPOINTMENT_STATE_BUSY = 1
 @Entity(tableName = "appointments_table")
 data class Appointment (
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
 
     @ColumnInfo(name = "time")
