@@ -29,13 +29,13 @@ class ClientEditFragment : Fragment() {
         binding.clientEditAvatar.clipToOutline = true
         binding.clientEditTextPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
+        // Get arguments
+        val clientId = requireArguments().getLong("client_id")
+        val appointmentId = requireArguments().getLong("appointment_id")
+
 
         // Create ViewModel via Factory
         val application = requireNotNull(this.activity).application
-
-        val clientId = requireArguments().getLong("client_id")
-
-        val appointmentId = requireArguments().getLong("appointment_id")
 
         val repository = Repository.getInstance(application)
 

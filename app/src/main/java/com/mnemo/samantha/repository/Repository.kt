@@ -4,6 +4,7 @@ import android.content.Context
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.repository.database.entity.Appointment
 import com.mnemo.samantha.repository.database.entity.Client
+import com.mnemo.samantha.repository.database.entity.Service
 
 class Repository(val database: SamanthaDatabase) {
 
@@ -30,6 +31,8 @@ class Repository(val database: SamanthaDatabase) {
 
     // Profile
     fun checkProfile() = database.checkProfile()
+
+    fun getCurrency() = database.getCurrency()
 
 
     // Clients
@@ -68,5 +71,15 @@ class Repository(val database: SamanthaDatabase) {
     fun getClientsCount(month: Int, year: Int) = database.getClientsCount(month, year)
 
     fun getMonthRevenue(month: Int, year: Int) = database.getMonthRevenue(month, year)
+
+
+    // Services
+    fun getServiceList() = database.getServiceList()
+
+    fun getService(serviceId: Long) = database.getService(serviceId)
+
+    fun addService(service: Service) = database.addService(service)
+
+    fun updateService(service: Service) = database.updateService(service)
 
 }

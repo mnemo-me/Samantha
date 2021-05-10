@@ -18,18 +18,6 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long, val reposi
     val client : LiveData<Client>
         get() = _client
 
-    // Coroutines
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-
-    init {
-
-        uiScope.launch {
-
-        }
-    }
-
 
     // Update info about client or create new client
     fun updateClientInfo(client : Client){
@@ -46,11 +34,5 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long, val reposi
         }
     }
 
-
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 
 }

@@ -123,7 +123,7 @@ class ClientsAdapter: ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHold
         }
     }
 
-    // DiffUtil Callback
+    // DiffUtil callback
     class ClientsDiffCallback : DiffUtil.ItemCallback<DataItem>(){
         override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem.id == newItem.id

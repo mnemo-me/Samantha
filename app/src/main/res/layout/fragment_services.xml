@@ -42,7 +42,8 @@
             android:id="@+id/services_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/services_title"/>
+            app:layout_constraintTop_toBottomOf="@id/services_title"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

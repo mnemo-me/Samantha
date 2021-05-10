@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -32,6 +33,24 @@ class ServicesFragment : Fragment() {
         val viewModelFactory = ServicesViewModelFactory(repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ServicesViewModel::class.java)
+
+
+        // Create adapter for RecycleView
+        val adapter = ServicesAdapter()
+
+        adapter.addNewServiceClickListener = ServicesAdapter.AddNewServiceClickListener {
+            view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment)
+        }
+
+        adapter.serviceClickListener = ServicesAdapter.ServiceClickListener { serviceId ->
+            view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment, bundleOf("service_id" to serviceId))
+        }
+
+        binding.servicesList.adapter = adapter
+
+        viewModel.services.observe(viewLifecycleOwner, {services ->
+            adapter.addHeaderAndSubmitList(services)
+        })
 
 
         // Back button click listener

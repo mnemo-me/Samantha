@@ -48,5 +48,10 @@
     <string name="currency">Currency</string>
     <string name="create_schedule">Create schedule</string>
     <string name="add_service">Add service</string>
+    <string name="price">Price</string>
+    <string name="time_in_minutes">Time (in minutes)</string>
+    <string name="service_updated">Service updated</string>
+    <string name="service_added">Service added</string>
+    <string name="edit_service">Edit service</string>
 
 </resources>

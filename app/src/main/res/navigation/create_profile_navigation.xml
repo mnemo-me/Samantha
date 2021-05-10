@@ -15,11 +15,6 @@
             app:destination="@id/selectRegionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addServiceFragment"
-        android:name="com.mnemo.samantha.ui.create_profile.services.add_service.AddServiceFragment"
-        android:label="fragment_add_service"
-        tools:layout="@layout/fragment_add_service" />
-    <fragment
         android:id="@+id/createScheduleFragment"
         android:name="com.mnemo.samantha.ui.create_profile.create_schedule.CreateScheduleFragment"
         android:label="fragment_create_schedule"
@@ -51,7 +46,16 @@
             android:id="@+id/action_servicesFragment_to_createScheduleFragment"
             app:destination="@id/createScheduleFragment" />
         <action
-            android:id="@+id/action_servicesFragment_to_addServiceFragment"
-            app:destination="@id/addServiceFragment" />
+            android:id="@+id/action_servicesFragment_to_serviceEditFragment"
+            app:destination="@id/serviceEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serviceEditFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.services.service_edit.ServiceEditFragment"
+        android:label="fragment_service_edit"
+        tools:layout="@layout/fragment_service_edit" >
+        <argument
+            android:name="service_id"
+            app:argType="long" />
     </fragment>
 </navigation>

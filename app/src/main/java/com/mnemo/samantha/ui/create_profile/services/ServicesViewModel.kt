@@ -5,5 +5,7 @@ import com.mnemo.samantha.repository.Repository
 
 class ServicesViewModel(val repository: Repository) : ViewModel() {
 
+    val services = repository.getServiceList()
 
+    val currency = repository.getCurrency()
 }

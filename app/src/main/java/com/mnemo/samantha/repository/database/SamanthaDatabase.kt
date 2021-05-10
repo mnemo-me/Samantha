@@ -10,17 +10,16 @@ import com.mnemo.samantha.repository.data.Statistics
 import com.mnemo.samantha.repository.database.dao.AppointmentDAO
 import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.dao.MasterDAO
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
-import com.mnemo.samantha.repository.database.entity.Appointment
-import com.mnemo.samantha.repository.database.entity.Client
-import com.mnemo.samantha.repository.database.entity.Master
+import com.mnemo.samantha.repository.database.dao.ServiceDAO
+import com.mnemo.samantha.repository.database.entity.*
 
-@Database(entities = [Master::class, Client::class, Appointment::class], version = 1, exportSchema = false)
+@Database(entities = [Master::class, Client::class, Appointment::class, Service::class], version = 1, exportSchema = false)
 abstract class SamanthaDatabase : RoomDatabase() {
 
     abstract val masterDAO: MasterDAO
     abstract val clientDao: ClientDAO
     abstract val appointmentDAO: AppointmentDAO
+    abstract val serviceDAO: ServiceDAO
 
     companion object{
 
@@ -47,6 +46,8 @@ abstract class SamanthaDatabase : RoomDatabase() {
 
     // Profile
     fun checkProfile() = masterDAO.get()
+
+    fun getCurrency() = masterDAO.getCurrency()
 
 
     // Clients
@@ -91,5 +92,15 @@ abstract class SamanthaDatabase : RoomDatabase() {
     fun getClientsCount(month: Int, year: Int) = appointmentDAO.getClientsCount(month, year)
 
     fun getMonthRevenue(month: Int, year: Int) = appointmentDAO.getMonthRevenue(month, year)
+
+
+    // Services
+    fun getServiceList() = serviceDAO.getAll()
+
+    fun getService(serviceId: Long) = serviceDAO.get(serviceId)
+
+    fun addService(service: Service) = serviceDAO.insert(service)
+
+    fun updateService(service: Service) = serviceDAO.update(service)
 
 }
