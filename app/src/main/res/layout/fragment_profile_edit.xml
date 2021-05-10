@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.create_profile.edit_profile_info.EditProfileFragment">
+    tools:context=".ui.create_profile.profile_edit.ProfileEditFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/edit_profile_close_button"
+                android:id="@+id/profile_edit_close_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/three_quarters_padding"
@@ -22,7 +22,7 @@
                 android:src="@drawable/outline_close_black_24"/>
 
             <TextView
-                android:id="@+id/edit_profile_title"
+                android:id="@+id/profile_edit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
@@ -30,11 +30,11 @@
                 android:textStyle="bold"
                 android:text="@string/create_profile"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/edit_profile_close_button"
-                app:layout_constraintEnd_toStartOf="@id/edit_profile_next_button"/>
+                app:layout_constraintStart_toEndOf="@id/profile_edit_close_button"
+                app:layout_constraintEnd_toStartOf="@id/profile_edit_next_button"/>
 
             <ImageView
-                android:id="@+id/edit_profile_next_button"
+                android:id="@+id/profile_edit_next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/three_quarters_padding"
@@ -43,14 +43,14 @@
                 android:src="@drawable/outline_arrow_forward_black_24"/>
 
             <ImageView
-                android:id="@+id/edit_profile_avatar"
+                android:id="@+id/profile_edit_avatar"
                 android:layout_width="210dp"
                 android:layout_height="210dp"
                 android:layout_marginStart="48dp"
                 android:layout_marginEnd="48dp"
                 android:layout_marginTop="36dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile_title"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="1"
@@ -60,68 +60,68 @@
                 tools:src="@drawable/samantha"/>
 
             <TextView
-                android:id="@+id/edit_profile_name_text"
+                android:id="@+id/profile_edit_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile_avatar"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_avatar"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/double_padding"
                 android:text="@string/name"/>
 
             <EditText
-                android:id="@+id/edit_profile_name"
+                android:id="@+id/profile_edit_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile_name_text"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_name_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
                 android:background="@drawable/edit_text_field"/>
 
             <TextView
-                android:id="@+id/edit_profile_profession_text"
+                android:id="@+id/profile_edit_profession_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile_name"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_name"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/one_and_a_half_padding"
                 android:text="@string/profession"/>
 
             <EditText
-                android:id="@+id/edit_profile__profession"
+                android:id="@+id/profile_edit_profession"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile_profession_text"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_profession_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
                 android:background="@drawable/edit_text_field"/>
 
             <TextView
-                android:id="@+id/edit_profile_phone_number_text"
+                android:id="@+id/profile_edit_phone_number_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile__profession"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_profession"
                 android:layout_marginTop="@dimen/one_and_a_half_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:text="@string/phone_number"/>
 
             <EditText
-                android:id="@+id/edit_profile__phone_number"
+                android:id="@+id/profile_edit_phone_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:maxLength="16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_profile_phone_number_text"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_phone_number_text"
                 android:layout_marginTop="@dimen/half_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"

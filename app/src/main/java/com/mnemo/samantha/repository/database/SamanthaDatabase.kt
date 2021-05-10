@@ -43,9 +43,13 @@ abstract class SamanthaDatabase : RoomDatabase() {
 
 
     // Profile
-    fun checkProfile() = masterDAO.get()
+    fun checkProfile() = masterDAO.getCount() > 0
+
+    fun createProfile(master: Master) = masterDAO.insert(master)
 
     fun getCurrency() = masterDAO.getCurrency()
+
+    fun getMaster() = masterDAO.get()
 
 
     // Clients

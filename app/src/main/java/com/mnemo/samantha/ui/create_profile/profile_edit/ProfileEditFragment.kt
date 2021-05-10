@@ -1,4 +1,4 @@
-package com.mnemo.samantha.ui.create_profile.edit_profile_info
+package com.mnemo.samantha.ui.create_profile.profile_edit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +11,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.mnemo.samantha.R
-import com.mnemo.samantha.databinding.FragmentEditProfileBinding
+import com.mnemo.samantha.databinding.FragmentProfileEditBinding
+
 import com.mnemo.samantha.repository.Repository
 
 
-class EditProfileFragment : Fragment() {
+class ProfileEditFragment : Fragment() {
 
-    private lateinit var binding: FragmentEditProfileBinding
-    private lateinit var viewModel: EditProfileViewModel
+    private lateinit var binding: FragmentProfileEditBinding
+    private lateinit var viewModel: ProfileEditViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +34,9 @@ class EditProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         //Bind View
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_edit_profile, container, false)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_profile_edit, container, false)
         val view = binding.root
-        binding.editProfileAvatar.clipToOutline = true
+        binding.profileEditAvatar.clipToOutline = true
 
 
         // Create ViewModel via Factory and bind it to View
@@ -43,25 +44,25 @@ class EditProfileFragment : Fragment() {
 
         val repository = Repository.getInstance(application)
 
-        val viewModelFactory = EditProfileViewModelFactory(repository)
+        val viewModelFactory = ProfileEditViewModelFactory(repository)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(EditProfileViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileEditViewModel::class.java)
 
 
         // Close button click listener
-        binding.editProfileCloseButton.setOnClickListener{
+        binding.profileEditCloseButton.setOnClickListener{
 
         }
 
 
         // Next button click listener
-        binding.editProfileNextButton.setOnClickListener {
+        binding.profileEditNextButton.setOnClickListener {
 
-            val masterName = binding.editProfileName.text.toString()
-            val masterProfession = binding.editProfileProfession.text.toString()
-            val masterPhoneNumber = binding.editProfilePhoneNumber.text.toString()
+            val masterName = binding.profileEditName.text.toString()
+            val masterProfession = binding.profileEditProfession.text.toString()
+            val masterPhoneNumber = binding.profileEditPhoneNumber.text.toString()
 
-            view.findNavController().navigate(R.id.action_editProfileFragment_to_selectRegionFragment,
+            view.findNavController().navigate(R.id.action_profileEditFragment_to_selectRegionFragment,
             bundleOf("master_name" to masterName, "master_profession" to masterProfession, "master_phone_number" to masterPhoneNumber))
         }
 

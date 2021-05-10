@@ -22,4 +22,8 @@ interface MasterDAO {
     @Query("SELECT currency FROM master_table LIMIT 1")
     fun getCurrency() : LiveData<String>
 
+    @Query("SELECT COUNT(id) FROM master_table")
+    fun getCount() : Int
+
+
 }

@@ -2,10 +2,7 @@ package com.mnemo.samantha.repository
 
 import android.content.Context
 import com.mnemo.samantha.repository.database.SamanthaDatabase
-import com.mnemo.samantha.repository.database.entity.Appointment
-import com.mnemo.samantha.repository.database.entity.Client
-import com.mnemo.samantha.repository.database.entity.ScheduleTemplate
-import com.mnemo.samantha.repository.database.entity.Service
+import com.mnemo.samantha.repository.database.entity.*
 
 class Repository(val database: SamanthaDatabase) {
 
@@ -33,7 +30,11 @@ class Repository(val database: SamanthaDatabase) {
     // Profile
     fun checkProfile() = database.checkProfile()
 
+    fun createProfile(master: Master) = database.createProfile(master)
+
     fun getCurrency() = database.getCurrency()
+
+    fun getMaster() = database.getMaster()
 
 
     // Clients

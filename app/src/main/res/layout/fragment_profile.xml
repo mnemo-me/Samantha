@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.profile.ProfileFragment">
 
+    <data>
+        <variable
+            name="master"
+            type="com.mnemo.samantha.repository.database.entity.Master" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,8 +48,8 @@
             app:layout_constraintTop_toTopOf="@id/profile_avatar"
             app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
             app:layout_constraintBottom_toTopOf="@id/profile_phone_number"
-            android:text="Samantha"
-            tools:text="Samantha"
+            android:text="@{master.name}"
+            tools:text="@string/app_name"
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
@@ -54,7 +60,7 @@
             android:layout_marginStart="@dimen/default_padding"
             app:layout_constraintTop_toBottomOf="@id/profile_name"
             app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
-            android:text="bartender"
+            android:text="@{master.profession}"
             tools:text="bartender"/>
 
         <TextView
@@ -65,7 +71,7 @@
             android:layout_marginTop="@dimen/half_padding"
             app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
             app:layout_constraintTop_toBottomOf="@id/profile_profession"
-            android:text="+7 900 000 00 00"
+            android:text="@{master.phoneNumber}"
             tools:text="+7 900 000 00 00"/>
 
         <com.google.android.material.button.MaterialButton
@@ -102,7 +108,7 @@
             android:layout_marginTop="@dimen/default_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_portfolio"
-            android:text="@string/services"/>
+            android:text="@string/servicesUP"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
