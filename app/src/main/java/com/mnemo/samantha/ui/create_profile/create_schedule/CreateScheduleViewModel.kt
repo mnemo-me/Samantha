@@ -1,6 +1,7 @@
 package com.mnemo.samantha.ui.create_profile.create_schedule
 
 import androidx.lifecycle.ViewModel
+import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.entity.ScheduleTemplate
 import com.mnemo.samantha.util.TimeTextConverter
@@ -8,10 +9,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class CreateScheduleViewModel(val scheduleId: Long, val repository: Repository) : ViewModel() {
+class CreateScheduleViewModel(val scheduleId: Long) : ViewModel() {
 
+    @Inject
+    lateinit var repository: Repository
 
+    init {
+        DaggerAppComponent.create().inject(this)
+    }
 
     fun updateSchedule(workingTimeStartText: String, workingTimeEndText: String, breakTimeStartText: String, breakTimeEndText: String, timeSectorText: String){
 

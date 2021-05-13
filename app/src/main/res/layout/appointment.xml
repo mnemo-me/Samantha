@@ -14,7 +14,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appointment_panel_height">
+        android:layout_height="@dimen/appointment_panel_height"
+        android:layout_marginStart="@dimen/quarter_padding"
+        android:layout_marginEnd="@dimen/quarter_padding"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        app:cardCornerRadius="@dimen/quarter_padding">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/appointment_background"

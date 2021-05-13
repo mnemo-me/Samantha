@@ -12,8 +12,6 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientInfoBinding
-import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.SamanthaDatabase
 
 
 class ClientInfoFragment : Fragment() {
@@ -32,13 +30,9 @@ class ClientInfoFragment : Fragment() {
 
 
         // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
         val clientId = requireArguments().get("client_id") as Long
 
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = ClientInfoViewModelFactory(clientId, repository)
+        val viewModelFactory = ClientInfoViewModelFactory(clientId)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientInfoViewModel::class.java)
 

@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mnemo.samantha.repository.Repository
 
-class AddClientDialogVIewModelFactory(val appointmentId: Long, val repository: Repository) : ViewModelProvider.Factory {
+class AddClientDialogVIewModelFactory(val appointmentId: Long) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AddClientDialogViewModel::class.java)){
-            return AddClientDialogViewModel(appointmentId, repository) as T
+            return AddClientDialogViewModel(appointmentId) as T
         }
 
         throw IllegalArgumentException("Unknown viewModel class")

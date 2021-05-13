@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentProfileBinding
-import com.mnemo.samantha.repository.Repository
+
 
 class ProfileFragment : Fragment() {
 
@@ -24,14 +24,8 @@ class ProfileFragment : Fragment() {
         binding.profileAvatar.clipToOutline = true
 
 
-        // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = ProfileViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
 
         // Bind Master to View

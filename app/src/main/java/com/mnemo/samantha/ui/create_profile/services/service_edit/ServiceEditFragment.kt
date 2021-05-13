@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentServiceEditBinding
-import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.entity.Service
 
 
@@ -39,12 +38,8 @@ class ServiceEditFragment : Fragment() {
         }
 
 
-        // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = ServiceEditViewModelFactory(serviceId, repository)
+        // Create ViewModel via Factory
+        val viewModelFactory = ServiceEditViewModelFactory(serviceId)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ServiceEditViewModel::class.java)
 

@@ -1,23 +1,31 @@
 package com.mnemo.samantha.repository
 
-import android.content.Context
+import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.repository.database.entity.*
+import javax.inject.Inject
 
-class Repository(val database: SamanthaDatabase) {
+class Repository {
+
+    @Inject
+    lateinit var database : SamanthaDatabase
+
+    init {
+        DaggerAppComponent.create().inject(this)
+    }
 
     companion object{
 
         @Volatile
         private var INSTANCE: Repository? = null
 
-        fun getInstance(context: Context) : Repository{
+        fun getInstance() : Repository{
 
             synchronized(this){
                 var instance = INSTANCE
 
                 if (instance == null){
-                    instance = Repository(SamanthaDatabase.getInstance(context))
+                    instance = Repository()
 
                     INSTANCE = instance
                 }

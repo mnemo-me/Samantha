@@ -1,4 +1,4 @@
-package com.mnemo.samantha.ui.current_day
+package com.mnemo.samantha.ui.today
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

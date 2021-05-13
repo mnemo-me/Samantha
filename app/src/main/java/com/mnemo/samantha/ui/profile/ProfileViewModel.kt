@@ -1,11 +1,27 @@
 package com.mnemo.samantha.ui.profile
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.repository.database.entity.Master
+import com.mnemo.samantha.repository.database.entity.Service
+import javax.inject.Inject
 
-class ProfileViewModel(val repository: Repository) : ViewModel() {
+class ProfileViewModel : ViewModel() {
 
-    val master = repository.getMaster()
+    @Inject
+    lateinit var repository: Repository
 
-    val services = repository.getServiceList()
+    val master: LiveData<Master>
+
+    val services: LiveData<List<Service>>
+
+    init {
+        DaggerAppComponent.create().inject(this)
+
+        master = repository.getMaster()
+
+        services = repository.getServiceList()
+    }
 }

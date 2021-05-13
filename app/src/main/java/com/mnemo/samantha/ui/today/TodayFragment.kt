@@ -1,4 +1,4 @@
-package com.mnemo.samantha.ui.current_day
+package com.mnemo.samantha.ui.today
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentTodayBinding
-import com.mnemo.samantha.repository.Repository
 
 class TodayFragment : Fragment() {
 
@@ -22,14 +21,8 @@ class TodayFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
 
 
-        // Create ViewModel via Factory
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = TodayViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TodayViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(TodayViewModel::class.java)
 
 
         // Create adapter for RecycleView

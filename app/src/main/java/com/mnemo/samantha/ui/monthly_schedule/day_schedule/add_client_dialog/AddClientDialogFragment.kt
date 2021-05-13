@@ -31,13 +31,9 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
 
 
         // Create ViewModel via Factory
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
         val appointmentId = requireArguments().getLong("appointment_id")
 
-        val viewModelFactory = AddClientDialogVIewModelFactory(appointmentId, repository)
+        val viewModelFactory = AddClientDialogVIewModelFactory(appointmentId)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddClientDialogViewModel::class.java)
 

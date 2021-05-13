@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentSelectRegionBinding
-import com.mnemo.samantha.repository.Repository
+
 
 class SelectRegionFragment : Fragment() {
 
@@ -24,14 +24,8 @@ class SelectRegionFragment : Fragment() {
         val view = binding.root
 
 
-        // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = SelectRegionViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SelectRegionViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(SelectRegionViewModel::class.java)
 
 
         // Back button click listener

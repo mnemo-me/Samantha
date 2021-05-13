@@ -1,16 +1,19 @@
 package com.mnemo.samantha.ui.clients
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class ClientsViewModel(val repository: Repository) : ViewModel() {
+class ClientsViewModel : ViewModel() {
 
-    val clients = repository.getClientList()
+    @Inject
+    lateinit var repository: Repository
+
+    val clients : LiveData<List<Client>>
     //val clients : LiveData<List<Client>>
     //get() = _clients
 
@@ -19,10 +22,9 @@ class ClientsViewModel(val repository: Repository) : ViewModel() {
 
 
     init {
+        DaggerAppComponent.create().inject(this)
 
-        uiScope.launch {
-
-        }
+        clients = repository.getClientList()
     }
 
 

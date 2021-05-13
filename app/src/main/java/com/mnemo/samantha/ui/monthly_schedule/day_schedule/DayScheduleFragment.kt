@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
-import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
 
 class DayScheduleFragment : Fragment() {
@@ -32,11 +31,7 @@ class DayScheduleFragment : Fragment() {
 
 
         // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = DayScheduleViewModelFactory(year, month, date, repository)
+        val viewModelFactory = DayScheduleViewModelFactory(year, month, date)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(DayScheduleViewModel::class.java)
 

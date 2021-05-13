@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.current_day.TodayFragment">
+    tools:context=".ui.today.TodayFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/today_schedule"

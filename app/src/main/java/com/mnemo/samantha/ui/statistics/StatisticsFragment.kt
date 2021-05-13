@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentStatisticsBinding
-import com.mnemo.samantha.repository.Repository
+
 
 class StatisticsFragment : Fragment() {
 
@@ -22,14 +22,8 @@ class StatisticsFragment : Fragment() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_statistics, container, false)
 
 
-        // Create ViewModel via Factory
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = StatisticsViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(StatisticsViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(StatisticsViewModel::class.java)
 
 
         // Create adapter for RecycleView

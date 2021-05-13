@@ -5,7 +5,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingBottom="@dimen/default_padding">
 
         <TextView
             android:id="@+id/statistics_header_annual_revenue_text"
@@ -15,16 +17,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
             android:text="@string/annual_revenue"/>
 
         <TextView
             android:id="@+id/statistics_header_annual_revenue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/ash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/default_padding"
             android:layout_marginEnd="@dimen/default_padding"
             tools:text="240 226, 00 р"/>
 

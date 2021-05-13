@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentServicesBinding
-import com.mnemo.samantha.repository.Repository
+
 
 class ServicesFragment : Fragment() {
 
@@ -25,14 +25,8 @@ class ServicesFragment : Fragment() {
         val view = binding.root
 
 
-        // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = ServicesViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ServicesViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(ServicesViewModel::class.java)
 
 
         // Create adapter for RecycleView

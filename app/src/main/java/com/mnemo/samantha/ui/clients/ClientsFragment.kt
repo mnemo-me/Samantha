@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +12,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientsBinding
-import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.SamanthaDatabase
+
 
 class ClientsFragment : Fragment() {
 
@@ -28,14 +26,8 @@ class ClientsFragment : Fragment() {
         val view = binding.root
 
 
-        // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = ClientsViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ClientsViewModel::class.java)
+        // Create ViewModel and bind it to View
+        viewModel = ViewModelProvider(this).get(ClientsViewModel::class.java)
 
         binding.lifecycleOwner = this
 

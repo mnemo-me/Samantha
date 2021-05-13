@@ -9,7 +9,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.ActivityMainBinding
-import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.ui.create_profile.CreateProfileActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,14 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 
-        // Create ViewModel and bind it to View
-        val application = this.application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = MainActivityViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
 
         // Setup Bottom Navigation

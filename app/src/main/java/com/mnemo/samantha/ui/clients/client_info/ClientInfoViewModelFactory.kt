@@ -6,10 +6,10 @@ import com.mnemo.samantha.repository.Repository
 import com.mnemo.samantha.repository.database.dao.ClientDAO
 import com.mnemo.samantha.repository.database.entity.Client
 
-class ClientInfoViewModelFactory(val clientId: Long, val repository: Repository): ViewModelProvider.Factory {
+class ClientInfoViewModelFactory(val clientId: Long): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ClientInfoViewModel::class.java)){
-            return ClientInfoViewModel(clientId, repository) as T
+            return ClientInfoViewModel(clientId) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

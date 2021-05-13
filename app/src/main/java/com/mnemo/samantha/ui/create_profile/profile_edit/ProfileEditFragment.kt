@@ -13,8 +13,6 @@ import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentProfileEditBinding
 
-import com.mnemo.samantha.repository.Repository
-
 
 class ProfileEditFragment : Fragment() {
 
@@ -39,14 +37,8 @@ class ProfileEditFragment : Fragment() {
         binding.profileEditAvatar.clipToOutline = true
 
 
-        // Create ViewModel via Factory and bind it to View
-        val application = requireNotNull(this.activity).application
-
-        val repository = Repository.getInstance(application)
-
-        val viewModelFactory = ProfileEditViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileEditViewModel::class.java)
+        // Create ViewModel
+        viewModel = ViewModelProvider(this).get(ProfileEditViewModel::class.java)
 
 
         // Close button click listener
