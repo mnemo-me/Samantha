@@ -28,7 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/circle_bg"
             android:outlineProvider="background"
-            android:src="@drawable/samantha"
             tools:src="@drawable/samantha"/>
 
         <TextView

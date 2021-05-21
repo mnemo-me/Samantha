@@ -8,14 +8,13 @@
     </data>
 
     <com.google.android.material.button.MaterialButton
+        style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_padding"
         android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginTop="@dimen/half_padding"
         android:text="@string/add_new_client"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/ash"
         android:onClick="@{() -> clickListener.onClick()}"/>
 
 </layout>

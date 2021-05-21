@@ -8,6 +8,7 @@
     </data>
 
     <com.google.android.material.button.MaterialButton
+        style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_padding"
@@ -15,8 +16,6 @@
         android:layout_marginTop="@dimen/double_padding"
         android:layout_marginBottom="@dimen/double_padding"
         android:text="@string/add_service"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/ash"
         android:onClick="@{() -> clickListener.onClick()}"/>
 
 </layout>

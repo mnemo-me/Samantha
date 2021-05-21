@@ -22,12 +22,12 @@ class TodayViewModel() : ViewModel() {
 
     val dateText = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault()).format(calendar.time)
 
-    val todayClients : LiveData<List<Appointment>>
+    val appointments : LiveData<List<Appointment>>
 
     init {
         DaggerAppComponent.create().inject(this)
 
-        todayClients = repository.getTodayClients(date, month, year)
+        appointments = repository.getTodayClients(date, month, year)
     }
 
 }

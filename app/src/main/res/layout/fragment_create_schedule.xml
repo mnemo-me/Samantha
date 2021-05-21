@@ -64,6 +64,7 @@
 
             <EditText
                 android:id="@+id/create_schedule_working_time_start"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,8 +72,7 @@
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_start_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"
-                android:background="@drawable/edit_text_field"/>
+                android:layout_marginTop="@dimen/half_padding"/>
 
             <TextView
                 android:id="@+id/create_schedule_working_time_end_text"
@@ -86,6 +86,7 @@
 
             <EditText
                 android:id="@+id/create_schedule_working_time_end"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,8 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_end_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"
-                android:background="@drawable/edit_text_field"/>
+                android:layout_marginTop="@dimen/half_padding"/>
 
             <TextView
                 android:id="@+id/create_schedule_break_time_text"
@@ -118,6 +118,7 @@
 
             <EditText
                 android:id="@+id/create_schedule_break_time_start"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,8 +126,7 @@
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_start_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"
-                android:background="@drawable/edit_text_field"/>
+                android:layout_marginTop="@dimen/half_padding"/>
 
             <TextView
                 android:id="@+id/create_schedule_break_time_end_text"
@@ -140,6 +140,7 @@
 
             <EditText
                 android:id="@+id/create_schedule_break_time_end"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -147,8 +148,7 @@
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_end_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"
-                android:background="@drawable/edit_text_field"/>
+                android:layout_marginTop="@dimen/half_padding"/>
 
             <TextView
                 android:id="@+id/create_schedule_time_sector_text"
@@ -162,6 +162,7 @@
 
             <EditText
                 android:id="@+id/create_schedule_time_sector"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -169,8 +170,7 @@
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_time_sector_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"
-                android:background="@drawable/edit_text_field"/>
+                android:layout_marginTop="@dimen/half_padding"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

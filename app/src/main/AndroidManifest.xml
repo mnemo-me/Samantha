@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.mnemo.samantha">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true"/>
 
     <application
         android:name=".SamanthaApplication"
@@ -19,5 +26,7 @@
             </intent-filter>
         </activity>
     </application>
+
+
 
 </manifest>

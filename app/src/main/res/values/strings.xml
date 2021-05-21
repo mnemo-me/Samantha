@@ -58,6 +58,9 @@
     <string name="end">End</string>
     <string name="break_time">BREAK</string>
     <string name="sector">SECTOR</string>
-    <string name="shedule_updated">Schedule updated</string>
+    <string name="schedule_updated">Schedule updated</string>
+
+    <string name="take_a_photo">Take a photo</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
 
 </resources>

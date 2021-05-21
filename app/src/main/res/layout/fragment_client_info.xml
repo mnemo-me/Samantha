@@ -98,10 +98,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/client_info_edit_button"
+            style="@style/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/ash"
-            android:textColor="@color/white"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_padding"

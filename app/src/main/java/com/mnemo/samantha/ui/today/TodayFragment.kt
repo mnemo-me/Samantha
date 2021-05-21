@@ -19,6 +19,7 @@ class TodayFragment : Fragment() {
 
         // Bind View
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
+        binding.lifecycleOwner = this
 
 
         // Create ViewModel
@@ -26,16 +27,15 @@ class TodayFragment : Fragment() {
 
 
         // Create adapter for RecycleView
-        val adapter = TodayClientsAdapter()
+        val adapter = AppointmentsAdapter()
         adapter.dateText = viewModel.dateText
-        adapter.buttonClickListener = TodayClientsAdapter.ButtonClickListener {  }
+        adapter.buttonClickListener = AppointmentsAdapter.ButtonClickListener {  }
 
         binding.todaySchedule.adapter = adapter
 
-        viewModel.todayClients.observe(viewLifecycleOwner, {todayClients ->
+        viewModel.appointments.observe(viewLifecycleOwner, { todayClients ->
             adapter.addHeaderAndSubmitList(todayClients)
         })
-
 
 
         return binding.root

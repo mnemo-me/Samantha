@@ -54,10 +54,8 @@
 
             <ImageView
                 android:id="@+id/client_edit_avatar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"
+                android:layout_width="210dp"
+                android:layout_height="210dp"
                 android:layout_marginTop="36dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toBottomOf="@id/client_edit_title"
@@ -66,7 +64,6 @@
                 app:layout_constraintDimensionRatio="1"
                 android:background="@drawable/circle_bg"
                 android:outlineProvider="background"
-                android:src="@drawable/samantha"
                 tools:src="@drawable/samantha"/>
 
             <TextView
@@ -81,6 +78,7 @@
 
             <EditText
                 android:id="@+id/client_edit_text_name"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +87,6 @@
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
-                android:background="@drawable/edit_text_field"
                 android:text="@{client.name}"/>
 
             <TextView
@@ -104,6 +101,7 @@
 
             <EditText
                 android:id="@+id/client_edit_text_phone_number"
+                style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
@@ -114,7 +112,6 @@
                 android:layout_marginTop="@dimen/half_padding"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:background="@drawable/edit_text_field"
                 android:text="@{client.phoneNumber}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,7 +52,7 @@ class CreateScheduleFragment : Fragment() {
 
             if (scheduleId != 0L){
                 view.findNavController().navigateUp()
-                Snackbar.make(view, getText(R.string.shedule_updated), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view, getText(R.string.schedule_updated), Snackbar.LENGTH_SHORT).show()
             }else{
                 requireNotNull(this.activity).finishAndRemoveTask()
             }

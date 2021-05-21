@@ -17,7 +17,7 @@ import java.lang.ClassCastException
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class TodayClientsAdapter: ListAdapter<TodayClientsAdapter.DataItem, RecyclerView.ViewHolder>(TodayClientsAdapter.AppointmentDiffCallback()){
+class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerView.ViewHolder>(AppointmentsAdapter.AppointmentDiffCallback()){
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
