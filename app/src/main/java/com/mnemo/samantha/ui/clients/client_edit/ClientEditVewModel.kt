@@ -3,10 +3,11 @@ package com.mnemo.samantha.ui.clients.client_edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.Client
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +18,10 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long) : ViewMode
 
     val client : LiveData<Client>
 
+    // Coroutines
+    private var viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
     init {
         DaggerAppComponent.create().inject(this)
 
@@ -24,19 +29,21 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long) : ViewMode
     }
 
     // Update info about client or create new client
-    fun updateClientInfo(client : Client){
-        CoroutineScope(Dispatchers.IO).launch {
-            if (clientId != 0L) {
-                repository.updateClientInfo(client)
-            }else{
-                repository.addClient(Client(name = client.name, phoneNumber = client.phoneNumber))
-            }
+    fun updateClientInfo(clientName: String, clientPhoneNumber: String){
+        viewModelScope.launch {
 
-            if (appointmentId != 0L){
-                repository.bookNewClient(appointmentId, 700)
+            val client = Client(clientId, clientName, clientPhoneNumber)
+
+            if (appointmentId == 0L) {
+                repository.addClient(client)
+            }else{
+                repository.bookNewClient(appointmentId, client, 700)
             }
         }
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 }

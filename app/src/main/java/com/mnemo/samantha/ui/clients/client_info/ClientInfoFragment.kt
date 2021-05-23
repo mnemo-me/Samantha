@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientInfoBinding
+import com.mnemo.samantha.domain.Client
 
 
 class ClientInfoFragment : Fragment() {
@@ -29,22 +30,19 @@ class ClientInfoFragment : Fragment() {
         binding.clientInfoAvatar.clipToOutline = true
 
 
-        // Create ViewModel via Factory and bind it to View
-        val clientId = requireArguments().get("client_id") as Long
+        // Get client id
+        val clientId = requireArguments().getLong("client_id")
 
+
+        // Create ViewModel via Factory
         val viewModelFactory = ClientInfoViewModelFactory(clientId)
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientInfoViewModel::class.java)
 
-        binding.lifecycleOwner = this
-
-        binding.viewModel = viewModel
-
-
         // Bind client
-        viewModel.client.observe(viewLifecycleOwner, {client ->
+        viewModel.client.observe(viewLifecycleOwner){client ->
             binding.client = client
-        })
+        }
+
 
 
         // Button 'Edit' click listener
@@ -54,7 +52,7 @@ class ClientInfoFragment : Fragment() {
 
         // Button 'Delete' click listener
         binding.clientInfoRemove.setOnClickListener{
-            viewModel.removeClient(clientId)
+            viewModel.removeClient()
             view.findNavController().navigateUp()
             Snackbar.make(view, getText(R.string.client_removed_from_list), Snackbar.LENGTH_SHORT).show()
         }

@@ -47,7 +47,8 @@
         tools:layout="@layout/fragment_client_info" >
         <argument
             android:name="client_id"
-            app:argType="long" />
+            app:argType="long"
+            android:defaultValue="0L" />
         <action
             android:id="@+id/action_clientInfoFragment_to_clientEditFragment"
             app:destination="@id/clientEditFragment" />

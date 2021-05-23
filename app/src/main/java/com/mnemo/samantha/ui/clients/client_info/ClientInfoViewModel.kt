@@ -3,8 +3,8 @@ package com.mnemo.samantha.ui.clients.client_info
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.Client
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -15,15 +15,24 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
 
     val client : LiveData<Client>
 
+    // Coroutines
+    private var viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
     init {
         DaggerAppComponent.create().inject(this)
 
         client = repository.getClient(clientId)
     }
 
-    fun removeClient(clientId: Long){
-        CoroutineScope(Dispatchers.IO).launch {
+    fun removeClient(){
+        viewModelScope.launch {
             repository.removeClient(clientId)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

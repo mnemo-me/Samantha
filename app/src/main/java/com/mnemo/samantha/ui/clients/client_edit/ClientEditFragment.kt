@@ -4,7 +4,6 @@ import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -18,7 +17,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientEditBinding
-import com.mnemo.samantha.repository.database.entity.Client
+
 
 private const val REQUEST_IMAGE_CAPTURE = 0
 private const val REQUEST_IMAGE_PICK = 1
@@ -40,7 +39,6 @@ class ClientEditFragment : Fragment() {
         val clientId = requireArguments().getLong("client_id")
         val appointmentId = requireArguments().getLong("appointment_id")
 
-
         // Create ViewModel via Factory
         val viewModelFactory = ClientEditViewModelFactory(clientId, appointmentId)
 
@@ -52,9 +50,12 @@ class ClientEditFragment : Fragment() {
 
 
         // Bind client
-        viewModel.client.observe(viewLifecycleOwner, {client ->
-            binding.client = client
-        })
+        if (clientId != 0L) {
+            viewModel.client.observe(viewLifecycleOwner) { client ->
+                binding.client = client
+            }
+        }
+
 
 
         // Button 'Done' click listener
@@ -62,7 +63,7 @@ class ClientEditFragment : Fragment() {
         binding.clientEditDoneButton.setOnClickListener{
             val clientName = binding.clientEditTextName.text.toString()
             val clientPhoneNumber = binding.clientEditTextPhoneNumber.text.toString()
-            viewModel.updateClientInfo(Client(clientId, clientName, clientPhoneNumber))
+            viewModel.updateClientInfo(clientName, clientPhoneNumber)
 
             view.findNavController().navigateUp()
 

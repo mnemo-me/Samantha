@@ -29,7 +29,7 @@ class ProfileFragment : Fragment() {
 
 
         // Bind Master to View
-        viewModel.master.observe(viewLifecycleOwner, {master ->
+        viewModel.databaseMaster.observe(viewLifecycleOwner, { master ->
             binding.master = master
         })
 

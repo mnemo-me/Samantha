@@ -1,7 +1,6 @@
 package com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.DialogFragmentAddClientBinding
-import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.ui.clients.ClientsAdapter
 
 
@@ -45,8 +42,8 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
             parentFragment?.view?.findNavController()?.navigate(R.id.action_addClientDialogFragment_to_clientEditFragment, bundleOf("appointment_id" to appointmentId))
         }
 
-        adapter.clickListener = ClientsAdapter.ClientClickListener {clientId ->
-            viewModel.bookClient(clientId, 700)
+        adapter.clickListener = ClientsAdapter.ClientClickListener {client ->
+            viewModel.bookClient(client, 700)
             dismiss()
         }
 

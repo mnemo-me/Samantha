@@ -2,20 +2,17 @@ package com.mnemo.samantha.repository.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.mnemo.samantha.repository.database.entity.ScheduleTemplate
+import com.mnemo.samantha.repository.database.entity.DatabaseScheduleTemplate
 
 @Dao
 interface ScheduleTemplateDAO {
 
-    @Insert
-    fun insert(scheduleTemplate: ScheduleTemplate)
-
-    @Update
-    fun update(scheduleTemplate: ScheduleTemplate)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(databaseScheduleTemplate: DatabaseScheduleTemplate)
 
     @Delete
-    fun delete(scheduleTemplate: ScheduleTemplate)
+    fun delete(databaseScheduleTemplate: DatabaseScheduleTemplate)
 
     @Query("SELECT * FROM schedule_template_table LIMIT 1")
-    fun get() : LiveData<ScheduleTemplate>
+    fun get() : LiveData<DatabaseScheduleTemplate>
 }

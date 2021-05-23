@@ -1,8 +1,13 @@
 package com.mnemo.samantha.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.*
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.repository.database.entity.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class Repository {
@@ -17,89 +22,171 @@ class Repository {
     companion object{
 
         @Volatile
-        private var INSTANCE: Repository? = null
+        private lateinit var INSTANCE: Repository
 
         fun getInstance() : Repository{
 
             synchronized(this){
-                var instance = INSTANCE
 
-                if (instance == null){
-                    instance = Repository()
-
-                    INSTANCE = instance
+                if (!::INSTANCE.isInitialized){
+                    INSTANCE = Repository()
                 }
 
-                return instance
+                return INSTANCE
             }
         }
     }
 
+    val master: LiveData<Master> = Transformations.map(database.masterDAO.get()){
+        it.asDomainModel()
+    }
+
+    val clients: LiveData<List<Client>> = Transformations.map(database.clientDao.getAll()){
+        it.asDomainModel()
+    }
+
+    val services: LiveData<List<Service>> = Transformations.map(database.serviceDAO.getAll()){
+        it.asDomainModel()
+    }
+
+
+
     // Profile
-    fun checkProfile() = database.checkProfile()
+    suspend fun checkProfile() : Boolean{
+        var shouldCreateProfile = false
+        withContext(Dispatchers.IO){
+            shouldCreateProfile = database.masterDAO.getCount() < 1
+        }
+        return shouldCreateProfile
+    }
 
-    fun createProfile(master: Master) = database.createProfile(master)
+    suspend fun createProfile(master: Master){
+        withContext(Dispatchers.IO){
+            database.masterDAO.insert(master.asDatabaseModel())
+        }
+    }
 
-    fun getCurrency() = database.getCurrency()
-
-    fun getMaster() = database.getMaster()
+    fun getCurrency() = database.masterDAO.getCurrency()
 
 
     // Clients
-    fun getClient(clientId: Long) = database.getClient(clientId)
+    fun getClient(clientId: Long) = Transformations.map(database.clientDao.get(clientId)){
+        it.asDomainModel()
+    }
 
-    fun updateClientInfo(client: Client) = database.updateClientInfo(client)
+    suspend fun addClient(client: Client){
+        withContext(Dispatchers.IO) {
+            database.clientDao.insert(client.asDatabaseModel())
+        }
+    }
 
-    fun addClient(client: Client) =  database.addClient(client)
+    suspend fun removeClient(clientId: Long) {
+        withContext(Dispatchers.IO){
+            database.clientDao.removeClient(clientId)
+        }
+    }
 
-    fun removeClient(clientId: Long) = database.removeClient(clientId)
 
-    fun getClientList() = database.getClientList()
+    // Appointments
+    fun getDaySchedule(date: Int, month: Int, year: Int) = Transformations.map(database.appointmentDAO.getDaySchedule(date, month, year)){
+        it.asDomainModel()
+    }
 
+    fun getTodayClients(date: Int, month: Int, year: Int) = Transformations.map(database.appointmentDAO.getTodayClients(date, month, year, APPOINTMENT_STATE_BUSY)){
+        it.asDomainModel()
+    }
 
-    // Schedule
-    fun getDaySchedule(date: Int, month: Int, year: Int) = database.getDaySchedule(date, month, year)
+    private suspend fun addAppointment(databaseAppointment: DatabaseAppointment){
+        database.appointmentDAO.insert(databaseAppointment)
+    }
 
-    fun getTodayClients(date: Int, month: Int, year: Int) = database.getTodayClients(date, month, year)
+    suspend fun bookClient(appointmentId: Long, client: Client, serviceCost: Int){
+        withContext(Dispatchers.IO){
+            val databaseClient = client.asDatabaseModel()
+            database.appointmentDAO.bookClient(appointmentId, databaseClient.id, databaseClient.name, databaseClient.phoneNumber , serviceCost, APPOINTMENT_STATE_BUSY)
+        }
+    }
 
-    fun addAppointment(appointment: Appointment) = database.addAppointment(appointment)
+    suspend fun bookNewClient(appointmentId: Long, client: Client, serviceCost: Int){
+        withContext(Dispatchers.IO) {
+            addClient(client)
+            bookClient(appointmentId, client, serviceCost)
+        }
+    }
 
-    fun updateAppointmentState(appointmentId: Long, appointmentState: Int) = database.updateAppointmentState(appointmentId, appointmentState)
-
-    fun bookClient(appointmentId: Long, clientId: Long, serviceCost: Int?) = database.bookClient(appointmentId, clientId, serviceCost)
-
-    fun bookNewClient(appointmentId: Long, serviceCost: Int?) = database.bookNewClient(appointmentId, serviceCost)
+    suspend fun updateAppointmentState(appointmentId: Long, appointmentState: Int){
+        withContext(Dispatchers.IO){
+            database.appointmentDAO.updateAppointmentState(appointmentId, appointmentState)
+        }
+    }
 
 
     // Statistics
-    fun getWorkingYears() = database.getWorkingYears()
+    suspend fun getStatistics() : List<Statistics> {
 
-    fun getWorkingMonths(year: Int) = database.getWorkingMonths(year)
+        val statistics = mutableListOf<Statistics>()
 
-    fun getWorkingDaysCount(month: Int, year: Int) = database.getWorkingDaysCount(month, year)
+        withContext(Dispatchers.IO) {
+            val workingYears = database.appointmentDAO.getWorkingYears()
 
-    fun getClientsCount(month: Int, year: Int) = database.getClientsCount(month, year)
+            workingYears.forEach { year ->
+                val workingMonths = database.appointmentDAO.getWorkingMonths(year)
 
-    fun getMonthRevenue(month: Int, year: Int) = database.getMonthRevenue(month, year)
+                workingMonths.forEach { month ->
+
+                    val workingDaysCount = database.appointmentDAO.getWorkingDaysCount(month, year)
+                    val clientsCount = database.appointmentDAO.getClientsCount(month, year)
+                    val revenue = database.appointmentDAO.getMonthRevenue(month, year)
+
+                    statistics.add(Statistics(month, year, workingDaysCount, clientsCount, revenue))
+                }
+            }
+        }
+
+        return statistics
+    }
+
 
 
     // Services
-    fun getServiceList() = database.getServiceList()
+    fun getService(serviceId: Long) = database.serviceDAO.get(serviceId)
 
-    fun getService(serviceId: Long) = database.getService(serviceId)
-
-    fun addService(service: Service) = database.addService(service)
-
-    fun updateService(service: Service) = database.updateService(service)
+    suspend fun addService(service: Service) {
+        withContext(Dispatchers.IO){
+            database.serviceDAO.insert(service.asDatabaseModel())
+        }
+    }
 
 
     // Schedule
-    fun getSchedule() = database.getSchedule()
+    fun getSchedule() = Transformations.map(database.scheduleTemplateDAO.get()){
+        it.asDomainModel()
+    }
 
-    fun addSchedule(scheduleTemplate: ScheduleTemplate) = database.addSchedule(scheduleTemplate)
+    suspend fun addSchedule(scheduleTemplate: ScheduleTemplate){
+        withContext(Dispatchers.IO){
+            database.scheduleTemplateDAO.insert(scheduleTemplate.asDatabaseModel())
+        }
+    }
 
-    fun updateSchedule(scheduleTemplate: ScheduleTemplate) = database.updateSchedule(scheduleTemplate)
-
-    fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int) = database.applyScheduleTemplate(scheduleTemplate, days, month, year)
+    suspend fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int){
+        withContext(Dispatchers.IO) {
+            for (i in 1..days) {
+                for (y in scheduleTemplate.workingTimeStart..scheduleTemplate.workingTimeEnd step scheduleTemplate.timeSector) {
+                    addAppointment(
+                        DatabaseAppointment(
+                            time = y,
+                            date = i,
+                            month = month,
+                            year = year,
+                            client = null,
+                            serviceCost = null,
+                            state = APPOINTMENT_STATE_FREE
+                        )
+                    )
+                }
+            }
+        }
+    }
 
 }

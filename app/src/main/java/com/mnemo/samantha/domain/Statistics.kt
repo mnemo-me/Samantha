@@ -1,4 +1,4 @@
-package com.mnemo.samantha.repository.data
+package com.mnemo.samantha.domain
 
 data class Statistics (
         val month: Int,

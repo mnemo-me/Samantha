@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mnemo.samantha.repository.database.entity.Client
 import com.mnemo.samantha.databinding.ClientsClientBinding
 import com.mnemo.samantha.databinding.ClientsHeaderBinding
+import com.mnemo.samantha.domain.Client
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -135,8 +135,8 @@ class ClientsAdapter: ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHold
     }
 
     // Click listeners
-    class ClientClickListener(val clickListener: (clientId: Long) -> Unit){
-        fun onClick(client: Client) = clickListener(client.id)
+    class ClientClickListener(val clickListener: (client: Client) -> Unit){
+        fun onClick(client: Client) = clickListener(client)
     }
 
     class AddNewClientClickListener(val clickListener: () -> Unit){

@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
+import com.mnemo.samantha.domain.APPOINTMENT_STATE_FREE
+
 
 class DayScheduleFragment : Fragment() {
 

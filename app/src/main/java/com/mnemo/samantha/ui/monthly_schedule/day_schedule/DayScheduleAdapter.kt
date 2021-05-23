@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.AppointmentBinding
 import com.mnemo.samantha.databinding.DayScheduleHeaderBinding
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BREAK
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_BUSY
-import com.mnemo.samantha.repository.database.entity.APPOINTMENT_STATE_FREE
-import com.mnemo.samantha.repository.database.entity.Appointment
+import com.mnemo.samantha.domain.APPOINTMENT_STATE_BREAK
+import com.mnemo.samantha.domain.APPOINTMENT_STATE_BUSY
+import com.mnemo.samantha.domain.APPOINTMENT_STATE_FREE
+import com.mnemo.samantha.domain.Appointment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -89,7 +89,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
             // Bind client info
             if (appointment.state == APPOINTMENT_STATE_BUSY) {
-                binding.appointmentClientName.text = appointment.client.name
+                binding.appointmentClientName.text = appointment.client?.name
                 binding.appointmentClientAvatar.setImageResource(R.drawable.samantha)
             }
 

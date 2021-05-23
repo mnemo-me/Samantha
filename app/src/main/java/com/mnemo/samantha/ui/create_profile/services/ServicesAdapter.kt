@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.ServiceBinding
 import com.mnemo.samantha.databinding.ServicesHeaderBinding
-import com.mnemo.samantha.repository.database.entity.Service
+import com.mnemo.samantha.domain.Service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

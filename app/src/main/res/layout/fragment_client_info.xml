@@ -7,10 +7,7 @@
     <data>
         <variable
             name="client"
-            type="com.mnemo.samantha.repository.database.entity.Client" />
-        <variable
-            name="viewModel"
-            type="com.mnemo.samantha.ui.clients.client_info.ClientInfoViewModel" />
+            type="com.mnemo.samantha.domain.Client" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

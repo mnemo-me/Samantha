@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.TodayClientBinding
 import com.mnemo.samantha.databinding.TodayClientsHeaderBinding
-import com.mnemo.samantha.repository.database.entity.*
+import com.mnemo.samantha.domain.Appointment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import java.lang.ClassCastException
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerView.ViewHolder>(AppointmentsAdapter.AppointmentDiffCallback()){
+class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerView.ViewHolder>(AppointmentDiffCallback()){
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 

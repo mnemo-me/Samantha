@@ -23,12 +23,5 @@ class MonthlyScheduleViewModel : ViewModel() {
         _month = calendar.get(Calendar.MONTH)
         month = SimpleDateFormat("MMMM", Locale.getDefault()).format(calendar.time)
 
-
-
-        /*
-        _days.value = mutableListOf()
-        for (i in 1..31){
-            _days.value!!.add("$i")
-        }*/
     }
 }

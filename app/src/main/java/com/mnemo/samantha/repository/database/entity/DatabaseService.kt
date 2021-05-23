@@ -3,9 +3,10 @@ package com.mnemo.samantha.repository.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mnemo.samantha.domain.Service
 
 @Entity(tableName = "service_table")
-data class Service (
+data class DatabaseService (
 
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
@@ -19,3 +20,18 @@ data class Service (
         @ColumnInfo(name = "time_to_complete")
         var timeToComplete: Int
 )
+
+fun DatabaseService.asDomainModel() : Service {
+        return Service(
+                id = this.id,
+                name = this.name,
+                price = this.price,
+                timeToComplete = this.timeToComplete
+        )
+}
+
+fun List<DatabaseService>.asDomainModel() : List<Service> {
+        return map {
+                it.asDomainModel()
+        }
+}

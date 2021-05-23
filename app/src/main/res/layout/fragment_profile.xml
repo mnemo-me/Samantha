@@ -7,7 +7,7 @@
     <data>
         <variable
             name="master"
-            type="com.mnemo.samantha.repository.database.entity.Master" />
+            type="com.mnemo.samantha.domain.Master" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

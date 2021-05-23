@@ -2,11 +2,12 @@ package com.mnemo.samantha.ui.create_profile.create_schedule
 
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.ScheduleTemplate
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.entity.ScheduleTemplate
 import com.mnemo.samantha.util.TimeTextConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -15,6 +16,10 @@ class CreateScheduleViewModel(val scheduleId: Long) : ViewModel() {
 
     @Inject
     lateinit var repository: Repository
+
+    // Coroutine
+    private var viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         DaggerAppComponent.create().inject(this)
@@ -30,17 +35,15 @@ class CreateScheduleViewModel(val scheduleId: Long) : ViewModel() {
 
         val scheduleTemplate = ScheduleTemplate(scheduleId, workingTimeStart, workingTimeEnd, breakTimeStart, breakTimeEnd, timeSector)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            if (scheduleId != 0L){
-                repository.updateSchedule(scheduleTemplate)
-            }else{
-                repository.addSchedule(scheduleTemplate)
-            }
+        viewModelScope.launch {
+
+            repository.addSchedule(scheduleTemplate)
+
             applySchedule(scheduleTemplate)
         }
     }
 
-    fun applySchedule(scheduleTemplate: ScheduleTemplate){
+    private suspend fun applySchedule(scheduleTemplate: ScheduleTemplate){
 
         val calendar = Calendar.getInstance()
 
@@ -50,5 +53,10 @@ class CreateScheduleViewModel(val scheduleId: Long) : ViewModel() {
 
         repository.applyScheduleTemplate(scheduleTemplate, days, month, year)
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

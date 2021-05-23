@@ -40,11 +40,8 @@ class MainActivity : AppCompatActivity() {
 
 
         // Create profile for new user
-        CoroutineScope(Dispatchers.IO).launch{
-            val isProfileCreated = viewModel.isProfileCreated()
-            withContext(Dispatchers.Main){
-                if (!isProfileCreated) createProfile()
-            }
+        viewModel.shouldCreateProfile.observe(this){shouldCreateProfile ->
+            if (shouldCreateProfile) createProfile()
         }
     }
 

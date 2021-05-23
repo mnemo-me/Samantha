@@ -2,7 +2,7 @@ package com.mnemo.samantha.ui.clients.client_edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mnemo.samantha.repository.Repository
+
 
 class ClientEditViewModelFactory(val clientId: Long, val appointmentId: Long) : ViewModelProvider.Factory {
 

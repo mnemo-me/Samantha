@@ -3,10 +3,11 @@ package com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.Client
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.entity.Client
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,15 +18,24 @@ class AddClientDialogViewModel(val appointmentId: Long): ViewModel() {
 
     val clients : LiveData<List<Client>>
 
+    // Coroutines
+    private var viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
     init {
         DaggerAppComponent.create().inject(this)
 
-        clients = repository.getClientList()
+        clients = repository.clients
     }
 
-    fun bookClient(clientId: Long, serviceCost: Int?){
-       CoroutineScope(Dispatchers.IO).launch{
-           repository.bookClient(appointmentId, clientId, serviceCost)
+    fun bookClient(client: Client, serviceCost: Int){
+       viewModelScope.launch{
+           repository.bookClient(appointmentId, client, serviceCost)
        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

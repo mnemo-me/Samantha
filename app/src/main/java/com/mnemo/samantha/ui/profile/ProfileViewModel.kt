@@ -3,9 +3,9 @@ package com.mnemo.samantha.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.Master
+import com.mnemo.samantha.domain.Service
 import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.entity.Master
-import com.mnemo.samantha.repository.database.entity.Service
 import javax.inject.Inject
 
 class ProfileViewModel : ViewModel() {
@@ -13,15 +13,15 @@ class ProfileViewModel : ViewModel() {
     @Inject
     lateinit var repository: Repository
 
-    val master: LiveData<Master>
+    val databaseMaster: LiveData<Master>
 
     val services: LiveData<List<Service>>
 
     init {
         DaggerAppComponent.create().inject(this)
 
-        master = repository.getMaster()
+        databaseMaster = repository.master
 
-        services = repository.getServiceList()
+        services = repository.services
     }
 }

@@ -11,7 +11,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentServiceEditBinding
-import com.mnemo.samantha.repository.database.entity.Service
+import com.mnemo.samantha.repository.database.entity.DatabaseService
 
 
 class ServiceEditFragment : Fragment() {
@@ -45,7 +45,7 @@ class ServiceEditFragment : Fragment() {
 
 
         // Bind service
-        viewModel.service.observe(viewLifecycleOwner, {service ->
+        viewModel.databaseService.observe(viewLifecycleOwner, { service ->
             if (serviceId != 0L){
                 binding.serviceEditName.setText(service.name)
                 binding.serviceEditPrice.setText(service.price.toString())
@@ -65,7 +65,7 @@ class ServiceEditFragment : Fragment() {
             val price = binding.serviceEditPrice.text.toString().toLong()
             val time = binding.serviceEditTime.text.toString().toInt()
 
-            viewModel.updateService(Service(serviceId, name, price, time))
+            viewModel.updateService(DatabaseService(serviceId, name, price, time))
 
             view.findNavController().navigateUp()
 

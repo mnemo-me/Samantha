@@ -27,7 +27,6 @@ class StatisticsFragment : Fragment() {
 
 
         // Create adapter for RecycleView
-
         val adapter = StatisticsAdapter()
         binding.statistics.adapter = adapter
 
