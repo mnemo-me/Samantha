@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
 import com.mnemo.samantha.domain.APPOINTMENT_STATE_FREE
@@ -24,6 +25,8 @@ class DayScheduleFragment : Fragment() {
         // Bind View
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_day_schedule, container, false)
         val view = binding.root
+        val dividerItemDecoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
+        binding.dayScheduleSchedule.addItemDecoration(dividerItemDecoration)
 
         // Get date parameters from bundle
         val year = requireArguments().getInt("year")
@@ -43,6 +46,7 @@ class DayScheduleFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = DayScheduleAdapter()
+        adapter.pictureFolder = viewModel.storagePath
         adapter.dateText = viewModel.dateText
         binding.dayScheduleSchedule.adapter = adapter
 

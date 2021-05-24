@@ -1,6 +1,7 @@
 package com.mnemo.samantha.ui.today
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.TodayClientBinding
 import com.mnemo.samantha.databinding.TodayClientsHeaderBinding
 import com.mnemo.samantha.domain.Appointment
+import com.mnemo.samantha.ui.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.lang.ClassCastException
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
@@ -21,9 +24,9 @@ class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerVie
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    lateinit var buttonClickListener: ButtonClickListener
-
+    lateinit var phoneCallClickListener: PhoneCallClickListener
     lateinit var dateText: String
+    lateinit var pictureFolder: File
 
     fun addHeaderAndSubmitList(appointments : List<Appointment>?){
         adapterScope.launch {
@@ -55,7 +58,7 @@ class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerVie
 
             is ViewHolder -> {
                 val appointmentItem = getItem(position) as DataItem.AppointmentItem
-                holder.bind(appointmentItem.appointment, buttonClickListener)
+                holder.bind(appointmentItem.appointment, phoneCallClickListener, pictureFolder)
             }
         }
     }
@@ -70,12 +73,15 @@ class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerVie
 
     class ViewHolder private constructor(val binding: TodayClientBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(appointment: Appointment, buttonClickListener: ButtonClickListener){
+        fun bind(appointment: Appointment, phoneCallClickListener: PhoneCallClickListener, pictureFolder: File){
 
             binding.appointment = appointment
+            binding.phoneCallClickListener = phoneCallClickListener
 
             binding.todayClientAvatar.clipToOutline = true
+            binding.todayClientPhoneCall.visibility = if (appointment.client?.phoneNumber != "") View.VISIBLE else View.INVISIBLE
 
+            binding.todayClientAvatar.loadImage(File(pictureFolder, "cl${appointment.client?.id}.JPEG"))
         }
 
 
@@ -134,7 +140,7 @@ class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerVie
 
 
     // Button click listener
-    class ButtonClickListener(val clickListener: (clientPhoneNumber: String) -> Unit){
+    class PhoneCallClickListener(val clickListener: (clientPhoneNumber: String) -> Unit){
         fun onClick(clientPhoneNumber : String) = clickListener(clientPhoneNumber)
     }
 }

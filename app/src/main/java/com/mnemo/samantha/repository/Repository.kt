@@ -1,19 +1,26 @@
 package com.mnemo.samantha.repository
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.*
 import com.mnemo.samantha.repository.database.SamanthaDatabase
 import com.mnemo.samantha.repository.database.entity.*
+import com.mnemo.samantha.repository.file_storage.FileStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 class Repository {
 
     @Inject
     lateinit var database : SamanthaDatabase
+
+    @Inject
+    lateinit var fileStorage: FileStorage
 
     init {
         DaggerAppComponent.create().inject(this)
@@ -85,6 +92,14 @@ class Repository {
             database.clientDao.removeClient(clientId)
         }
     }
+
+    suspend fun saveClientAvatar(bitmap: Bitmap, clientId: Long){
+        withContext(Dispatchers.IO){
+            fileStorage.saveClientAvatar(bitmap, clientId)
+        }
+    }
+
+    fun getClientAvatarPath(clientId: Long) = fileStorage.getClientAvatarPath(clientId)
 
 
     // Appointments
@@ -188,5 +203,9 @@ class Repository {
             }
         }
     }
+
+
+    // File storage
+    fun getStoragePath() = fileStorage.storageDir
 
 }

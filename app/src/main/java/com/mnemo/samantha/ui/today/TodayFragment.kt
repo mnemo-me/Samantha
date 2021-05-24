@@ -1,5 +1,7 @@
 package com.mnemo.samantha.ui.today
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentTodayBinding
 
@@ -19,6 +22,10 @@ class TodayFragment : Fragment() {
 
         // Bind View
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
+        val view = binding.root
+        val dividerItemDecoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
+        binding.todaySchedule.addItemDecoration(dividerItemDecoration)
+
         binding.lifecycleOwner = this
 
 
@@ -28,8 +35,13 @@ class TodayFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = AppointmentsAdapter()
+        adapter.pictureFolder = viewModel.storagePath
         adapter.dateText = viewModel.dateText
-        adapter.buttonClickListener = AppointmentsAdapter.ButtonClickListener {  }
+        adapter.phoneCallClickListener = AppointmentsAdapter.PhoneCallClickListener { clientPhoneNumber ->
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:$clientPhoneNumber" )
+            startActivity(intent)
+        }
 
         binding.todaySchedule.adapter = adapter
 
@@ -38,7 +50,7 @@ class TodayFragment : Fragment() {
         })
 
 
-        return binding.root
+        return view
     }
 
 }

@@ -1,5 +1,7 @@
 package com.mnemo.samantha.ui.clients.client_edit
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
@@ -41,6 +43,16 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long) : ViewMode
             }
         }
     }
+
+    fun updateClientAvatar(bitmap: Bitmap, clientId: Long){
+
+        viewModelScope.launch {
+            repository.saveClientAvatar(bitmap, clientId)
+        }
+    }
+
+    fun getClientAvatarPath(clientId: Long) = repository.getClientAvatarPath(clientId)
+
 
     override fun onCleared() {
         super.onCleared()
