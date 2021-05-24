@@ -37,6 +37,7 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
 
         // Create adapter for RecycleView
         val adapter = ClientsAdapter()
+        adapter.pictureFolder = viewModel.storagePath
 
         adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener {
             parentFragment?.view?.findNavController()?.navigate(R.id.action_addClientDialogFragment_to_clientEditFragment, bundleOf("appointment_id" to appointmentId))

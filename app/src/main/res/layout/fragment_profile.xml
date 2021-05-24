@@ -28,7 +28,6 @@
             app:layout_constraintDimensionRatio="1"
             android:background="@drawable/circle_bg"
             android:outlineProvider="background"
-            android:src="@drawable/samantha"
             tools:src="@drawable/samantha"/>
 
         <androidx.constraintlayout.widget.Guideline

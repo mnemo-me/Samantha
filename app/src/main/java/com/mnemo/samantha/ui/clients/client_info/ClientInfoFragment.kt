@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientInfoBinding
-import com.mnemo.samantha.domain.Client
+import com.mnemo.samantha.ui.loadImage
 
 
 class ClientInfoFragment : Fragment() {
@@ -41,6 +41,8 @@ class ClientInfoFragment : Fragment() {
         // Bind client
         viewModel.client.observe(viewLifecycleOwner){client ->
             binding.client = client
+
+            binding.clientInfoAvatar.loadImage(viewModel.getClientAvatarPath(clientId))
         }
 
 

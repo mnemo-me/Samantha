@@ -37,6 +37,8 @@ class ClientsFragment : Fragment() {
         // Create adapter for RecycleView
         val adapter = ClientsAdapter()
 
+        adapter.pictureFolder = viewModel.storagePath
+
         adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener { ->
             view.findNavController().navigate(R.id.action_navigation_clients_to_clientEditFragment)
         }

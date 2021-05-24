@@ -31,6 +31,8 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
         }
     }
 
+    fun getClientAvatarPath(clientId: Long) = repository.getClientAvatarPath(clientId)
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

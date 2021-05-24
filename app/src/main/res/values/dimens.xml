@@ -9,9 +9,9 @@
     <dimen name="double_padding">32dp</dimen>
 
     <dimen name="appointment_panel_height">72dp</dimen>
-    <dimen name="appointment_client_image_height">48dp</dimen>
+    <dimen name="appointment_client_avatar_height">48dp</dimen>
     <dimen name="time_text_height">48dp</dimen>
-    <dimen name="phone_call_height">36dp</dimen>
+    <dimen name="phone_call_height">48dp</dimen>
 
     <dimen name="client_image_height">72dp</dimen>
 

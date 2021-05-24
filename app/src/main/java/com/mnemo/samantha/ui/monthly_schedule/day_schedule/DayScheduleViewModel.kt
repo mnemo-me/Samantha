@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class DayScheduleViewModel(val year: Int, val month: Int, val date: Int) : ViewM
 
     val dateText : String
 
+    val storagePath: File
+
     // Coroutines
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -37,6 +40,7 @@ class DayScheduleViewModel(val year: Int, val month: Int, val date: Int) : ViewM
         calendar.set(year, month, date, 0, 0, 0)
         dateText = SimpleDateFormat("EEEE, MMM d", Locale.getDefault()).format(calendar.time)
 
+        storagePath = repository.getStoragePath()!!
     }
 
     fun updateAppointmentState(appointmentId: Long, appointmentState: Int){

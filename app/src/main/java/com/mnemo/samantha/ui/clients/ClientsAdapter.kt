@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.ClientsClientBinding
 import com.mnemo.samantha.databinding.ClientsHeaderBinding
 import com.mnemo.samantha.domain.Client
+import com.mnemo.samantha.ui.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.lang.ClassCastException
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
@@ -22,6 +24,7 @@ class ClientsAdapter: ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHold
 
     lateinit var addNewClientClickListener : AddNewClientClickListener
     lateinit var clickListener : ClientClickListener
+    lateinit var pictureFolder: File
 
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -56,7 +59,7 @@ class ClientsAdapter: ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHold
 
             is ViewHolder -> {
                 val clientItem = getItem(position) as DataItem.ClientItem
-                holder.bind(clientItem.client, clickListener)
+                holder.bind(clientItem.client, clickListener, pictureFolder)
             }
         }
 
@@ -72,11 +75,13 @@ class ClientsAdapter: ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHold
 
     class ViewHolder private constructor (val binding: ClientsClientBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(client: Client, clickListener: ClientClickListener){
+        fun bind(client: Client, clickListener: ClientClickListener, pictureFolder: File){
 
             binding.clientsClientAvatar.clipToOutline = true
             binding.client = client
             binding.clickListener = clickListener
+
+            binding.clientsClientAvatar.loadImage(File(pictureFolder, "cl${client.id}.JPEG"))
         }
 
         companion object{

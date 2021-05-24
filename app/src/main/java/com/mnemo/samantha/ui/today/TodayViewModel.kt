@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.Appointment
 import com.mnemo.samantha.repository.Repository
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -24,10 +25,14 @@ class TodayViewModel() : ViewModel() {
 
     val appointments : LiveData<List<Appointment>>
 
+    val storagePath: File
+
     init {
         DaggerAppComponent.create().inject(this)
 
         appointments = repository.getTodayClients(date, month, year)
+
+        storagePath = repository.getStoragePath()!!
     }
 
 }

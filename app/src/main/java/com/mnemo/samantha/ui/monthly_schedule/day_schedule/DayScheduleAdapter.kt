@@ -13,10 +13,12 @@ import com.mnemo.samantha.domain.APPOINTMENT_STATE_BREAK
 import com.mnemo.samantha.domain.APPOINTMENT_STATE_BUSY
 import com.mnemo.samantha.domain.APPOINTMENT_STATE_FREE
 import com.mnemo.samantha.domain.Appointment
+import com.mnemo.samantha.ui.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
@@ -29,6 +31,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
     lateinit var clickListener : ClickListener
     lateinit var buttonClickListener: ButtonClickListener
     lateinit var editScheduleClickListener : EditScheduleClickListener
+    lateinit var pictureFolder: File
 
     lateinit var dateText: String
 
@@ -62,7 +65,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
             is ViewHolder -> {
                 val appointmentItem = getItem(position) as DataItem.AppointmentItem
-                holder.bind(appointmentItem.appointment, clickListener, buttonClickListener)
+                holder.bind(appointmentItem.appointment, clickListener, buttonClickListener, pictureFolder)
             }
         }
     }
@@ -77,7 +80,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
 
     class ViewHolder private constructor(val binding: AppointmentBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(appointment: Appointment, clickListener: ClickListener, buttonClickListener: ButtonClickListener){
+        fun bind(appointment: Appointment, clickListener: ClickListener, buttonClickListener: ButtonClickListener, pictureFolder: File){
 
             binding.appointment = appointment
             binding.clickListener = clickListener
@@ -91,6 +94,8 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
             if (appointment.state == APPOINTMENT_STATE_BUSY) {
                 binding.appointmentClientName.text = appointment.client?.name
                 binding.appointmentClientAvatar.setImageResource(R.drawable.samantha)
+
+                binding.appointmentClientAvatar.loadImage(File(pictureFolder, "cl${appointment.client?.id}.JPEG"))
             }
 
             // Button click listener

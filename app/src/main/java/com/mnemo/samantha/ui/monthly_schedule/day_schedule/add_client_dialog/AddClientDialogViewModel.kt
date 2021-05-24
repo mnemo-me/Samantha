@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 class AddClientDialogViewModel(val appointmentId: Long): ViewModel() {
@@ -18,6 +19,8 @@ class AddClientDialogViewModel(val appointmentId: Long): ViewModel() {
 
     val clients : LiveData<List<Client>>
 
+    val storagePath: File
+
     // Coroutines
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -26,6 +29,8 @@ class AddClientDialogViewModel(val appointmentId: Long): ViewModel() {
         DaggerAppComponent.create().inject(this)
 
         clients = repository.clients
+
+        storagePath = repository.getStoragePath()!!
     }
 
     fun bookClient(client: Client, serviceCost: Int){

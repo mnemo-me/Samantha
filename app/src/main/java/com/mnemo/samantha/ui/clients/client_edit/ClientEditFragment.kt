@@ -2,8 +2,11 @@ package com.mnemo.samantha.ui.clients.client_edit
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -17,6 +20,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientEditBinding
+import com.mnemo.samantha.ui.loadImage
 
 
 private const val REQUEST_IMAGE_CAPTURE = 0
@@ -27,6 +31,10 @@ class ClientEditFragment : Fragment() {
     private lateinit var binding: FragmentClientEditBinding
     private lateinit var viewModel: ClientEditVewModel
 
+    private lateinit var contentResolver: ContentResolver
+
+    private var newImageUri: Uri? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         // Bind View
@@ -34,6 +42,8 @@ class ClientEditFragment : Fragment() {
         val view = binding.root
         binding.clientEditAvatar.clipToOutline = true
         binding.clientEditTextPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
+        contentResolver = view.context.contentResolver
 
         // Get arguments
         val clientId = requireArguments().getLong("client_id")
@@ -53,6 +63,8 @@ class ClientEditFragment : Fragment() {
         if (clientId != 0L) {
             viewModel.client.observe(viewLifecycleOwner) { client ->
                 binding.client = client
+
+                binding.clientEditAvatar.loadImage(viewModel.getClientAvatarPath(clientId))
             }
         }
 
@@ -64,6 +76,8 @@ class ClientEditFragment : Fragment() {
             val clientName = binding.clientEditTextName.text.toString()
             val clientPhoneNumber = binding.clientEditTextPhoneNumber.text.toString()
             viewModel.updateClientInfo(clientName, clientPhoneNumber)
+
+            if (newImageUri != null) viewModel.updateClientAvatar(getBitmapFromUri(newImageUri!!), clientId)
 
             view.findNavController().navigateUp()
 
@@ -116,12 +130,20 @@ class ClientEditFragment : Fragment() {
                     binding.clientEditAvatar.setImageBitmap(imageBitmap)
                 }
                 REQUEST_IMAGE_PICK -> {
-                    val imageUri = data?.data
-                    binding.clientEditAvatar.setImageURI(imageUri)
+                    newImageUri = data?.data
+                    binding.clientEditAvatar.setImageURI(newImageUri)
                 }
             }
         }
 
+    }
+
+    fun getBitmapFromUri(uri: Uri) : Bitmap{
+        val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
+        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
+        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        parcelFileDescriptor?.close()
+        return image
     }
 
 }
