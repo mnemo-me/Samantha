@@ -66,6 +66,8 @@ class ClientEditFragment : Fragment() {
 
                 binding.clientEditAvatar.loadImage(viewModel.getClientAvatarPath(clientId))
             }
+        }else{
+            binding.clientEditAvatar.setImageDrawable(view.resources.getDrawable(R.drawable.empty_profile))
         }
 
 

@@ -58,7 +58,7 @@
             app:layout_constraintDimensionRatio="1"
             android:background="@drawable/circle_bg"
             android:outlineProvider="background"
-            tools:src="@drawable/samantha"/>
+            tools:src="@drawable/empty_profile"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/client_info_vertical_guideline"
@@ -98,27 +98,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
             android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_padding"
-            app:layout_constraintStart_toEndOf="@id/client_info_vertical_guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/client_info_line"
-            android:text="@string/edit"/>
-
-        <View
-            android:id="@+id/client_info_line"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="@dimen/default_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/client_info_avatar"/>
+            app:layout_constraintTop_toBottomOf="@id/client_info_avatar"
+            android:text="@string/edit"/>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/client_info_line"
+            app:layout_constraintTop_toBottomOf="@id/client_info_edit_button"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginStart="@dimen/default_padding"
             android:text="@string/history"/>

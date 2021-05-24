@@ -56,7 +56,7 @@
                 app:layout_constraintDimensionRatio="1"
                 android:background="@drawable/circle_bg"
                 android:outlineProvider="background"
-                tools:src="@drawable/samantha"/>
+                tools:src="@drawable/empty_profile"/>
 
             <TextView
                 android:id="@+id/profile_edit_name_text"

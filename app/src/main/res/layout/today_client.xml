@@ -39,7 +39,7 @@
             app:layout_constraintStart_toEndOf="@id/today_client_time"
             android:background="@drawable/circle_bg"
             android:outlineProvider="background"
-            tools:src="@drawable/samantha"/>
+            tools:src="@drawable/empty_profile"/>
 
         <TextView
             android:id="@+id/today_client_name"

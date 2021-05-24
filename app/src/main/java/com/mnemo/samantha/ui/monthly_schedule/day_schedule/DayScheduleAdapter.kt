@@ -3,6 +3,7 @@ package com.mnemo.samantha.ui.monthly_schedule.day_schedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -93,7 +94,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
             // Bind client info
             if (appointment.state == APPOINTMENT_STATE_BUSY) {
                 binding.appointmentClientName.text = appointment.client?.name
-                binding.appointmentClientAvatar.setImageResource(R.drawable.samantha)
+                binding.appointmentClientAvatar.setImageResource(R.drawable.empty_profile)
 
                 binding.appointmentClientAvatar.loadImage(File(pictureFolder, "cl${appointment.client?.id}.JPEG"))
             }
@@ -122,22 +123,33 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
         private fun initAppointmentState(appointmentState: Int){
             when (appointmentState){
                 APPOINTMENT_STATE_BREAK -> {
-                    binding.appointmentBackground.setBackgroundResource(R.color.ash)
+                    binding.appointmentBackground.setBackgroundResource(R.color.paint_it_black)
+                    binding.appointmentTime.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
                     binding.appointmentClientAvatar.visibility = View.INVISIBLE
                     binding.appointmentClientName.text = ""
+                    binding.appointmentClientName.visibility = View.INVISIBLE
+                    binding.appointmentClientServices.visibility = View.INVISIBLE
+                    binding.appointmentAddClient.visibility = View.INVISIBLE
                     binding.appointmentClientButton.setImageResource(R.drawable.outline_add_white_24)
                 }
                 APPOINTMENT_STATE_FREE -> {
-                    binding.appointmentBackground.setBackgroundResource(R.color.blue_background)
+                    binding.appointmentBackground.setBackgroundResource(R.color.green)
+                    binding.appointmentTime.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
                     binding.appointmentClientAvatar.visibility = View.VISIBLE
                     binding.appointmentClientAvatar.setImageResource(R.drawable.outline_account_circle_white_24)
-                    binding.appointmentClientName.setText(R.string.add_client)
+                    binding.appointmentClientName.visibility = View.INVISIBLE
+                    binding.appointmentClientServices.visibility = View.INVISIBLE
+                    binding.appointmentAddClient.visibility = View.VISIBLE
                     binding.appointmentClientButton.setImageResource(R.drawable.outline_remove_white_24)
                 }
 
                 APPOINTMENT_STATE_BUSY -> {
                     binding.appointmentBackground.setBackgroundResource(R.color.white)
+                    binding.appointmentTime.setTextColor(ContextCompat.getColor(binding.root.context, android.R.color.tab_indicator_text))
                     binding.appointmentClientAvatar.visibility = View.VISIBLE
+                    binding.appointmentClientName.visibility = View.VISIBLE
+                    binding.appointmentClientServices.visibility = View.VISIBLE
+                    binding.appointmentAddClient.visibility = View.INVISIBLE
                     binding.appointmentClientButton.setImageResource(R.drawable.outline_close_black_24)
                 }
             }
