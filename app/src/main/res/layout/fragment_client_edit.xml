@@ -33,11 +33,10 @@
 
             <TextView
                 android:id="@+id/client_edit_title"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:text="@string/edit_client_info"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/client_edit_back_button"

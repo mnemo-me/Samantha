@@ -62,5 +62,6 @@
 
     <string name="take_a_photo">Take a photo</string>
     <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="pick_services">Pick services</string>
 
 </resources>

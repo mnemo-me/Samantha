@@ -19,16 +19,23 @@ private const val ITEM_VIEW_TYPE_ITEM = 1
 
 class ServicesAdapter : ListAdapter<ServicesAdapter.DataItem, RecyclerView.ViewHolder>(ServiceDiffCallback()){
 
-    lateinit var addNewServiceClickListener: AddNewServiceClickListener
-    lateinit var serviceClickListener: ServiceClickListener
+    private var isHeaderAttached = false
+
+    var addNewServiceClickListener: AddNewServiceClickListener = AddNewServiceClickListener {  }
+    var serviceClickListener: ServiceClickListener = ServiceClickListener {  }
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun addHeaderAndSubmitList(services: List<Service>){
+    fun attachHeader(){
+        isHeaderAttached = true
+    }
+
+    fun submitServicesList(services: List<Service>){
         adapterScope.launch {
-            val items = when (services){
-                null -> listOf(DataItem.Header)
-                else -> listOf(DataItem.Header) + services.map { DataItem.ServiceItem(it) }
+            val items = if (isHeaderAttached){
+                listOf(DataItem.Header) + services.map { DataItem.ServiceItem(it) }
+            }else{
+                services.map { DataItem.ServiceItem(it) }
             }
             withContext(Dispatchers.Main){
                 submitList(items)
@@ -59,9 +66,10 @@ class ServicesAdapter : ListAdapter<ServicesAdapter.DataItem, RecyclerView.ViewH
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(position){
-            0 -> ITEM_VIEW_TYPE_HEADER
-            else -> ITEM_VIEW_TYPE_ITEM
+        return if (isHeaderAttached && position == 0){
+            ITEM_VIEW_TYPE_HEADER
+        } else{
+            ITEM_VIEW_TYPE_ITEM
         }
     }
 

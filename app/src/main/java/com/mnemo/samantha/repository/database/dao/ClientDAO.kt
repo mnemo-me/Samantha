@@ -19,4 +19,10 @@ interface ClientDAO {
     @Query("SELECT * FROM clients_table ORDER BY id ASC")
     fun getAll(): LiveData<List<DatabaseClient>>
 
+    @Query("SELECT * FROM clients_table WHERE id = :id")
+    fun getClient(id: Long): DatabaseClient
+
+    @Query("SELECT * FROM clients_table ORDER BY id DESC LIMIT 1")
+    fun getNewClient(): DatabaseClient
+
 }

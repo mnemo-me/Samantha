@@ -140,8 +140,8 @@ class ClientsAdapter: ListAdapter<ClientsAdapter.DataItem, RecyclerView.ViewHold
     }
 
     // Click listeners
-    class ClientClickListener(val clickListener: (client: Client) -> Unit){
-        fun onClick(client: Client) = clickListener(client)
+    class ClientClickListener(val clickListener: (clientId: Long) -> Unit){
+        fun onClick(client: Client) = clickListener(client.id)
     }
 
     class AddNewClientClickListener(val clickListener: () -> Unit){

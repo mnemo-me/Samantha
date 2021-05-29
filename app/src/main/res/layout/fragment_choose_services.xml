@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.monthly_schedule.day_schedule.add_client_dialog.choose_services.ChooseServicesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/pick_services_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/three_quarters_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/outline_close_black_24"/>
+
+        <TextView
+            android:id="@+id/pick_services_title"
+            style="@style/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/pick_services_close_button"
+            app:layout_constraintEnd_toStartOf="@id/pick_services_done_button"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/pick_services"/>
+
+        <ImageView
+            android:id="@+id/pick_services_done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/three_quarters_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/outline_done_black_24"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pick_services_check_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pick_services_title"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

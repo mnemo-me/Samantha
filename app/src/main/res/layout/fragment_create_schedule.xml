@@ -23,11 +23,10 @@
 
             <TextView
                 android:id="@+id/create_schedule_title"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:text="@string/create_schedule"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/create_schedule_back_button"

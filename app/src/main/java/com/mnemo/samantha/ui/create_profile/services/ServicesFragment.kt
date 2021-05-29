@@ -31,6 +31,7 @@ class ServicesFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = ServicesAdapter()
+        adapter.attachHeader()
 
         adapter.addNewServiceClickListener = ServicesAdapter.AddNewServiceClickListener {
             view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment)
@@ -43,7 +44,7 @@ class ServicesFragment : Fragment() {
         binding.servicesList.adapter = adapter
 
         viewModel.services.observe(viewLifecycleOwner, {services ->
-            adapter.addHeaderAndSubmitList(services)
+            adapter.submitServicesList(services)
         })
 
 

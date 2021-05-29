@@ -19,11 +19,10 @@
 
         <TextView
             android:id="@+id/services_title"
+            style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             android:text="@string/services"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/services_back_button"

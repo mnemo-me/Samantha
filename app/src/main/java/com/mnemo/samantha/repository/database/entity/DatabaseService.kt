@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.mnemo.samantha.domain.Service
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "service_table")
+@Serializable
 data class DatabaseService (
 
         @PrimaryKey(autoGenerate = true)

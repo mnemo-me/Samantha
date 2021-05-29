@@ -25,15 +25,14 @@
 
         <TextView
             android:id="@+id/client_info_title"
+            style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/client_info_back_button"
             app:layout_constraintEnd_toStartOf="@id/client_info_remove"
-            android:text="@string/client_info"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:text="@string/client_info"/>
 
         <ImageView
             android:id="@+id/client_info_remove"

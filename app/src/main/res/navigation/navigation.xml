@@ -66,6 +66,9 @@
             android:name="appointment_id"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_clientEditFragment_to_pickServicesFragment"
+            app:destination="@id/pickServicesFragment" />
     </fragment>
     <fragment
         android:id="@+id/dayScheduleFragment"
@@ -97,4 +100,16 @@
             android:id="@+id/action_addClientDialogFragment_to_clientEditFragment"
             app:destination="@id/clientEditFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/pickServicesFragment"
+        android:name="com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog.choose_services.ChooseServicesFragment"
+        android:label="fragment_pick_services"
+        tools:layout="@layout/fragment_choose_services" >
+        <argument
+            android:name="appointment_id"
+            app:argType="long" />
+        <argument
+            android:name="client_id"
+            app:argType="long" />
+    </fragment>
 </navigation>

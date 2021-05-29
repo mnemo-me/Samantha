@@ -101,7 +101,7 @@
             android:id="@+id/profile_services_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/ash"
+            android:textColor="@color/paint_it_black"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +109,7 @@
             android:text="@string/servicesUP"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_services_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

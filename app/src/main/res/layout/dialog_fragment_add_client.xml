@@ -6,6 +6,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/add_client_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/clients_client"
+        tools:itemCount="12"/>
 
 </layout>

@@ -43,8 +43,8 @@ class ClientsFragment : Fragment() {
             view.findNavController().navigate(R.id.action_navigation_clients_to_clientEditFragment)
         }
 
-        adapter.clickListener = ClientsAdapter.ClientClickListener {client ->
-            view.findNavController().navigate(R.id.action_navigation_clients_to_clientInfoFragment, bundleOf("client_id" to client.id))
+        adapter.clickListener = ClientsAdapter.ClientClickListener {clientId ->
+            view.findNavController().navigate(R.id.action_navigation_clients_to_clientInfoFragment, bundleOf("client_id" to clientId))
         }
 
         val layoutManager = GridLayoutManager(context, 3)

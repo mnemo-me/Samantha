@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.mnemo.samantha.repository.database.dao.*
 import com.mnemo.samantha.repository.database.entity.*
 
 @Database(entities = [DatabaseMaster::class, DatabaseClient::class, DatabaseAppointment::class, DatabaseService::class, DatabaseScheduleTemplate::class], version = 1, exportSchema = false)
+@TypeConverters(com.mnemo.samantha.util.TypeConverters::class)
 abstract class SamanthaDatabase : RoomDatabase() {
 
     abstract val masterDAO: MasterDAO

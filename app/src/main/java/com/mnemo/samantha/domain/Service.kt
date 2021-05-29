@@ -17,3 +17,9 @@ fun Service.asDatabaseModel() : DatabaseService{
         timeToComplete = this.timeToComplete
     )
 }
+
+fun List<Service>.asDatabaseModel() : List<DatabaseService>{
+    return map {
+        it.asDatabaseModel()
+    }
+}

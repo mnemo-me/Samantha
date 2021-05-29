@@ -29,6 +29,9 @@ class MonthlyScheduleFragment : Fragment() {
 
 
         // Setup CalendarView
+        binding.monthlyScheduleCalendar.minDate = viewModel.minDate
+        binding.monthlyScheduleCalendar.maxDate = viewModel.maxDate
+
         binding.monthlyScheduleCalendar.setOnDateChangeListener { calendarView, year, month, date ->
             view.findNavController().navigate(R.id.action_navigation_month_to_dayScheduleFragment,
                 bundleOf("year" to year, "month" to month, "date" to date))

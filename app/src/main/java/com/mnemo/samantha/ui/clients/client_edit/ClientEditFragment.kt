@@ -31,9 +31,8 @@ class ClientEditFragment : Fragment() {
     private lateinit var binding: FragmentClientEditBinding
     private lateinit var viewModel: ClientEditVewModel
 
-    private lateinit var contentResolver: ContentResolver
-
     private var newImageUri: Uri? = null
+    private var avatarBitmap: Bitmap? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -43,14 +42,13 @@ class ClientEditFragment : Fragment() {
         binding.clientEditAvatar.clipToOutline = true
         binding.clientEditTextPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
-        contentResolver = view.context.contentResolver
 
         // Get arguments
         val clientId = requireArguments().getLong("client_id")
         val appointmentId = requireArguments().getLong("appointment_id")
 
         // Create ViewModel via Factory
-        val viewModelFactory = ClientEditViewModelFactory(clientId, appointmentId)
+        val viewModelFactory = ClientEditViewModelFactory(clientId, appointmentId, requireNotNull(activity).application.baseContext)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientEditVewModel::class.java)
 
@@ -63,7 +61,6 @@ class ClientEditFragment : Fragment() {
         if (clientId != 0L) {
             viewModel.client.observe(viewLifecycleOwner) { client ->
                 binding.client = client
-
                 binding.clientEditAvatar.loadImage(viewModel.getClientAvatarPath(clientId))
             }
         }else{
@@ -77,9 +74,19 @@ class ClientEditFragment : Fragment() {
         binding.clientEditDoneButton.setOnClickListener{
             val clientName = binding.clientEditTextName.text.toString()
             val clientPhoneNumber = binding.clientEditTextPhoneNumber.text.toString()
-            viewModel.updateClientInfo(clientName, clientPhoneNumber)
 
-            if (newImageUri != null) viewModel.updateClientAvatar(getBitmapFromUri(newImageUri!!), clientId)
+            // Prepare avatar
+            if (avatarBitmap == null){
+                if (newImageUri != null){
+                    avatarBitmap = viewModel.getBitmapFromUri(newImageUri!!)
+                }else{
+                    if (clientId == 0L) {
+                        avatarBitmap = BitmapFactory.decodeResource(view.resources, R.drawable.empty_profile)
+                    }
+                }
+            }
+
+            viewModel.updateClientInfo(clientName, clientPhoneNumber, avatarBitmap)
 
             view.findNavController().navigateUp()
 
@@ -128,24 +135,18 @@ class ClientEditFragment : Fragment() {
         if (resultCode == RESULT_OK ) {
             when (requestCode) {
                 REQUEST_IMAGE_CAPTURE -> {
-                    val imageBitmap = data?.extras?.get("data") as Bitmap
-                    binding.clientEditAvatar.setImageBitmap(imageBitmap)
+                    newImageUri = null
+                    avatarBitmap = data?.extras?.get("data") as Bitmap
+                    binding.clientEditAvatar.setImageBitmap(avatarBitmap)
                 }
                 REQUEST_IMAGE_PICK -> {
+                    avatarBitmap = null
                     newImageUri = data?.data
                     binding.clientEditAvatar.setImageURI(newImageUri)
                 }
             }
         }
 
-    }
-
-    fun getBitmapFromUri(uri: Uri) : Bitmap{
-        val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
-        val fileDescriptor = parcelFileDescriptor?.fileDescriptor
-        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-        parcelFileDescriptor?.close()
-        return image
     }
 
 }

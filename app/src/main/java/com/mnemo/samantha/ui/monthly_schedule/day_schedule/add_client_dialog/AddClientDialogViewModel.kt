@@ -33,9 +33,9 @@ class AddClientDialogViewModel(val appointmentId: Long): ViewModel() {
         storagePath = repository.getStoragePath()!!
     }
 
-    fun bookClient(client: Client, serviceCost: Int){
+    fun bookClient(clientId: Long, serviceCost: Int){
        viewModelScope.launch{
-           repository.bookClient(appointmentId, client, serviceCost)
+           repository.bookClient(appointmentId, clientId, serviceCost)
        }
     }
 

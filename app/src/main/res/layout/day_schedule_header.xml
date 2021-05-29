@@ -11,15 +11,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
         <TextView
             android:id="@+id/day_schedule_day"
-            style="@style/date_text"
+            style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginStart="@dimen/default_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -27,13 +26,13 @@
 
         <ImageView
             android:id="@+id/day_schedule_edit_button"
-            android:layout_width="@dimen/phone_call_height"
-            android:layout_height="@dimen/phone_call_height"
-            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/three_quarters_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/outline_edit_note_black_48"
+            android:src="@drawable/outline_create_black_24"
             android:onClick="@{() -> editScheduleClickListener.onClick()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

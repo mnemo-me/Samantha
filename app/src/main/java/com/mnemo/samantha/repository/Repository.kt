@@ -1,7 +1,6 @@
 package com.mnemo.samantha.repository
 
 import android.graphics.Bitmap
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.mnemo.samantha.di.DaggerAppComponent
@@ -11,7 +10,6 @@ import com.mnemo.samantha.repository.database.entity.*
 import com.mnemo.samantha.repository.file_storage.FileStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 import javax.inject.Inject
 
 class Repository {
@@ -81,9 +79,11 @@ class Repository {
         it.asDomainModel()
     }
 
-    suspend fun addClient(client: Client){
+    suspend fun addClient(client: Client, clientAvatar: Bitmap?){
         withContext(Dispatchers.IO) {
             database.clientDao.insert(client.asDatabaseModel())
+            val clientId = if (client.id == 0L) database.clientDao.getNewClient().id else client.id
+            if (clientAvatar != null) saveClientAvatar(clientAvatar, clientId)
         }
     }
 
@@ -115,17 +115,10 @@ class Repository {
         database.appointmentDAO.insert(databaseAppointment)
     }
 
-    suspend fun bookClient(appointmentId: Long, client: Client, serviceCost: Int){
+    suspend fun bookClient(appointmentId: Long, clientId: Long, serviceCost: Int){
         withContext(Dispatchers.IO){
-            val databaseClient = client.asDatabaseModel()
-            database.appointmentDAO.bookClient(appointmentId, databaseClient.id, databaseClient.name, databaseClient.phoneNumber , serviceCost, APPOINTMENT_STATE_BUSY)
-        }
-    }
-
-    suspend fun bookNewClient(appointmentId: Long, client: Client, serviceCost: Int){
-        withContext(Dispatchers.IO) {
-            addClient(client)
-            bookClient(appointmentId, client, serviceCost)
+            val client = if (clientId != 0L) database.clientDao.getClient(clientId) else database.clientDao.getNewClient()
+            database.appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber , serviceCost, APPOINTMENT_STATE_BUSY)
         }
     }
 
@@ -195,7 +188,9 @@ class Repository {
                             month = month,
                             year = year,
                             client = null,
+                            services = null,
                             serviceCost = null,
+                            timeToComplete = null,
                             state = APPOINTMENT_STATE_FREE
                         )
                     )

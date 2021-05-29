@@ -43,8 +43,8 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
             parentFragment?.view?.findNavController()?.navigate(R.id.action_addClientDialogFragment_to_clientEditFragment, bundleOf("appointment_id" to appointmentId))
         }
 
-        adapter.clickListener = ClientsAdapter.ClientClickListener {client ->
-            viewModel.bookClient(client, 700)
+        adapter.clickListener = ClientsAdapter.ClientClickListener {clientId ->
+            viewModel.bookClient(clientId, 700)
             dismiss()
         }
 

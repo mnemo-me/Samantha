@@ -31,13 +31,6 @@ class ClientsViewModel : ViewModel() {
     }
 
 
-    // Functions that can launch from UI interactions
-    fun addClient(client: Client){
-        viewModelScope.launch {
-            repository.addClient(client)
-        }
-    }
-
 
     override fun onCleared() {
         super.onCleared()

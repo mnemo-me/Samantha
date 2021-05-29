@@ -87,15 +87,11 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
             binding.clickListener = clickListener
 
             binding.appointmentClientAvatar.clipToOutline = true
-            binding.appointmentTime.text = appointment.time.toString()
 
             initAppointmentState(appointment.state)
 
             // Bind client info
             if (appointment.state == APPOINTMENT_STATE_BUSY) {
-                binding.appointmentClientName.text = appointment.client?.name
-                binding.appointmentClientAvatar.setImageResource(R.drawable.empty_profile)
-
                 binding.appointmentClientAvatar.loadImage(File(pictureFolder, "cl${appointment.client?.id}.JPEG"))
             }
 
@@ -126,6 +122,7 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
                     binding.appointmentBackground.setBackgroundResource(R.color.paint_it_black)
                     binding.appointmentTime.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
                     binding.appointmentClientAvatar.visibility = View.INVISIBLE
+                    binding.appointmentClientAvatar.setImageResource(android.R.color.transparent)
                     binding.appointmentClientName.text = ""
                     binding.appointmentClientName.visibility = View.INVISIBLE
                     binding.appointmentClientServices.visibility = View.INVISIBLE
@@ -135,8 +132,8 @@ open class DayScheduleAdapter : ListAdapter<DayScheduleAdapter.DataItem, Recycle
                 APPOINTMENT_STATE_FREE -> {
                     binding.appointmentBackground.setBackgroundResource(R.color.green)
                     binding.appointmentTime.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
-                    binding.appointmentClientAvatar.visibility = View.VISIBLE
-                    binding.appointmentClientAvatar.setImageResource(R.drawable.outline_account_circle_white_24)
+                    binding.appointmentClientAvatar.visibility = View.INVISIBLE
+                    binding.appointmentClientAvatar.setImageResource(android.R.color.transparent)
                     binding.appointmentClientName.visibility = View.INVISIBLE
                     binding.appointmentClientServices.visibility = View.INVISIBLE
                     binding.appointmentAddClient.visibility = View.VISIBLE
