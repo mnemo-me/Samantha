@@ -74,8 +74,7 @@
             app:layout_constraintStart_toEndOf="@id/appointment_client_avatar"
             app:layout_constraintTop_toBottomOf="@id/appointment_client_name"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/appointment_client_button"
-            android:text="development, some shit, Yeahh!!"/>
+            app:layout_constraintEnd_toStartOf="@id/appointment_client_button"/>
 
         <TextView
             android:id="@+id/appointment_add_client"

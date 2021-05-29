@@ -1,6 +1,12 @@
 package com.mnemo.samantha.ui.create_profile.profile_edit
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +18,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentProfileEditBinding
+import com.mnemo.samantha.ui.loadImage
+
+
+private const val REQUEST_IMAGE_CAPTURE = 0
+private const val REQUEST_IMAGE_PICK = 1
 
 
 class ProfileEditFragment : Fragment() {
@@ -19,15 +30,8 @@ class ProfileEditFragment : Fragment() {
     private lateinit var binding: FragmentProfileEditBinding
     private lateinit var viewModel: ProfileEditViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Change back button behavior
-        requireActivity().onBackPressedDispatcher.addCallback(this){
-
-        }
-    }
-
+    private var newImageUri: Uri? = null
+    private var avatarBitmap: Bitmap? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -41,9 +45,37 @@ class ProfileEditFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ProfileEditViewModel::class.java)
 
 
+        // Bind master
+        val masterId = requireArguments().getLong("master_id")
+
+        if (masterId != 0L){
+
+            viewModel.master.observe(viewLifecycleOwner){master ->
+                binding.master = master
+                binding.profileEditAvatar.loadImage(viewModel.getMasterAvatarPath(masterId))
+            }
+
+            binding.profileEditTitle.text = view.resources.getString(R.string.edit_profile)
+            binding.profileEditNextButton.setImageResource(R.drawable.outline_done_black_24)
+
+        }else{
+
+            binding.profileEditAvatar.setImageDrawable(view.resources.getDrawable(R.drawable.empty_profile))
+
+        }
+
+
+        // Change back button behavior
+        if (masterId == 0L) requireActivity().onBackPressedDispatcher.addCallback(this){}
+
+
         // Close button click listener
         binding.profileEditCloseButton.setOnClickListener{
+            if (masterId != 0L){
+                view.findNavController().navigateUp()
+            }else{
 
+            }
         }
 
 
@@ -54,12 +86,75 @@ class ProfileEditFragment : Fragment() {
             val masterProfession = binding.profileEditProfession.text.toString()
             val masterPhoneNumber = binding.profileEditPhoneNumber.text.toString()
 
-            view.findNavController().navigate(R.id.action_profileEditFragment_to_selectRegionFragment,
-            bundleOf("master_name" to masterName, "master_profession" to masterProfession, "master_phone_number" to masterPhoneNumber))
+            // Prepare avatar
+            if (avatarBitmap == null){
+                if (newImageUri != null){
+                    avatarBitmap = viewModel.getBitmapFromUri(view.context, newImageUri!!)
+                }else{
+                    if (masterId == 0L) {
+                        avatarBitmap = viewModel.getDefaultProfileBitmap(view.context)
+                    }
+                }
+            }
+
+            if (masterId != 0L){
+                viewModel.updateProfileInfo(masterId, masterName, masterProfession, masterPhoneNumber, avatarBitmap)
+                view.findNavController().navigateUp()
+            }else {
+                view.findNavController().navigate(
+                    R.id.action_profileEditFragmentCreateProfile_to_selectRegionFragmentCreateProfile,
+                    bundleOf(
+                        "master_name" to masterName,
+                        "master_profession" to masterProfession,
+                        "master_phone_number" to masterPhoneNumber
+                    )
+                )
+            }
+        }
+
+
+        // Profile avatar click listener
+        binding.profileEditAvatar.setOnClickListener{
+
+            val items = arrayOf(getString(R.string.take_a_photo), getString(R.string.choose_from_gallery))
+
+            AlertDialog.Builder(context)
+                .setItems(items) { dialogInterface, item ->
+
+                    when (items[item]) {
+                        getString(R.string.take_a_photo) -> {
+                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+                        }
+                        getString(R.string.choose_from_gallery) -> {
+                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                            startActivityForResult(intent, REQUEST_IMAGE_PICK)
+                        }
+                    }
+
+                }.show()
         }
 
         return view
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_CAPTURE -> {
+                    newImageUri = null
+                    avatarBitmap = data?.extras?.get("data") as Bitmap
+                    binding.profileEditAvatar.setImageBitmap(avatarBitmap)
+                }
+                REQUEST_IMAGE_PICK -> {
+                    avatarBitmap = null
+                    newImageUri = data?.data
+                    binding.profileEditAvatar.setImageURI(newImageUri)
+                }
+            }
+        }
+    }
 
 }

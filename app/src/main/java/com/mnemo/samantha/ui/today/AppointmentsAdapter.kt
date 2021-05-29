@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.TodayClientBinding
 import com.mnemo.samantha.databinding.TodayClientsHeaderBinding
 import com.mnemo.samantha.domain.Appointment
+import com.mnemo.samantha.domain.convertToString
 import com.mnemo.samantha.ui.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,6 +77,7 @@ class AppointmentsAdapter: ListAdapter<AppointmentsAdapter.DataItem, RecyclerVie
         fun bind(appointment: Appointment, phoneCallClickListener: PhoneCallClickListener, pictureFolder: File){
 
             binding.appointment = appointment
+            binding.todayClientServices.text = appointment.services?.convertToString()
             binding.phoneCallClickListener = phoneCallClickListener
 
             binding.todayClientAvatar.clipToOutline = true

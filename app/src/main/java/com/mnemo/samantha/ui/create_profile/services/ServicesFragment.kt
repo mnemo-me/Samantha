@@ -25,6 +25,14 @@ class ServicesFragment : Fragment() {
         val view = binding.root
 
 
+        // Get master id
+        val masterId = requireArguments().getLong("master_id")
+        if (masterId != 0L) {
+            binding.servicesBackButton.setImageResource(R.drawable.outline_close_black_24)
+            binding.servicesNextButton.setImageResource(R.drawable.outline_done_black_24)
+        }
+
+
         // Create ViewModel
         viewModel = ViewModelProvider(this).get(ServicesViewModel::class.java)
 
@@ -34,11 +42,19 @@ class ServicesFragment : Fragment() {
         adapter.attachHeader()
 
         adapter.addNewServiceClickListener = ServicesAdapter.AddNewServiceClickListener {
-            view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment)
+            if (masterId != 0L){
+                view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment)
+            }else {
+                view.findNavController().navigate(R.id.action_servicesFragmentCreateProfile_to_serviceEditFragmentCreateProfile)
+            }
         }
 
         adapter.serviceClickListener = ServicesAdapter.ServiceClickListener { serviceId ->
-            view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment, bundleOf("service_id" to serviceId))
+            if (masterId != 0L){
+                view.findNavController().navigate(R.id.action_servicesFragment_to_serviceEditFragment, bundleOf("service_id" to serviceId))
+            }else {
+                view.findNavController().navigate(R.id.action_servicesFragmentCreateProfile_to_serviceEditFragmentCreateProfile, bundleOf("service_id" to serviceId))
+            }
         }
 
         binding.servicesList.adapter = adapter
@@ -55,7 +71,11 @@ class ServicesFragment : Fragment() {
 
         // Next button click listener
         binding.servicesNextButton.setOnClickListener{
-            view.findNavController().navigate(R.id.action_servicesFragment_to_createScheduleFragment)
+            if (masterId != 0L){
+                view.findNavController().navigateUp()
+            }else {
+                view.findNavController().navigate(R.id.action_servicesFragmentCreateProfile_to_createScheduleFragmentCreateProfile)
+            }
         }
 
 

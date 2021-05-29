@@ -24,4 +24,6 @@ class ProfileViewModel : ViewModel() {
 
         services = repository.services
     }
+
+    fun getMasterAvatarPath(masterId: Long) = repository.getMasterAvatarPath(masterId)
 }

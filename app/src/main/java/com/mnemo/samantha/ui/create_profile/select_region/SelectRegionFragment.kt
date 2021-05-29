@@ -28,6 +28,19 @@ class SelectRegionFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(SelectRegionViewModel::class.java)
 
 
+        // Bind master region info
+        val masterId = requireArguments().getLong("master_id")
+
+        if (masterId != 0L){
+            viewModel.master.observe(viewLifecycleOwner){master ->
+                binding.master = master
+            }
+
+            binding.selectRegionBackButton.setImageResource(R.drawable.outline_close_black_24)
+            binding.selectRegionNextButton.setImageResource(R.drawable.outline_done_black_24)
+        }
+
+
         // Back button click listener
         binding.selectRegionBackButton.setOnClickListener{
             view.findNavController().navigateUp()
@@ -36,16 +49,24 @@ class SelectRegionFragment : Fragment() {
         // Next button click listener
         binding.selectRegionNextButton.setOnClickListener{
 
-            val masterName = requireArguments().getString("master_name")!!
-            val masterProfession = requireArguments().getString("master_profession")!!
-            val masterPhoneNumber = requireArguments().getString("master_phone_number")!!
             val masterCountry = binding.selectRegionCountry.text.toString()
             val masterCity = binding.selectRegionCity.text.toString()
             val masterCurrency = binding.selectRegionCurrency.text.toString()
 
+            if (masterId != 0L){
 
-            viewModel.createProfile(masterName, masterProfession, masterPhoneNumber, masterCountry, masterCity, masterCurrency)
-            view.findNavController().navigate(R.id.action_selectRegionFragment_to_servicesFragment)
+                viewModel.updateProfileRegionInfo(masterId, masterCountry, masterCity, masterCurrency)
+                view.findNavController().navigateUp()
+
+            }else{
+
+                val masterName = requireArguments().getString("master_name")!!
+                val masterProfession = requireArguments().getString("master_profession")!!
+                val masterPhoneNumber = requireArguments().getString("master_phone_number")!!
+
+                viewModel.createProfile(masterName, masterProfession, masterPhoneNumber, masterCountry, masterCity, masterCurrency)
+                view.findNavController().navigate(R.id.action_selectRegionFragmentCreateProfile_to_servicesFragmentCreateProfile)
+            }
         }
 
         return view

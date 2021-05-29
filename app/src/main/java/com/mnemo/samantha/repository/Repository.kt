@@ -71,6 +71,27 @@ class Repository {
         }
     }
 
+    suspend fun updateProfileInfo(id: Long, name: String, profession: String, phoneNumber: String, masterAvatar: Bitmap?){
+        withContext(Dispatchers.IO){
+            database.masterDAO.updateMasterInfo(id, name, profession, phoneNumber)
+            if (masterAvatar != null) saveMasterAvatar(masterAvatar, id)
+        }
+    }
+
+    private suspend fun saveMasterAvatar(bitmap: Bitmap, masterId: Long){
+        withContext(Dispatchers.IO){
+            fileStorage.saveMasterAvatar(bitmap, masterId)
+        }
+    }
+
+    fun getMasterAvatarPath(masterId: Long) = fileStorage.getMasterAvatarPath(masterId)
+
+    suspend fun updateProfileRegionInfo(id: Long, country: String, city: String, currency: String){
+        withContext(Dispatchers.IO){
+            database.masterDAO.updateRegionInfo(id, country, city, currency)
+        }
+    }
+
     fun getCurrency() = database.masterDAO.getCurrency()
 
 
@@ -93,7 +114,7 @@ class Repository {
         }
     }
 
-    suspend fun saveClientAvatar(bitmap: Bitmap, clientId: Long){
+    private suspend fun saveClientAvatar(bitmap: Bitmap, clientId: Long){
         withContext(Dispatchers.IO){
             fileStorage.saveClientAvatar(bitmap, clientId)
         }
@@ -115,10 +136,10 @@ class Repository {
         database.appointmentDAO.insert(databaseAppointment)
     }
 
-    suspend fun bookClient(appointmentId: Long, clientId: Long, serviceCost: Int){
+    suspend fun bookClient(appointmentId: Long, clientId: Long, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int){
         withContext(Dispatchers.IO){
             val client = if (clientId != 0L) database.clientDao.getClient(clientId) else database.clientDao.getNewClient()
-            database.appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber , serviceCost, APPOINTMENT_STATE_BUSY)
+            database.appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, services.asDatabaseModel(), serviceCost, serviceTimeToComplete, APPOINTMENT_STATE_BUSY)
         }
     }
 

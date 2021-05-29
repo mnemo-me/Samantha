@@ -23,3 +23,16 @@ fun List<Service>.asDatabaseModel() : List<DatabaseService>{
         it.asDatabaseModel()
     }
 }
+
+fun List<Service>.convertToString() : String{
+
+    var servicesString = ""
+
+    for(service in this){
+        servicesString = servicesString + service.name + ", "
+    }
+
+    servicesString = servicesString.dropLast(2)
+
+    return servicesString
+}

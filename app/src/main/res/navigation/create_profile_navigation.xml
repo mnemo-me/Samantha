@@ -6,16 +6,20 @@
     app:startDestination="@id/profileEditFragment">
 
     <fragment
-        android:id="@+id/profileEditFragment"
+        android:id="@+id/profileEditFragmentCreateProfile"
         android:name="com.mnemo.samantha.ui.create_profile.profile_edit.ProfileEditFragment"
         android:label="fragment_profile_edit"
         tools:layout="@layout/fragment_profile_edit" >
         <action
-            android:id="@+id/action_profileEditFragment_to_selectRegionFragment"
-            app:destination="@id/selectRegionFragment" />
+            android:id="@+id/action_profileEditFragmentCreateProfile_to_selectRegionFragmentCreateProfile"
+            app:destination="@id/selectRegionFragmentCreateProfile" />
+        <argument
+            android:name="master_id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
-        android:id="@+id/createScheduleFragment"
+        android:id="@+id/createScheduleFragmentCreateProfile"
         android:name="com.mnemo.samantha.ui.create_profile.create_schedule.CreateScheduleFragment"
         android:label="fragment_create_schedule"
         tools:layout="@layout/fragment_create_schedule" >
@@ -25,7 +29,7 @@
             android:defaultValue="0L" />
     </fragment>
     <fragment
-        android:id="@+id/selectRegionFragment"
+        android:id="@+id/selectRegionFragmentCreateProfile"
         android:name="com.mnemo.samantha.ui.create_profile.select_region.SelectRegionFragment"
         android:label="fragment_select_region"
         tools:layout="@layout/fragment_select_region" >
@@ -39,23 +43,31 @@
             android:name="master_phone_number"
             app:argType="string" />
         <action
-            android:id="@+id/action_selectRegionFragment_to_servicesFragment"
-            app:destination="@id/servicesFragment" />
+            android:id="@+id/action_selectRegionFragmentCreateProfile_to_servicesFragmentCreateProfile"
+            app:destination="@id/servicesFragmentCreateProfile" />
+        <argument
+            android:name="master_id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
-        android:id="@+id/servicesFragment"
+        android:id="@+id/servicesFragmentCreateProfile"
         android:name="com.mnemo.samantha.ui.create_profile.services.ServicesFragment"
         android:label="fragment_services"
         tools:layout="@layout/fragment_services" >
         <action
-            android:id="@+id/action_servicesFragment_to_createScheduleFragment"
-            app:destination="@id/createScheduleFragment" />
+            android:id="@+id/action_servicesFragmentCreateProfile_to_createScheduleFragmentCreateProfile"
+            app:destination="@id/createScheduleFragmentCreateProfile" />
         <action
-            android:id="@+id/action_servicesFragment_to_serviceEditFragment"
-            app:destination="@id/serviceEditFragment" />
+            android:id="@+id/action_servicesFragmentCreateProfile_to_serviceEditFragmentCreateProfile"
+            app:destination="@id/serviceEditFragmentCreateProfile" />
+        <argument
+            android:name="master_id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
-        android:id="@+id/serviceEditFragment"
+        android:id="@+id/serviceEditFragmentCreateProfile"
         android:name="com.mnemo.samantha.ui.create_profile.services.service_edit.ServiceEditFragment"
         android:label="fragment_service_edit"
         tools:layout="@layout/fragment_service_edit" >

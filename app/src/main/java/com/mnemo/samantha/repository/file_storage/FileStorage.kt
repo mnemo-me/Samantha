@@ -47,4 +47,19 @@ class FileStorage(context: Context){
         val fileName = "cl${clientId}.JPEG"
         return File(storageDir, fileName)
     }
+
+    fun saveMasterAvatar(bitmap: Bitmap, masterId: Long){
+        val fileName = "m${masterId}.JPEG"
+        val file = File(storageDir, fileName)
+
+        val fileOutPutStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fileOutPutStream)
+        fileOutPutStream.flush()
+        fileOutPutStream.close()
+    }
+
+    fun getMasterAvatarPath(masterId: Long) : File{
+        val fileName = "m${masterId}.JPEG"
+        return File(storageDir, fileName)
+    }
 }

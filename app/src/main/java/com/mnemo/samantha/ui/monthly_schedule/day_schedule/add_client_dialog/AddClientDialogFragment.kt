@@ -44,8 +44,7 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
         }
 
         adapter.clickListener = ClientsAdapter.ClientClickListener {clientId ->
-            viewModel.bookClient(clientId, 700)
-            dismiss()
+            parentFragment?.view?.findNavController()?.navigate(R.id.action_addClientDialogFragment_to_chooseServicesFragment, bundleOf("appointment_id" to appointmentId, "client_id" to clientId))
         }
 
         val layoutManager = GridLayoutManager(context, 3)

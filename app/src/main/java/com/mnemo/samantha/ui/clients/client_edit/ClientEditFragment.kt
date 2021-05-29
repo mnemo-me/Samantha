@@ -2,10 +2,8 @@ package com.mnemo.samantha.ui.clients.client_edit
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -48,7 +47,7 @@ class ClientEditFragment : Fragment() {
         val appointmentId = requireArguments().getLong("appointment_id")
 
         // Create ViewModel via Factory
-        val viewModelFactory = ClientEditViewModelFactory(clientId, appointmentId, requireNotNull(activity).application.baseContext)
+        val viewModelFactory = ClientEditViewModelFactory(clientId, appointmentId)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClientEditVewModel::class.java)
 
@@ -78,17 +77,21 @@ class ClientEditFragment : Fragment() {
             // Prepare avatar
             if (avatarBitmap == null){
                 if (newImageUri != null){
-                    avatarBitmap = viewModel.getBitmapFromUri(newImageUri!!)
+                    avatarBitmap = viewModel.getBitmapFromUri(view.context, newImageUri!!)
                 }else{
                     if (clientId == 0L) {
-                        avatarBitmap = BitmapFactory.decodeResource(view.resources, R.drawable.empty_profile)
+                        avatarBitmap = viewModel.getDefaultProfileBitmap(view.context)
                     }
                 }
             }
 
             viewModel.updateClientInfo(clientName, clientPhoneNumber, avatarBitmap)
 
-            view.findNavController().navigateUp()
+            if (appointmentId != 0L){
+                view.findNavController().navigate(R.id.action_clientEditFragment_to_chooseServicesFragment, bundleOf("appointment_id" to appointmentId, "client_id" to clientId))
+            }else {
+                view.findNavController().navigateUp()
+            }
 
             if (clientId != 0L){
                 Snackbar.make(view, getText(R.string.client_info_updated), Snackbar.LENGTH_SHORT).show()
@@ -146,7 +149,6 @@ class ClientEditFragment : Fragment() {
                 }
             }
         }
-
     }
 
 }

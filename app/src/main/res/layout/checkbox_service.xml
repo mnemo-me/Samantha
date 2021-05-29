@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="service"
+            type="com.mnemo.samantha.domain.Service" />
+    </data>
+
+    <CheckBox
+        android:id="@+id/checkbox_service"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/half_padding"
+        android:text="@{service.name}"
+        tools:text="do something"/>
+
+</layout>

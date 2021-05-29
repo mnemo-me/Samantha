@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/pick_services_close_button"
+            android:id="@+id/choose_services_close_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/three_quarters_padding"
@@ -18,18 +18,18 @@
             android:src="@drawable/outline_close_black_24"/>
 
         <TextView
-            android:id="@+id/pick_services_title"
+            android:id="@+id/choose_services_title"
             style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/pick_services_close_button"
-            app:layout_constraintEnd_toStartOf="@id/pick_services_done_button"
+            app:layout_constraintStart_toEndOf="@id/choose_services_close_button"
+            app:layout_constraintEnd_toStartOf="@id/choose_services_done_button"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/pick_services"/>
+            android:text="@string/choose_services"/>
 
         <ImageView
-            android:id="@+id/pick_services_done_button"
+            android:id="@+id/choose_services_done_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/three_quarters_padding"
@@ -37,16 +37,39 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/outline_done_black_24"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pick_services_check_list"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/choose_services_total_cost"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pick_services_title"
+            app:layout_constraintTop_toBottomOf="@id/choose_services_title"
+            tools:text="@string/services_total_cost"/>
+
+        <TextView
+            android:id="@+id/choose_services_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_services_total_cost"
+            tools:text="@string/services_total_time"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/choose_services_check_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:paddingStart="@dimen/default_padding"
+            android:paddingEnd="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_services_total_time"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            tools:listitem="@layout/checkbox_service"
+            tools:itemCount="4"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

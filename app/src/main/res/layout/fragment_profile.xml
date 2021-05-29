@@ -39,14 +39,17 @@
 
         <TextView
             android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_marginStart="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginTop="@dimen/half_padding"
             app:layout_constraintTop_toTopOf="@id/profile_avatar"
             app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
-            app:layout_constraintBottom_toTopOf="@id/profile_phone_number"
+            app:layout_constraintEnd_toEndOf="parent"
             android:text="@{master.name}"
             tools:text="@string/app_name"
             android:textStyle="bold"
@@ -54,22 +57,72 @@
 
         <TextView
             android:id="@+id/profile_profession"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
             app:layout_constraintTop_toBottomOf="@id/profile_name"
             app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
             android:text="@{master.profession}"
             tools:text="bartender"/>
 
         <TextView
-            android:id="@+id/profile_phone_number"
-            android:layout_width="wrap_content"
+            android:id="@+id/profile_country"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginTop="@dimen/half_padding"
             app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_profession"
+            android:text="@{master.country}"
+            tools:text="Russian Federation"/>
+
+        <TextView
+            android:id="@+id/profile_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_country"
+            android:text="@{master.city}"
+            tools:text="Saint Petersburg"/>
+
+        <TextView
+            android:id="@+id/profile_contact_info_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_city"
+            android:text="@string/contact_info"/>
+
+        <TextView
+            android:id="@+id/profile_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/profile_vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_contact_info_text"
             android:text="@{master.phoneNumber}"
             tools:text="+7 900 000 00 00"/>
 

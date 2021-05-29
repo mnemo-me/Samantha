@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 
-class ClientEditViewModelFactory(val clientId: Long, val appointmentId: Long, val context: Context) : ViewModelProvider.Factory {
+class ClientEditViewModelFactory(val clientId: Long, val appointmentId: Long) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ClientEditVewModel::class.java)){
-            return ClientEditVewModel(clientId, appointmentId, context) as T
+            return ClientEditVewModel(clientId, appointmentId) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

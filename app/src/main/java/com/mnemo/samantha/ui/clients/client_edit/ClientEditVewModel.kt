@@ -16,7 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ClientEditVewModel(val clientId: Long, val appointmentId: Long, val context: Context) : ViewModel() {
+class ClientEditVewModel(val clientId: Long, val appointmentId: Long) : ViewModel() {
 
     @Inject
     lateinit var repository: Repository
@@ -36,19 +36,14 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long, val contex
     // Update info about client or create new client
     fun updateClientInfo(clientName: String, clientPhoneNumber: String, clientAvatar: Bitmap?){
         viewModelScope.launch {
-
             val client = Client(clientId, clientName, clientPhoneNumber)
             repository.addClient(client, clientAvatar)
-
-            if (appointmentId != 0L) {
-                repository.bookClient(appointmentId, clientId, 700)
-            }
         }
     }
 
     fun getClientAvatarPath(clientId: Long) = repository.getClientAvatarPath(clientId)
 
-    fun getBitmapFromUri(uri: Uri) : Bitmap{
+    fun getBitmapFromUri(context: Context, uri: Uri) : Bitmap{
         val contentResolver = context.contentResolver
         val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
         val fileDescriptor = parcelFileDescriptor?.fileDescriptor
@@ -57,10 +52,9 @@ class ClientEditVewModel(val clientId: Long, val appointmentId: Long, val contex
         return image
     }
 
-    fun getDefaultProfileBitmap() : Bitmap{
+    fun getDefaultProfileBitmap(context: Context) : Bitmap{
         return BitmapFactory.decodeResource(context.resources, R.drawable.empty_profile)
     }
-
 
     override fun onCleared() {
         super.onCleared()

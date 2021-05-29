@@ -22,4 +22,9 @@ interface MasterDAO {
     @Query("SELECT COUNT(id) FROM master_table")
     fun getCount() : Int
 
+    @Query("UPDATE master_table SET name = :name, profession = :profession, phone_number = :phoneNumber WHERE id = :id")
+    fun updateMasterInfo(id: Long, name: String, profession: String, phoneNumber: String)
+
+    @Query("UPDATE master_table SET country = :country, city = :city, currency = :currency WHERE id = :id")
+    fun updateRegionInfo(id: Long, country: String, city: String, currency: String)
 }
