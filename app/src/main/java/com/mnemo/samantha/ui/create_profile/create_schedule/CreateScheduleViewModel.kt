@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-class CreateScheduleViewModel(val scheduleId: Long) : ViewModel() {
+class CreateScheduleViewModel(private val scheduleId: Long) : ViewModel() {
 
     @Inject
     lateinit var repository: Repository
@@ -47,12 +47,20 @@ class CreateScheduleViewModel(val scheduleId: Long) : ViewModel() {
 
         val calendar = Calendar.getInstance()
 
-        val days = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH)
-        val year = calendar.get(Calendar.YEAR)
+        val currentDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentYear = calendar.get(Calendar.YEAR)
 
-        repository.applyScheduleTemplate(scheduleTemplate, days, month, year)
+        repository.applyScheduleTemplate(scheduleTemplate, currentDays, currentMonth, currentYear)
 
+        val nextMonth = if (currentMonth == 11) 0 else currentMonth + 1
+        val nextMonthYear = if (nextMonth == 0) currentYear + 1 else currentYear
+
+        calendar.set(nextMonthYear, nextMonth, 1)
+
+        val nextMonthDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        repository.applyScheduleTemplate(scheduleTemplate, nextMonthYear, nextMonth, nextMonthDays)
     }
 
     override fun onCleared() {
