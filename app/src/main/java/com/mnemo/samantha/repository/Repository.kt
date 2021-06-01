@@ -179,7 +179,7 @@ class Repository {
         return statistics
     }
 
-
+    fun getAnnualRevenue(year: Int) = database.appointmentDAO.getAnnualRevenue(year)
 
     // Services
     fun getService(serviceId: Long) = database.serviceDAO.get(serviceId)

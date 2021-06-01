@@ -19,13 +19,15 @@ private const val ITEM_VIEW_TYPE_ITEM = 1
 
 class StatisticsAdapter: ListAdapter<StatisticsAdapter.DataItem, RecyclerView.ViewHolder>(StatisticsDiffCallback()) {
 
+    var annualRevenue = 0L
+
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     fun addHeaderAndSubmitList(statistics: List<Statistics>){
         adapterScope.launch {
             val items = when (statistics){
-                null -> listOf(DataItem.Header(100))
-                else -> listOf(DataItem.Header(100)) + statistics.map { DataItem.StatisticsItem(it) }
+                null -> listOf(DataItem.Header(annualRevenue))
+                else -> listOf(DataItem.Header(annualRevenue)) + statistics.map { DataItem.StatisticsItem(it) }
             }
             withContext(Dispatchers.Main){
                 submitList(items)

@@ -44,4 +44,7 @@ interface AppointmentDAO {
 
     @Query("SELECT SUM (service_cost) FROM appointments_table WHERE month = :month AND year = :year")
     fun getMonthRevenue(month: Int, year: Int) : Long
+
+    @Query("SELECT SUM (service_cost) FROM appointments_table WHERE year = :year")
+    fun getAnnualRevenue(year: Int) : LiveData<Long>
 }
