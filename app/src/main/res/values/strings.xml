@@ -69,5 +69,6 @@
     <string name="edit_region">Edit region</string>
     <string name="edit_services">Edit services</string>
     <string name="contact_info">Contact info:</string>
+    <string name="book_client">Book client</string>
 
 </resources>

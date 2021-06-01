@@ -1,5 +1,6 @@
 package com.mnemo.samantha.ui
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -8,11 +9,21 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import java.io.File
 
-@BindingAdapter("imageLoad")
+@BindingAdapter("loadImage")
 fun ImageView.loadImage(imageFile: File){
 
     Glide.with(this)
         .load(imageFile)
+        .apply(RequestOptions.skipMemoryCacheOf(true))
+        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+        .into(this)
+}
+
+@BindingAdapter("loadImageDrawable")
+fun ImageView.loadImageDrawable(drawable: Drawable){
+
+    Glide.with(this)
+        .load(drawable)
         .apply(RequestOptions.skipMemoryCacheOf(true))
         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
         .into(this)

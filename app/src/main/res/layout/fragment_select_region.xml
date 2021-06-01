@@ -59,10 +59,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="1"
-                android:src="@drawable/earth"/>
+                app:loadImageDrawable="@{@drawable/earth}"/>
 
             <TextView
                 android:id="@+id/select_region_country_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +87,7 @@
 
             <TextView
                 android:id="@+id/select_region_city_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +111,7 @@
 
             <TextView
                 android:id="@+id/select_region_currency_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,8 +125,6 @@
                 style="@style/edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:maxLength="16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/select_region_currency_text"

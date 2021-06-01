@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientEditBinding
 import com.mnemo.samantha.ui.loadImage
+import com.mnemo.samantha.ui.loadImageDrawable
 
 
 private const val REQUEST_IMAGE_CAPTURE = 0
@@ -63,7 +64,7 @@ class ClientEditFragment : Fragment() {
                 binding.clientEditAvatar.loadImage(viewModel.getClientAvatarPath(clientId))
             }
         }else{
-            binding.clientEditAvatar.setImageDrawable(view.resources.getDrawable(R.drawable.empty_profile))
+            binding.clientEditAvatar.loadImageDrawable(view.resources.getDrawable(R.drawable.empty_profile))
         }
 
 

@@ -19,6 +19,7 @@ import androidx.navigation.findNavController
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentProfileEditBinding
 import com.mnemo.samantha.ui.loadImage
+import com.mnemo.samantha.ui.loadImageDrawable
 
 
 private const val REQUEST_IMAGE_CAPTURE = 0
@@ -60,7 +61,7 @@ class ProfileEditFragment : Fragment() {
 
         }else{
 
-            binding.profileEditAvatar.setImageDrawable(view.resources.getDrawable(R.drawable.empty_profile))
+            binding.profileEditAvatar.loadImageDrawable(resources.getDrawable(R.drawable.empty_profile))
 
         }
 

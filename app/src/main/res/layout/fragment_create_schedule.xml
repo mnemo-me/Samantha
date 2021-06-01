@@ -53,6 +53,7 @@
 
             <TextView
                 android:id="@+id/create_schedule_working_time_start_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +76,7 @@
 
             <TextView
                 android:id="@+id/create_schedule_working_time_end_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +109,7 @@
 
             <TextView
                 android:id="@+id/create_schedule_break_time_start_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,6 +132,7 @@
 
             <TextView
                 android:id="@+id/create_schedule_break_time_end_text"
+                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
