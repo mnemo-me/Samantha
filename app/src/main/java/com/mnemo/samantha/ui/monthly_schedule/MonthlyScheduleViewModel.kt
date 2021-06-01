@@ -1,15 +1,10 @@
 package com.mnemo.samantha.ui.monthly_schedule
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MonthlyScheduleViewModel : ViewModel() {
 
-    private var _month : Int
-    val month : String
 
     private var _minDate: Long
     val minDate: Long
@@ -24,22 +19,36 @@ class MonthlyScheduleViewModel : ViewModel() {
     }
 
 
-    private val _days = MutableLiveData<MutableList<String>>()
-    val days : LiveData<MutableList<String>>
-    get() = _days
-
     init {
+        _minDate = getCalendarMinDate()
+        _maxDate = getCalendarMaxDate()
+    }
+
+
+    private fun getCalendarMinDate() : Long{
 
         val calendar = Calendar.getInstance()
 
-        _month = calendar.get(Calendar.MONTH)
-        month = SimpleDateFormat("MMMM", Locale.getDefault()).format(calendar.time)
-
-        val year = calendar.get(Calendar.YEAR)
-        val date = calendar.get(Calendar.DATE)
-        _minDate = Date("$year/${_month+1}/$date").time
-        _maxDate = Date("$year/${_month+2}/1").time
+        return calendar.timeInMillis
+    }
 
 
+    private fun getCalendarMaxDate() : Long{
+
+        val calendar = Calendar.getInstance()
+
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
+
+        val nextMonth = if (currentMonth == 11) 0 else currentMonth + 1
+        val nextMonthYear = if (nextMonth == 0) currentYear + 1 else currentYear
+
+        calendar.set(nextMonthYear, nextMonth, 1)
+
+        val nextMonthMaxDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        calendar.set(nextMonthYear, nextMonth, nextMonthMaxDate)
+
+        return calendar.timeInMillis
     }
 }
