@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentClientInfoBinding
@@ -28,6 +29,8 @@ class ClientInfoFragment : Fragment() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_client_info, container, false)
         val view = binding.root
         binding.clientInfoAvatar.clipToOutline = true
+        val dividerItemDecoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
+        binding.clientInfoAppointmentList.addItemDecoration(dividerItemDecoration)
 
 
         // Get client id
@@ -46,7 +49,6 @@ class ClientInfoFragment : Fragment() {
         }
 
 
-
         // Button 'Edit' click listener
         binding.clientInfoEditButton.setOnClickListener {
             view.findNavController().navigate(R.id.action_clientInfoFragment_to_clientEditFragment, bundleOf("client_id" to clientId))
@@ -62,6 +64,14 @@ class ClientInfoFragment : Fragment() {
         // Button 'Back' click listener
         binding.clientInfoBackButton.setOnClickListener{
             view.findNavController().navigateUp()
+        }
+
+        // Create adapter for RecyclerView
+        val adapter = ClientAppointmentHistoryAdapter()
+        binding.clientInfoAppointmentList.adapter = adapter
+
+        viewModel.clientAppointments.observe(viewLifecycleOwner){clientAppointments ->
+            adapter.submitList(clientAppointments)
         }
 
         return view

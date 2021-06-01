@@ -24,6 +24,9 @@ interface AppointmentDAO {
     @Query("UPDATE appointments_table SET client_id = :clientId, client_name = :clientName, client_phone_number = :clientPhoneNumber, services = :services, service_cost = :serviceCost, time_to_complete = :timeToComplete, state = :state WHERE id = :id")
     fun bookClient(id: Long, clientId: Long, clientName: String, clientPhoneNumber: String, services: List<DatabaseService>, serviceCost: Long, timeToComplete: Int, state: Int)
 
+    @Query("SELECT * FROM appointments_table WHERE client_id = :clientId ORDER BY id DESC")
+    fun getClientAppointments(clientId: Long) : LiveData<List<DatabaseAppointment>>
+
     @Query("UPDATE appointments_table SET client_id = null, client_name = null, client_phone_number = null, state = :state WHERE id = :id")
     fun updateAppointmentState(id: Long, state: Int)
 

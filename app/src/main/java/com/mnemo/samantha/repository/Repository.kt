@@ -143,6 +143,10 @@ class Repository {
         }
     }
 
+    fun getClientAppointments(clientId: Long) = Transformations.map(database.appointmentDAO.getClientAppointments(clientId)){
+        it.asDomainModel()
+    }
+
     suspend fun updateAppointmentState(appointmentId: Long, appointmentState: Int){
         withContext(Dispatchers.IO){
             database.appointmentDAO.updateAppointmentState(appointmentId, appointmentState)

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="appointment"
+            type="com.mnemo.samantha.domain.Appointment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/half_padding"
+        android:paddingBottom="@dimen/half_padding"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/client_appointment_history_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setTime="@{appointment.time}"
+            tools:text="14:00"/>
+
+        <TextView
+            android:id="@+id/client_appointment_history_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/client_appointment_history_time"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="01/01/2021"/>
+
+        <TextView
+            android:id="@+id/client_appointment_history_services"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            app:layout_constraintStart_toEndOf="@id/client_appointment_history_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="one service, two service, three service, four service"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

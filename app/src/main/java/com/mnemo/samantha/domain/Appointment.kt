@@ -8,7 +8,6 @@ const val APPOINTMENT_STATE_FREE = 0
 const val APPOINTMENT_STATE_BUSY = 1
 const val APPOINTMENT_STATE_OVERLAY = 2
 
-@Entity(tableName = "appointments_table")
 data class Appointment (
     var id: Long = 0L,
     var time: Int,

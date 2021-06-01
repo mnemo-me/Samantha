@@ -3,6 +3,7 @@ package com.mnemo.samantha.ui.clients.client_info
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
+import com.mnemo.samantha.domain.Appointment
 import com.mnemo.samantha.domain.Client
 import com.mnemo.samantha.repository.Repository
 import kotlinx.coroutines.*
@@ -14,6 +15,7 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
     lateinit var repository: Repository
 
     val client : LiveData<Client>
+    val clientAppointments: LiveData<List<Appointment>>
 
     // Coroutines
     private var viewModelJob = Job()
@@ -23,6 +25,7 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
         DaggerAppComponent.create().inject(this)
 
         client = repository.getClient(clientId)
+        clientAppointments = repository.getClientAppointments(clientId)
     }
 
     fun removeClient(){
