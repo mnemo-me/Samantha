@@ -79,7 +79,7 @@ class Repository {
         }
     }
 
-    private suspend fun saveMasterAvatar(bitmap: Bitmap, masterId: Long){
+    suspend fun saveMasterAvatar(bitmap: Bitmap, masterId: Long){
         withContext(Dispatchers.IO){
             fileStorage.saveMasterAvatar(bitmap, masterId)
         }

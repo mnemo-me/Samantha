@@ -38,6 +38,14 @@ class ProfileEditViewModel : ViewModel() {
 
     fun getMasterAvatarPath(masterId: Long) = repository.getMasterAvatarPath(masterId)
 
+    fun saveMasterAvatar(masterAvatar: Bitmap?){
+        if (masterAvatar != null) {
+            viewModelScope.launch {
+                repository.saveMasterAvatar(masterAvatar, 1)
+            }
+        }
+    }
+
     fun getBitmapFromUri(context: Context, uri: Uri) : Bitmap {
         val contentResolver = context.contentResolver
         val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")

@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.telephony.PhoneNumberFormattingTextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,7 @@ class ProfileEditFragment : Fragment() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_profile_edit, container, false)
         val view = binding.root
         binding.profileEditAvatar.clipToOutline = true
+        binding.profileEditPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
 
         // Create ViewModel
@@ -102,6 +104,7 @@ class ProfileEditFragment : Fragment() {
                 viewModel.updateProfileInfo(masterId, masterName, masterProfession, masterPhoneNumber, avatarBitmap)
                 view.findNavController().navigateUp()
             }else {
+                viewModel.saveMasterAvatar(avatarBitmap)
                 view.findNavController().navigate(
                     R.id.action_profileEditFragmentCreateProfile_to_selectRegionFragmentCreateProfile,
                     bundleOf(

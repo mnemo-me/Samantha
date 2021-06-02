@@ -52,13 +52,13 @@ class ChooseServicesFragment : Fragment() {
 
         // Close button click listener
         binding.chooseServicesCloseButton.setOnClickListener{
-            view.findNavController().navigateUp()
+            view.findNavController().popBackStack(R.id.dayScheduleFragment, false)
         }
 
-        // Don button click listener
+        // Done button click listener
         binding.chooseServicesDoneButton.setOnClickListener{
             viewModel.bookClient()
-            view.findNavController().navigateUp()
+            view.findNavController().popBackStack(R.id.dayScheduleFragment, false)
         }
 
         return view

@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/double_padding"
-                android:text="@string/working_time"/>
+                android:text="@string/working_hours"/>
 
             <TextView
                 android:id="@+id/create_schedule_working_time_start_text"
@@ -173,6 +173,17 @@
                 android:layout_marginTop="@dimen/double_padding"
                 android:text="@string/sector"/>
 
+            <TextView
+                android:id="@+id/create_schedule_time_sector_hint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_time_sector_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:text="@string/time_sector_hint"/>
+
             <EditText
                 android:id="@+id/create_schedule_time_sector"
                 style="@style/edit_text"
@@ -180,7 +191,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_time_sector_text"
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_time_sector_hint"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
