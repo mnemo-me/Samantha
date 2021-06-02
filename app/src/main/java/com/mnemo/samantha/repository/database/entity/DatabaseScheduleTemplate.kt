@@ -17,6 +17,9 @@ data class DatabaseScheduleTemplate (
         @ColumnInfo(name = "working_time_end")
         var workingTimeEnd: Int,
 
+        @ColumnInfo(name = "have_break")
+        var haveBreak: Boolean,
+
         @ColumnInfo(name = "break_time_start")
         var breakTimeStart: Int?,
 
@@ -24,7 +27,10 @@ data class DatabaseScheduleTemplate (
         var breakTimeEnd: Int?,
 
         @ColumnInfo(name = "time_sector")
-        var timeSector: Int
+        var timeSector: Int,
+
+        @ColumnInfo(name = "working_days")
+        var workingDays: List<Int>
 )
 
 fun DatabaseScheduleTemplate.asDomainModel() : ScheduleTemplate{
@@ -32,8 +38,10 @@ fun DatabaseScheduleTemplate.asDomainModel() : ScheduleTemplate{
                 id = this.id,
                 workingTimeStart = this.workingTimeStart,
                 workingTimeEnd = this.workingTimeEnd,
+                haveBreak = this.haveBreak,
                 breakTimeStart = this.breakTimeStart,
                 breakTimeEnd = this.breakTimeEnd,
-                timeSector = this.timeSector
+                timeSector = this.timeSector,
+                workingDays = this.workingDays
         )
 }

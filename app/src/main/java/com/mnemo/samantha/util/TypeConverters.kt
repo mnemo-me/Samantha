@@ -17,4 +17,14 @@ class TypeConverters {
             it
         )
     }
+
+    @TypeConverter
+    fun workingDaysToString(workingDays: List<Int>) = Json.encodeToString(workingDays)
+
+    @TypeConverter
+    fun stringToWorkingDays(workingDaysString: String) = workingDaysString.let{
+        Json.decodeFromString<List<Int>>(
+            it
+        )
+    }
 }

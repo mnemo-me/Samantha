@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_navigation_month_to_dayScheduleFragment"
             app:destination="@id/dayScheduleFragment" />
+        <action
+            android:id="@+id/action_navigation_month_to_createScheduleFragment"
+            app:destination="@id/createScheduleFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"
@@ -162,6 +165,16 @@
         tools:layout="@layout/fragment_service_edit" >
         <argument
             android:name="service_id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/createScheduleFragment"
+        android:name="com.mnemo.samantha.ui.create_profile.create_schedule.CreateScheduleFragment"
+        android:label="fragment_create_schedule"
+        tools:layout="@layout/fragment_create_schedule" >
+        <argument
+            android:name="schedule_Id"
             app:argType="long"
             android:defaultValue="0L" />
     </fragment>

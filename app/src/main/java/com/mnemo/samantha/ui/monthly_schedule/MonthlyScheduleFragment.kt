@@ -38,6 +38,10 @@ class MonthlyScheduleFragment : Fragment() {
         }
 
 
+        // Edit schedule button click listener
+        binding.monthlyScheduleEditButton.setOnClickListener{
+            view.findNavController().navigate(R.id.action_navigation_month_to_createScheduleFragment)
+        }
 
         return view
     }

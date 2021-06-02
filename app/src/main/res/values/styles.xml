@@ -20,4 +20,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="time_text">
+        <item name="android:textColor">@drawable/time_text_selector</item>
+        <item name="android:textSize">48sp</item>
+
+    </style>
+
 </resources>

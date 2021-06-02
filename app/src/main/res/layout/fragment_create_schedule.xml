@@ -43,6 +43,7 @@
 
             <TextView
                 android:id="@+id/create_schedule_working_time_text"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_title"
@@ -53,52 +54,51 @@
 
             <TextView
                 android:id="@+id/create_schedule_working_time_start_text"
-                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_text"
+                app:layout_constraintTop_toTopOf="@id/create_schedule_working_time_start"
+                app:layout_constraintBottom_toBottomOf="@id/create_schedule_working_time_start"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
                 android:text="@string/begin"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/create_schedule_working_time_start"
-                style="@style/edit_text"
-                android:layout_width="0dp"
+                style="@style/time_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_start_text"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"/>
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="00:00"/>
+
 
             <TextView
                 android:id="@+id/create_schedule_working_time_end_text"
-                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_start"
+                app:layout_constraintTop_toTopOf="@id/create_schedule_working_time_end"
+                app:layout_constraintBottom_toBottomOf="@id/create_schedule_working_time_end"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
                 android:text="@string/end"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/create_schedule_working_time_end"
-                style="@style/edit_text"
-                android:layout_width="0dp"
+                style="@style/time_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_end_text"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"/>
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="00:00"/>
+
 
             <TextView
                 android:id="@+id/create_schedule_break_time_text"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_working_time_end"
@@ -107,54 +107,64 @@
                 android:layout_marginTop="@dimen/double_padding"
                 android:text="@string/break_time"/>
 
+            <CheckBox
+                android:id="@+id/create_schedule_break_time_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/create_schedule_break_time_text"
+                app:layout_constraintBottom_toBottomOf="@id/create_schedule_break_time_text"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <TextView
                 android:id="@+id/create_schedule_break_time_start_text"
-                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_text"
+                app:layout_constraintTop_toTopOf="@id/create_schedule_break_time_start"
+                app:layout_constraintBottom_toBottomOf="@id/create_schedule_break_time_start"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
-                android:text="@string/begin"/>
+                android:text="@string/begin"
+                android:enabled="false"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/create_schedule_break_time_start"
-                style="@style/edit_text"
-                android:layout_width="0dp"
+                style="@style/time_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_start_text"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"/>
+                android:layout_marginTop="@dimen/default_padding"
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="00:00"
+                android:enabled="false"/>
 
             <TextView
                 android:id="@+id/create_schedule_break_time_end_text"
-                style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_start"
+                app:layout_constraintTop_toTopOf="@id/create_schedule_break_time_end"
+                app:layout_constraintBottom_toBottomOf="@id/create_schedule_break_time_end"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginTop="@dimen/half_padding"
-                android:text="@string/end"/>
+                android:text="@string/end"
+                android:enabled="false"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/create_schedule_break_time_end"
-                style="@style/edit_text"
-                android:layout_width="0dp"
+                style="@style/time_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_end_text"
-                android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"/>
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_break_time_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="00:00"
+                android:enabled="false"/>
 
             <TextView
                 android:id="@+id/create_schedule_time_sector_text"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,8 +183,33 @@
                 app:layout_constraintTop_toBottomOf="@id/create_schedule_time_sector_text"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
-                android:layout_marginTop="@dimen/half_padding"/>
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="30"/>
 
+            <TextView
+                android:id="@+id/create_schedule_working_days_text"
+                style="@style/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_time_sector"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginTop="@dimen/double_padding"
+                android:text="@string/working_days"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/create_schedule_day_of_week_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:paddingBottom="@dimen/one_and_a_half_padding"
+                app:layout_constraintTop_toBottomOf="@id/create_schedule_working_days_text"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="7"
+                tools:listitem="@layout/day_of_week"
+                tools:itemCount="7"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

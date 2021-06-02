@@ -1,5 +1,6 @@
 package com.mnemo.samantha.ui.create_profile.create_schedule
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,16 +40,62 @@ class CreateScheduleFragment : Fragment() {
             view.findNavController().navigateUp()
         }
 
+        // Time pickers
+        binding.createScheduleWorkingTimeStart.setOnClickListener{
+            TimePickerDialog(this.context, TimePickerDialog.OnTimeSetListener{timePicker, hour, minute ->
+                binding.createScheduleWorkingTimeStart.text = viewModel.getTime(hour, minute)
+            }, 0,0,false).show()
+
+        }
+
+        binding.createScheduleWorkingTimeEnd.setOnClickListener{
+            TimePickerDialog(this.context, TimePickerDialog.OnTimeSetListener{timePicker, hour, minute ->
+                binding.createScheduleWorkingTimeEnd.text = viewModel.getTime(hour, minute)
+            }, 0,0,false).show()
+
+        }
+
+        binding.createScheduleBreakTimeStart.setOnClickListener{
+            TimePickerDialog(this.context, TimePickerDialog.OnTimeSetListener{timePicker, hour, minute ->
+                binding.createScheduleBreakTimeStart.text = viewModel.getTime(hour, minute)
+            }, 0,0,false).show()
+
+        }
+
+        binding.createScheduleBreakTimeEnd.setOnClickListener{
+            TimePickerDialog(this.context, TimePickerDialog.OnTimeSetListener{timePicker, hour, minute ->
+                binding.createScheduleBreakTimeEnd.text = viewModel.getTime(hour, minute)
+            }, 0,0,false).show()
+
+        }
+
+        // Enable/disable break time
+        binding.createScheduleBreakTimeCheckbox.setOnCheckedChangeListener{view, isChecked ->
+            binding.createScheduleBreakTimeStartText.isEnabled = isChecked
+            binding.createScheduleBreakTimeStart.isEnabled = isChecked
+            binding.createScheduleBreakTimeEndText.isEnabled = isChecked
+            binding.createScheduleBreakTimeEnd.isEnabled = isChecked
+        }
+
+
+        // Create adapter for RecyclerView
+        val adapter = DayOfWeekAdapter()
+        adapter.submitListWithCheck(viewModel.daysOfWeek)
+        binding.createScheduleDayOfWeekPicker.adapter = adapter
+
+
         // Done button click listener
         binding.createScheduleDoneButton.setOnClickListener{
 
             val workingTimeStart = binding.createScheduleWorkingTimeStart.text.toString()
             val workingTimeEnd = binding.createScheduleWorkingTimeEnd.text.toString()
+            val haveBreak = binding.createScheduleBreakTimeCheckbox.isChecked
             val breakTimeStart = binding.createScheduleBreakTimeStart.text.toString()
             val breakTimeEnd = binding.createScheduleBreakTimeEnd.text.toString()
             val timeSector = binding.createScheduleTimeSector.text.toString()
+            val workingDays = adapter.workingDaysOfWeek
 
-            viewModel.updateSchedule(workingTimeStart, workingTimeEnd, breakTimeStart, breakTimeEnd, timeSector)
+            viewModel.updateSchedule(workingTimeStart, workingTimeEnd, haveBreak, breakTimeStart, breakTimeEnd, timeSector, workingDays)
 
             if (scheduleId != 0L){
                 view.findNavController().navigateUp()
@@ -57,6 +104,7 @@ class CreateScheduleFragment : Fragment() {
                 requireNotNull(this.activity).finishAndRemoveTask()
             }
         }
+
 
         return view
     }

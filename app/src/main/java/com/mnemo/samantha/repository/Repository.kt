@@ -10,6 +10,7 @@ import com.mnemo.samantha.repository.database.entity.*
 import com.mnemo.samantha.repository.file_storage.FileStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class Repository {
@@ -205,20 +206,46 @@ class Repository {
     suspend fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int){
         withContext(Dispatchers.IO) {
             for (i in 1..days) {
-                for (y in scheduleTemplate.workingTimeStart..scheduleTemplate.workingTimeEnd step scheduleTemplate.timeSector) {
-                    addAppointment(
-                        DatabaseAppointment(
-                            time = y,
-                            date = i,
-                            month = month,
-                            year = year,
-                            client = null,
-                            services = null,
-                            serviceCost = null,
-                            timeToComplete = null,
-                            state = APPOINTMENT_STATE_FREE
-                        )
-                    )
+
+                val calendar = Calendar.getInstance()
+                calendar.set(year, month, i)
+
+                if (scheduleTemplate.workingDays.contains(calendar.get(Calendar.DAY_OF_WEEK))) {
+
+                    for (y in scheduleTemplate.workingTimeStart..scheduleTemplate.workingTimeEnd step scheduleTemplate.timeSector) {
+                        if (scheduleTemplate.haveBreak) {
+                            if (!(y >= scheduleTemplate.breakTimeStart!! && y <= scheduleTemplate.breakTimeEnd!!)) {
+                                addAppointment(
+                                    DatabaseAppointment(
+                                        time = y,
+                                        date = i,
+                                        month = month,
+                                        year = year,
+                                        client = null,
+                                        services = null,
+                                        serviceCost = null,
+                                        timeToComplete = null,
+                                        state = APPOINTMENT_STATE_FREE
+                                    )
+                                )
+                            }
+
+                        } else {
+                            addAppointment(
+                                DatabaseAppointment(
+                                    time = y,
+                                    date = i,
+                                    month = month,
+                                    year = year,
+                                    client = null,
+                                    services = null,
+                                    serviceCost = null,
+                                    timeToComplete = null,
+                                    state = APPOINTMENT_STATE_FREE
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
