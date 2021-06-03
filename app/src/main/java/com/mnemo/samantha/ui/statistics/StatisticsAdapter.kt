@@ -13,6 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.DateFormatSymbols
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val  ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
@@ -73,7 +75,10 @@ class StatisticsAdapter: ListAdapter<StatisticsAdapter.DataItem, RecyclerView.Vi
 
         fun bind(statistics: Statistics){
 
-            binding.monthlyStatisticsMonth.text = DateFormatSymbols.getInstance().months[statistics.month]
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.MONTH, statistics.month)
+
+            binding.monthlyStatisticsMonth.text = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
             binding.monthlyStatisticsWorkingDays.text = statistics.workingDays.toString()
             binding.monthlyStatisticsClients.text = statistics.clients.toString()
             binding.monthlyStatisticsRevenue.text = statistics.revenue.toString()

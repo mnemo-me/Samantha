@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/service_edit_title"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginTop="@dimen/double_padding"
-            android:text="@string/name"/>
+            android:text="@string/service_name"/>
 
         <EditText
             android:id="@+id/service_edit_name"

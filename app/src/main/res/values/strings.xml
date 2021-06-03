@@ -5,28 +5,21 @@
     <string name="clients">Clients</string>
     <string name="statistics">Statistics</string>
     <string name="profile">Profile</string>
-
-    <string name="free_time">Free time</string>
-
     <string name="add_client">Add client</string>
     <string name="add_new_client">Add new client</string>
     <string name="edit">Edit</string>
     <string name="client_info">Client info</string>
     <string name="edit_client_info">Edit client info</string>
-    <string name="history">History</string>
     <string name="client_name">Client name</string>
     <string name="phone_number">Phone number</string>
     <string name="client_info_updated">Client info updated</string>
     <string name="client_added_to_list">Client added to list</string>
     <string name="client_removed_from_list">Client removed from list</string>
-
-    <string name="annual_revenue">Annual revenue</string>
     <string name="working_days">Working days</string>
     <string name="revenue">Revenue</string>
-
+    <string name="annual_revenue">Annual revenue</string>
     <string name="edit_profile">Edit profile</string>
     <string name="services">Services</string>
-
     <string name="create_profile">Create profile</string>
     <string name="name">Name</string>
     <string name="profession">Profession</string>
@@ -47,18 +40,18 @@
     <string name="break_time">Break</string>
     <string name="sector">Sector</string>
     <string name="schedule_updated">Schedule updated</string>
-
     <string name="take_a_photo">Take a photo</string>
     <string name="choose_from_gallery">Choose from gallery</string>
     <string name="choose_services">Choose services</string>
     <string name="services_total_cost">Total cost: %d %s</string>
     <string name="services_total_time">Time to complete: %d</string>
     <string name="edit_profile_info">Edit profile info</string>
-    <string name="edit_region">Edit region</string>
-    <string name="edit_services">Edit services</string>
+    <string name="edit_region">Select region</string>
+    <string name="edit_services">Services</string>
     <string name="contact_info">Contact info:</string>
     <string name="book_client">Book client</string>
     <string name="monthly_schedule">Monthly Schedule</string>
     <string name="time_sector_hint">(split working hours into equal parts in minutes)</string>
+    <string name="service_name">Name</string>
 
 </resources>

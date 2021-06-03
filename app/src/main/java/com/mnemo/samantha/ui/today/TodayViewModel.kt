@@ -21,7 +21,7 @@ class TodayViewModel() : ViewModel() {
     private val month = calendar.get(Calendar.MONTH)
     private val year = calendar.get(Calendar.YEAR)
 
-    val dateText = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault()).format(calendar.time)
+    val dateText = SimpleDateFormat("EEEE, MMM d", Locale.getDefault()).format(calendar.time)
 
     val appointments : LiveData<List<Appointment>>
 

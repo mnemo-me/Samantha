@@ -39,7 +39,7 @@ interface AppointmentDAO {
     @Query("SELECT COUNT (DISTINCT date) FROM appointments_table WHERE month = :month AND year = :year")
     fun getWorkingDaysCount(month: Int, year: Int) : Int
 
-    @Query("SELECT COUNT (DISTINCT client_id) FROM appointments_table WHERE month = :month AND year = :year AND client_id != null")
+    @Query("SELECT COUNT (DISTINCT client_id) FROM appointments_table WHERE month = :month AND year = :year")
     fun getClientsCount(month: Int, year: Int) : Int
 
     @Query("SELECT SUM (service_cost) FROM appointments_table WHERE month = :month AND year = :year")
