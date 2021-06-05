@@ -7,7 +7,7 @@
     <data>
         <variable
             name="master"
-            type="com.mnemo.samantha.domain.Master" />
+            type="com.mnemo.samantha.domain.entities.Master" />
     </data>
 
     <ScrollView

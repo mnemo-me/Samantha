@@ -3,9 +3,9 @@ package com.mnemo.samantha.ui.clients.client_info
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.Appointment
-import com.mnemo.samantha.domain.Client
-import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.domain.entities.Appointment
+import com.mnemo.samantha.domain.entities.Client
+import com.mnemo.samantha.domain.repositories.Repository
 import kotlinx.coroutines.*
 import javax.inject.Inject
 

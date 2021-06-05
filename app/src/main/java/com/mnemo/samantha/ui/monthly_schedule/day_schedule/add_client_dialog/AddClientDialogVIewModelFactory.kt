@@ -2,7 +2,6 @@ package com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mnemo.samantha.repository.Repository
 
 class AddClientDialogVIewModelFactory(val appointmentId: Long) : ViewModelProvider.Factory {
 

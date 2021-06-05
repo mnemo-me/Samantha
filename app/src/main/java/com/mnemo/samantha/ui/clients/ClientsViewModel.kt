@@ -3,8 +3,8 @@ package com.mnemo.samantha.ui.clients
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.Client
-import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.domain.entities.Client
+import com.mnemo.samantha.domain.repositories.Repository
 import kotlinx.coroutines.*
 import java.io.File
 import javax.inject.Inject

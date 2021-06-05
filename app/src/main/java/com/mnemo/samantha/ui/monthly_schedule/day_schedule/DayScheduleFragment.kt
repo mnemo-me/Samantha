@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.FragmentDayScheduleBinding
-import com.mnemo.samantha.domain.APPOINTMENT_STATE_FREE
+import com.mnemo.samantha.domain.entities.APPOINTMENT_STATE_FREE
 
 
 class DayScheduleFragment : Fragment() {

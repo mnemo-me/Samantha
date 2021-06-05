@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.R
 import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.Master
-import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.domain.entities.Master
+import com.mnemo.samantha.domain.repositories.Repository
 import kotlinx.coroutines.*
 import javax.inject.Inject
 

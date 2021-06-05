@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.ClientAppointmentHistoryItemBinding
-import com.mnemo.samantha.domain.Appointment
-import com.mnemo.samantha.domain.convertToString
+import com.mnemo.samantha.domain.entities.Appointment
+import com.mnemo.samantha.domain.entities.convertToString
 import java.text.SimpleDateFormat
 import java.util.*
 

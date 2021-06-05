@@ -11,6 +11,7 @@ import com.mnemo.samantha.R
 import com.mnemo.samantha.databinding.AppointmentBinding
 import com.mnemo.samantha.databinding.DayScheduleHeaderBinding
 import com.mnemo.samantha.domain.*
+import com.mnemo.samantha.domain.entities.*
 import com.mnemo.samantha.ui.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="appointment"
-            type="com.mnemo.samantha.domain.Appointment" />
+            type="com.mnemo.samantha.domain.entities.Appointment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

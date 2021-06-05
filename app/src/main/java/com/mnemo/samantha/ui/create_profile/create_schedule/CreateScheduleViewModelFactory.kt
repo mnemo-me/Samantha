@@ -2,7 +2,6 @@ package com.mnemo.samantha.ui.create_profile.create_schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mnemo.samantha.repository.Repository
 
 class CreateScheduleViewModelFactory(val scheduleId: Long) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -1,8 +1,7 @@
-package com.mnemo.samantha.repository.file_storage
+package com.mnemo.samantha.data.file_storage
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Environment
 import java.io.File
 import java.io.FileOutputStream

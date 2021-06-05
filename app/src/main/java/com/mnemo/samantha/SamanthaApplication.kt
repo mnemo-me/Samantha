@@ -1,8 +1,8 @@
 package com.mnemo.samantha
 
 import android.app.Application
-import com.mnemo.samantha.repository.database.SamanthaDatabase
-import com.mnemo.samantha.repository.file_storage.FileStorage
+import com.mnemo.samantha.data.database.SamanthaDatabase
+import com.mnemo.samantha.data.file_storage.FileStorage
 
 class SamanthaApplication : Application() {
 

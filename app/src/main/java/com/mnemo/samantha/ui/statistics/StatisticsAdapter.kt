@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.MonthlyStatisticsBinding
 import com.mnemo.samantha.databinding.StatisticsHeaderBinding
-import com.mnemo.samantha.domain.Statistics
+import com.mnemo.samantha.domain.entities.Statistics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
 

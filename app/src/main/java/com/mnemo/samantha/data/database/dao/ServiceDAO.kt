@@ -1,8 +1,8 @@
-package com.mnemo.samantha.repository.database.dao
+package com.mnemo.samantha.data.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.mnemo.samantha.repository.database.entity.DatabaseService
+import com.mnemo.samantha.data.database.entities.DatabaseService
 
 @Dao
 interface ServiceDAO {

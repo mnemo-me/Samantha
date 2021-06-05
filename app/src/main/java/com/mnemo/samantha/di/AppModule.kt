@@ -1,9 +1,10 @@
 package com.mnemo.samantha.di
 
 import com.mnemo.samantha.SamanthaApplication
-import com.mnemo.samantha.repository.Repository
-import com.mnemo.samantha.repository.database.SamanthaDatabase
-import com.mnemo.samantha.repository.file_storage.FileStorage
+import com.mnemo.samantha.data.SamanthaRepository
+import com.mnemo.samantha.data.database.SamanthaDatabase
+import com.mnemo.samantha.data.file_storage.FileStorage
+import com.mnemo.samantha.domain.repositories.Repository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,7 +14,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun getRepository() : Repository = Repository.getInstance()
+    fun getRepository() : Repository = SamanthaRepository.getInstance()
 
     @Singleton
     @Provides

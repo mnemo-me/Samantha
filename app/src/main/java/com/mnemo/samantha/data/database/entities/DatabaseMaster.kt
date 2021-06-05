@@ -1,9 +1,9 @@
-package com.mnemo.samantha.repository.database.entity
+package com.mnemo.samantha.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mnemo.samantha.domain.Master
+import com.mnemo.samantha.domain.entities.Master
 
 @Entity(tableName = "master_table")
 data class DatabaseMaster (
@@ -44,4 +44,17 @@ fun DatabaseMaster.asDomainModel() : Master {
              currency = this.currency,
              privateAccess = this.privateAccess
       )
+}
+
+fun Master.asDatabaseModel() : DatabaseMaster{
+       return DatabaseMaster(
+              id = this.id,
+              name = this.name,
+              profession = this.profession,
+              phoneNumber = this.phoneNumber,
+              country = this.country,
+              city = this.city,
+              currency = this.currency,
+              privateAccess = this.privateAccess
+       )
 }

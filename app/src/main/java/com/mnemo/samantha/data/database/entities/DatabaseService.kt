@@ -1,9 +1,9 @@
-package com.mnemo.samantha.repository.database.entity
+package com.mnemo.samantha.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mnemo.samantha.domain.Service
+import com.mnemo.samantha.domain.entities.Service
 import kotlinx.serialization.Serializable
 
 @Entity(tableName = "service_table")
@@ -35,5 +35,20 @@ fun DatabaseService.asDomainModel() : Service {
 fun List<DatabaseService>.asDomainModel() : List<Service> {
         return map {
                 it.asDomainModel()
+        }
+}
+
+fun Service.asDatabaseModel() : DatabaseService{
+        return DatabaseService(
+                id = this.id,
+                name = this.name,
+                price = this.price,
+                timeToComplete = this.timeToComplete
+        )
+}
+
+fun List<Service>.asDatabaseModel() : List<DatabaseService>{
+        return map {
+                it.asDatabaseModel()
         }
 }

@@ -1,9 +1,9 @@
-package com.mnemo.samantha.repository.database.entity
+package com.mnemo.samantha.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mnemo.samantha.domain.ScheduleTemplate
+import com.mnemo.samantha.domain.entities.ScheduleTemplate
 
 @Entity(tableName = "schedule_template_table")
 data class DatabaseScheduleTemplate (
@@ -33,8 +33,21 @@ data class DatabaseScheduleTemplate (
         var workingDays: List<Int>
 )
 
-fun DatabaseScheduleTemplate.asDomainModel() : ScheduleTemplate{
+fun DatabaseScheduleTemplate.asDomainModel() : ScheduleTemplate {
         return ScheduleTemplate(
+                id = this.id,
+                workingTimeStart = this.workingTimeStart,
+                workingTimeEnd = this.workingTimeEnd,
+                haveBreak = this.haveBreak,
+                breakTimeStart = this.breakTimeStart,
+                breakTimeEnd = this.breakTimeEnd,
+                timeSector = this.timeSector,
+                workingDays = this.workingDays
+        )
+}
+
+fun ScheduleTemplate.asDatabaseModel() : DatabaseScheduleTemplate {
+        return DatabaseScheduleTemplate(
                 id = this.id,
                 workingTimeStart = this.workingTimeStart,
                 workingTimeEnd = this.workingTimeEnd,

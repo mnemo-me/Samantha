@@ -6,7 +6,7 @@
     <data>
         <variable
             name="appointment"
-            type="com.mnemo.samantha.domain.Appointment"/>
+            type="com.mnemo.samantha.domain.entities.Appointment"/>
         <variable
             name="phoneCallClickListener"
             type="com.mnemo.samantha.ui.today.AppointmentsAdapter.PhoneCallClickListener" />

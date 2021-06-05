@@ -1,7 +1,7 @@
-package com.mnemo.samantha.repository.database.entity
+package com.mnemo.samantha.data.database.entities
 
 import androidx.room.*
-import com.mnemo.samantha.domain.Appointment
+import com.mnemo.samantha.domain.entities.Appointment
 
 @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
 @Entity(tableName = "appointments_table")
@@ -57,4 +57,19 @@ fun List<DatabaseAppointment>.asDomainModel() : List<Appointment> {
     return map{
         it.asDomainModel()
     }
+}
+
+fun Appointment.asDatabaseModel() : DatabaseAppointment {
+    return DatabaseAppointment(
+        id = this.id,
+        time = this.time,
+        date = this.date,
+        month = this.month,
+        year = this.year,
+        client = this.client?.asDatabaseModel(),
+        services = this.services?.asDatabaseModel(),
+        serviceCost = this.serviceCost,
+        timeToComplete = this.timeToComplete,
+        state = this.state
+    )
 }

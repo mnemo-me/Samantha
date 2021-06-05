@@ -3,8 +3,8 @@ package com.mnemo.samantha.ui.today
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.Appointment
-import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.domain.entities.Appointment
+import com.mnemo.samantha.domain.repositories.Repository
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*

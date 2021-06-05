@@ -1,7 +1,7 @@
-package com.mnemo.samantha.util
+package com.mnemo.samantha.data.database.converters
 
 import androidx.room.TypeConverter
-import com.mnemo.samantha.repository.database.entity.DatabaseService
+import com.mnemo.samantha.data.database.entities.DatabaseService
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

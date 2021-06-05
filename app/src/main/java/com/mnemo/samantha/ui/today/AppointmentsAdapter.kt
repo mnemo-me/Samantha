@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mnemo.samantha.databinding.TodayClientBinding
 import com.mnemo.samantha.databinding.TodayClientsHeaderBinding
-import com.mnemo.samantha.domain.Appointment
-import com.mnemo.samantha.domain.convertToString
+import com.mnemo.samantha.domain.entities.Appointment
+import com.mnemo.samantha.domain.entities.convertToString
 import com.mnemo.samantha.ui.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -10,7 +10,7 @@
             type="com.mnemo.samantha.ui.clients.client_edit.ClientEditVewModel"/>
         <variable
             name="client"
-            type="com.mnemo.samantha.domain.Client" />
+            type="com.mnemo.samantha.domain.entities.Client" />
     </data>
 
 

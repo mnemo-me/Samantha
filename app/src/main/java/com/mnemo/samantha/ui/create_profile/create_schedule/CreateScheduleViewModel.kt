@@ -2,8 +2,8 @@ package com.mnemo.samantha.ui.create_profile.create_schedule
 
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.ScheduleTemplate
-import com.mnemo.samantha.repository.Repository
+import com.mnemo.samantha.domain.entities.ScheduleTemplate
+import com.mnemo.samantha.domain.repositories.Repository
 import com.mnemo.samantha.util.TimeTextConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
