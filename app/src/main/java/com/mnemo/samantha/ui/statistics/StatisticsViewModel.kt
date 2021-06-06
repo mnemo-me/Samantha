@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Statistics
-import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.usecases.GetAnnualRevenueUseCase
+import com.mnemo.samantha.domain.usecases.GetStatisticsUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -16,23 +18,29 @@ import javax.inject.Inject
 class StatisticsViewModel : ViewModel() {
 
     @Inject
-    lateinit var repository: Repository
+    lateinit var getStatisticsUseCase: GetStatisticsUseCase
 
-    val statistics = MutableLiveData<List<Statistics>>()
+    @Inject
+    lateinit var getAnnualRevenueUseCase: GetAnnualRevenueUseCase
+
+    private val _statistics = MutableLiveData<List<Statistics>>()
+    val statistics : LiveData<List<Statistics>>
+    get() = _statistics
+
+    private val _annualRevenue = MutableLiveData<Long>()
     val annualRevenue : LiveData<Long>
+    get() = _annualRevenue
 
-    // Coroutines
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         DaggerAppComponent.create().inject(this)
 
-        val calendar = Calendar.getInstance()
-        annualRevenue = repository.getAnnualRevenue(calendar.get(Calendar.YEAR))
-
         viewModelScope.launch {
-            statistics.value = repository.getStatistics()
+            val calendar = Calendar.getInstance()
+            getAnnualRevenueUseCase.invoke(calendar.get(Calendar.YEAR)).collect { _annualRevenue.value = it }
+            _statistics.value = getStatisticsUseCase.invoke()
         }
     }
 

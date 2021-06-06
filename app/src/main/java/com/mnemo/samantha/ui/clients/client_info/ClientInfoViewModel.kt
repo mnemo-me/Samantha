@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Appointment
 import com.mnemo.samantha.domain.entities.Client
-import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.usecases.GetClientAppointmentsUseCase
 import com.mnemo.samantha.domain.usecases.GetClientAvatarPathUseCase
 import com.mnemo.samantha.domain.usecases.GetClientUseCase
 import com.mnemo.samantha.domain.usecases.RemoveClientUseCase
@@ -17,9 +17,6 @@ import javax.inject.Inject
 class ClientInfoViewModel(val clientId: Long): ViewModel() {
 
     @Inject
-    lateinit var repository: Repository
-
-    @Inject
     lateinit var getClientUseCase: GetClientUseCase
 
     @Inject
@@ -28,14 +25,17 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
     @Inject
     lateinit var removeClientUseCase: RemoveClientUseCase
 
+    @Inject
+    lateinit var getClientAppointmentsUseCase: GetClientAppointmentsUseCase
+
     private val _client = MutableLiveData<Client>()
     val client : LiveData<Client>
     get() = _client
 
+    private val _clientAppointments = MutableLiveData<List<Appointment>>()
+    val clientAppointments : LiveData<List<Appointment>>
+    get() = _clientAppointments
 
-    val clientAppointments: LiveData<List<Appointment>>
-
-    // Coroutines
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
@@ -44,8 +44,8 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
 
         viewModelScope.launch {
             getClientUseCase.invoke(clientId).collect { _client.value = it }
+            getClientAppointmentsUseCase.invoke(clientId)
         }
-        clientAppointments = repository.getClientAppointments(clientId)
     }
 
     fun removeClient(){

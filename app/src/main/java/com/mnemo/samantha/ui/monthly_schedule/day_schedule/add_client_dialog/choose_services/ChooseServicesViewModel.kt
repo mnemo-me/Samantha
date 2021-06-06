@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Service
 import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.usecases.BookClientUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -15,6 +16,9 @@ class ChooseServicesViewModel(val appointmentId: Long, val clientId: Long) : Vie
 
     @Inject
     lateinit var repository: Repository
+
+    @Inject
+    lateinit var bookClientUseCase: BookClientUseCase
 
     val services: LiveData<List<Service>>
 
@@ -47,7 +51,7 @@ class ChooseServicesViewModel(val appointmentId: Long, val clientId: Long) : Vie
 
     fun bookClient(){
         viewModelScope.launch {
-            repository.bookClient(appointmentId, clientId, checkedServicesList, totalCost, totalTime)
+            bookClientUseCase.invoke(appointmentId, clientId, checkedServicesList, totalCost, totalTime)
         }
     }
 

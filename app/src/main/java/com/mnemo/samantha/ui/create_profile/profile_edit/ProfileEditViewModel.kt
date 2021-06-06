@@ -18,7 +18,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
-class ProfileEditViewModel : ViewModel() {
+class ProfileEditViewModel(val masterId: Long) : ViewModel() {
 
     @Inject
     lateinit var getMasterUseCase: GetMasterUseCase
@@ -43,7 +43,7 @@ class ProfileEditViewModel : ViewModel() {
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            getMasterUseCase.invoke().collect { _master.value = it }
+            if (masterId != 0L) getMasterUseCase.invoke().collect { _master.value = it }
         }
     }
 

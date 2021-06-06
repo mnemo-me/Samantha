@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SelectRegionViewModel : ViewModel(){
+class SelectRegionViewModel(val masterId: Long) : ViewModel(){
 
     @Inject
     lateinit var getMasterUseCase: GetMasterUseCase
@@ -37,7 +37,7 @@ class SelectRegionViewModel : ViewModel(){
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            getMasterUseCase.invoke().collect { _master.value = it }
+            if (masterId != 0L) getMasterUseCase.invoke().collect { _master.value = it }
         }
     }
 

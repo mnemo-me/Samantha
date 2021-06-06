@@ -24,13 +24,16 @@ class SelectRegionFragment : Fragment() {
         val view = binding.root
 
 
-        // Create ViewModel
-        viewModel = ViewModelProvider(this).get(SelectRegionViewModel::class.java)
+        // Get master id
+        val masterId = requireArguments().getLong("master_id")
+
+
+        // Create ViewModel via Factory
+        val viewModelFactory = SelectRegionVIewModelFactory(masterId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SelectRegionViewModel::class.java)
 
 
         // Bind master region info
-        val masterId = requireArguments().getLong("master_id")
-
         if (masterId != 0L){
             viewModel.master.observe(viewLifecycleOwner){master ->
                 binding.master = master

@@ -1,6 +1,6 @@
 package com.mnemo.samantha.data
 
-import android.graphics.Bitmap
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.mnemo.samantha.di.DaggerAppComponent
@@ -52,63 +52,8 @@ class SamanthaRepository : Repository{
 
 
 
-    // Appointments
-    override fun getDaySchedule(date: Int, month: Int, year: Int) = Transformations.map(database.appointmentDAO.getDaySchedule(date, month, year)){
-        it.asDomainModel()
-    }
-
-    override fun getTodayClients(date: Int, month: Int, year: Int) = Transformations.map(database.appointmentDAO.getTodayClients(date, month, year, APPOINTMENT_STATE_BUSY)){
-        it.asDomainModel()
-    }
-
-    override suspend fun addAppointment(appointment: Appointment){
-        database.appointmentDAO.insert(appointment.asDatabaseModel())
-    }
-
-    override suspend fun bookClient(appointmentId: Long, clientId: Long, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int){
-        withContext(Dispatchers.IO){
-            //val client = if (clientId != 0L) database.clientDao.getClient(clientId) else database.clientDao.getNewClient()
-            //database.appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, services.asDatabaseModel(), serviceCost, serviceTimeToComplete, APPOINTMENT_STATE_BUSY)
-        }
-    }
-
-    override fun getClientAppointments(clientId: Long) = Transformations.map(database.appointmentDAO.getClientAppointments(clientId)){
-        it.asDomainModel()
-    }
-
-    override suspend fun updateAppointmentState(appointmentId: Long, appointmentState: Int){
-        withContext(Dispatchers.IO){
-            database.appointmentDAO.updateAppointmentState(appointmentId, appointmentState)
-        }
-    }
 
 
-    // Statistics
-    override suspend fun getStatistics() : List<Statistics> {
-
-        val statistics = mutableListOf<Statistics>()
-
-        withContext(Dispatchers.IO) {
-            val workingYears = database.appointmentDAO.getWorkingYears()
-
-            workingYears.forEach { year ->
-                val workingMonths = database.appointmentDAO.getWorkingMonths(year)
-
-                workingMonths.forEach { month ->
-
-                    val workingDaysCount = database.appointmentDAO.getWorkingDaysCount(month, year)
-                    val clientsCount = database.appointmentDAO.getClientsCount(month, year)
-                    val revenue = database.appointmentDAO.getMonthRevenue(month, year)
-
-                    statistics.add(Statistics(month, year, workingDaysCount, clientsCount, revenue))
-                }
-            }
-        }
-
-        return statistics
-    }
-
-    override fun getAnnualRevenue(year: Int) = database.appointmentDAO.getAnnualRevenue(year)
 
     // Services
     override fun getService(serviceId: Long) = Transformations.map(database.serviceDAO.get(serviceId)){
@@ -134,7 +79,7 @@ class SamanthaRepository : Repository{
     }
 
     override suspend fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int){
-        withContext(Dispatchers.IO) {
+        /*withContext(Dispatchers.IO) {
             for (i in 1..days) {
 
                 val calendar = Calendar.getInstance()
@@ -178,7 +123,7 @@ class SamanthaRepository : Repository{
                     }
                 }
             }
-        }
+        }*/
     }
 
 

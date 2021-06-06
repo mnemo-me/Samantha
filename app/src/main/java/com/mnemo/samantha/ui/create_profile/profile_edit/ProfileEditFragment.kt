@@ -44,13 +44,16 @@ class ProfileEditFragment : Fragment() {
         binding.profileEditPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
 
-        // Create ViewModel
-        viewModel = ViewModelProvider(this).get(ProfileEditViewModel::class.java)
+        // Get master id
+        val masterId = requireArguments().getLong("master_id")
+
+        // Create ViewModel via Factory
+        val viewModelFactory = ProfileEditViewModelFactory(masterId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileEditViewModel::class.java)
+
 
 
         // Bind master
-        val masterId = requireArguments().getLong("master_id")
-
         if (masterId != 0L){
 
             viewModel.master.observe(viewLifecycleOwner){master ->

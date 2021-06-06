@@ -3,11 +3,14 @@ package com.mnemo.samantha.di
 import com.mnemo.samantha.SamanthaApplication
 import com.mnemo.samantha.data.SamanthaRepository
 import com.mnemo.samantha.data.database.SamanthaDatabase
+import com.mnemo.samantha.data.database.dao.AppointmentDAO
 import com.mnemo.samantha.data.database.dao.ClientDAO
 import com.mnemo.samantha.data.database.dao.MasterDAO
 import com.mnemo.samantha.data.file_storage.FileStorage
+import com.mnemo.samantha.data.repositories.AppointmentsRepositoryImpl
 import com.mnemo.samantha.data.repositories.ClientsRepositoryImpl
 import com.mnemo.samantha.data.repositories.MasterRepositoryImpl
+import com.mnemo.samantha.domain.repositories.AppointmentsRepository
 import com.mnemo.samantha.domain.repositories.ClientsRepository
 import com.mnemo.samantha.domain.repositories.MasterRepository
 import com.mnemo.samantha.domain.repositories.Repository
@@ -85,7 +88,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun getAddClientUseCase() : AddClientUseCase = AddClientUseCase(getClientsRepository(), getNewClientIdUseCase(), getSaveClientAvatarUseCase())
+    fun getAddClientUseCase() : AddClientUseCase = AddClientUseCase(getClientsRepository(), getSaveClientAvatarUseCase())
 
     @Singleton
     @Provides
@@ -101,13 +104,51 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun getNewClientIdUseCase() : GetNewClientIdUseCase = GetNewClientIdUseCase(getClientsRepository())
-
-    @Singleton
-    @Provides
     fun getRemoveClientUseCase() : RemoveClientUseCase = RemoveClientUseCase(getClientsRepository())
 
     @Singleton
     @Provides
     fun getSaveClientAvatarUseCase() : SaveClientAvatarUseCase = SaveClientAvatarUseCase(getFileStorage())
+
+
+    // Appointments
+    @Singleton
+    @Provides
+    fun getAppointmentDAO() : AppointmentDAO = getDatabase().appointmentDAO
+
+    @Singleton
+    @Provides
+    fun getAppointmentsRepository() : AppointmentsRepository = AppointmentsRepositoryImpl.getInstance(getAppointmentDAO())
+
+    @Singleton
+    @Provides
+    fun getAddAppointmentsUseCase() : AddAppointmentsUseCase = AddAppointmentsUseCase(getAppointmentsRepository())
+
+    @Singleton
+    @Provides
+    fun getBookClientUseCase() : BookClientUseCase = BookClientUseCase(getAppointmentsRepository(), getClientsRepository(), getGetClientUseCase())
+
+    @Singleton
+    @Provides
+    fun getGetAnnualRevenueUseCase() : GetAnnualRevenueUseCase = GetAnnualRevenueUseCase(getAppointmentsRepository())
+
+    @Singleton
+    @Provides
+    fun getGetClientAppointmentsUseCase() : GetClientAppointmentsUseCase = GetClientAppointmentsUseCase(getAppointmentsRepository())
+
+    @Singleton
+    @Provides
+    fun getGetDayScheduleUseCase() : GetDayScheduleUseCase = GetDayScheduleUseCase(getAppointmentsRepository())
+
+    @Singleton
+    @Provides
+    fun getGetStatisticsUseCase() : GetStatisticsUseCase = GetStatisticsUseCase(getAppointmentsRepository())
+
+    @Singleton
+    @Provides
+    fun getGetTodayClientsUseCase() : GetTodayClientsUseCase = GetTodayClientsUseCase(getAppointmentsRepository())
+
+    @Singleton
+    @Provides
+    fun getUpdateAppointmentStateUseCase() : UpdateAppointmentStateUseCase = UpdateAppointmentStateUseCase(getAppointmentsRepository())
 }

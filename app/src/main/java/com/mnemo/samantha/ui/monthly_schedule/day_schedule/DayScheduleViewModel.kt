@@ -1,13 +1,17 @@
 package com.mnemo.samantha.ui.monthly_schedule.day_schedule
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Appointment
 import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.usecases.GetDayScheduleUseCase
+import com.mnemo.samantha.domain.usecases.UpdateAppointmentStateUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
@@ -19,15 +23,20 @@ class DayScheduleViewModel(val year: Int, val month: Int, val date: Int) : ViewM
     @Inject
     lateinit var repository: Repository
 
-    val appointments : LiveData<List<Appointment>>
+    @Inject
+    lateinit var getDayScheduleUseCase: GetDayScheduleUseCase
 
-    private val calendar = Calendar.getInstance()
+    @Inject
+    lateinit var updateAppointmentStateUseCase: UpdateAppointmentStateUseCase
+
+    private val _appointments = MutableLiveData<List<Appointment>>()
+    val appointments : LiveData<List<Appointment>>
+    get() = _appointments
 
     val dateText : String
 
     val storagePath: File
 
-    // Coroutines
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
@@ -35,8 +44,11 @@ class DayScheduleViewModel(val year: Int, val month: Int, val date: Int) : ViewM
     init {
         DaggerAppComponent.create().inject(this)
 
-        appointments = repository.getDaySchedule(date, month, year)
+        viewModelScope.launch {
+            getDayScheduleUseCase.invoke(date, month, year).collect { _appointments.value = it }
+        }
 
+        val calendar = Calendar.getInstance()
         calendar.set(year, month, date, 0, 0, 0)
         dateText = SimpleDateFormat("EEEE, MMM d", Locale.getDefault()).format(calendar.time)
 
@@ -45,7 +57,7 @@ class DayScheduleViewModel(val year: Int, val month: Int, val date: Int) : ViewM
 
     fun updateAppointmentState(appointmentId: Long, appointmentState: Int){
         viewModelScope.launch {
-            repository.updateAppointmentState(appointmentId, appointmentState)
+            updateAppointmentStateUseCase.invoke(appointmentId, appointmentState)
         }
     }
 
