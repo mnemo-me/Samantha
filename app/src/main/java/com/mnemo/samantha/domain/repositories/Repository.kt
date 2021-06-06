@@ -9,19 +9,9 @@ import java.io.File
 interface Repository {
 
 
-    val master: LiveData<Master>
     val clients: LiveData<List<Client>>
     val services: LiveData<List<Service>>
 
-
-    // Profile
-    suspend fun checkProfile() : Boolean
-    suspend fun createProfile(master: Master)
-    suspend fun updateProfileInfo(id: Long, name: String, profession: String, phoneNumber: String, masterAvatar: Bitmap?)
-    suspend fun saveMasterAvatar(bitmap: Bitmap, masterId: Long)
-    fun getMasterAvatarPath(masterId: Long) : File
-    suspend fun updateProfileRegionInfo(id: Long, country: String, city: String, currency: String)
-    fun getCurrency() : LiveData<String>
 
 
     // Clients

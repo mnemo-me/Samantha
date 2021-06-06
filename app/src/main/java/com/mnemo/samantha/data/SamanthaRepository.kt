@@ -44,10 +44,6 @@ class SamanthaRepository : Repository{
         }
     }
 
-    override val master: LiveData<Master> = Transformations.map(database.masterDAO.get()){
-        it.asDomainModel()
-    }
-
     override val clients: LiveData<List<Client>> = Transformations.map(database.clientDao.getAll()){
         it.asDomainModel()
     }
@@ -56,45 +52,6 @@ class SamanthaRepository : Repository{
         it.asDomainModel()
     }
 
-
-
-    // Profile
-    override suspend fun checkProfile() : Boolean{
-        var shouldCreateProfile = false
-        withContext(Dispatchers.IO){
-            shouldCreateProfile = database.masterDAO.getCount() < 1
-        }
-        return shouldCreateProfile
-    }
-
-    override suspend fun createProfile(master: Master){
-        withContext(Dispatchers.IO){
-            database.masterDAO.insert(master.asDatabaseModel())
-        }
-    }
-
-    override suspend fun updateProfileInfo(id: Long, name: String, profession: String, phoneNumber: String, masterAvatar: Bitmap?){
-        withContext(Dispatchers.IO){
-            database.masterDAO.updateMasterInfo(id, name, profession, phoneNumber)
-            if (masterAvatar != null) saveMasterAvatar(masterAvatar, id)
-        }
-    }
-
-    override suspend fun saveMasterAvatar(bitmap: Bitmap, masterId: Long){
-        withContext(Dispatchers.IO){
-            fileStorage.saveMasterAvatar(bitmap, masterId)
-        }
-    }
-
-    override fun getMasterAvatarPath(masterId: Long) = fileStorage.getMasterAvatarPath(masterId)
-
-    override suspend fun updateProfileRegionInfo(id: Long, country: String, city: String, currency: String){
-        withContext(Dispatchers.IO){
-            database.masterDAO.updateRegionInfo(id, country, city, currency)
-        }
-    }
-
-    override fun getCurrency() = database.masterDAO.getCurrency()
 
 
     // Clients

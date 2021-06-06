@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
 
 
         // Bind Master to View
-        viewModel.databaseMaster.observe(viewLifecycleOwner, { master ->
+        viewModel.master.observe(viewLifecycleOwner, { master ->
             binding.master = master
             binding.profileAvatar.loadImage(viewModel.getMasterAvatarPath(master.id))
 

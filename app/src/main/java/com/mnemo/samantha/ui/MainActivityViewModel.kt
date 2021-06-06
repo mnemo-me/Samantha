@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.usecases.CheckProfileUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MainActivityViewModel : ViewModel(){
 
     @Inject
-    lateinit var repository: Repository
+    lateinit var checkProfileUseCase: CheckProfileUseCase
 
     private var _shouldCreateProfile = MutableLiveData<Boolean>()
     val shouldCreateProfile : LiveData<Boolean>
@@ -30,7 +30,7 @@ class MainActivityViewModel : ViewModel(){
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            _shouldCreateProfile.value = repository.checkProfile()
+            _shouldCreateProfile.value = checkProfileUseCase.invoke()
         }
     }
 

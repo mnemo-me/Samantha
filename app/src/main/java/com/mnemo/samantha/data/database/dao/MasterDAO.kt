@@ -1,8 +1,8 @@
 package com.mnemo.samantha.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mnemo.samantha.data.database.entities.DatabaseMaster
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MasterDAO {
@@ -14,10 +14,10 @@ interface MasterDAO {
     fun delete(databaseMaster: DatabaseMaster)
 
     @Query("SELECT * FROM master_table LIMIT 1")
-    fun get() : LiveData<DatabaseMaster>
+    fun get() : Flow<DatabaseMaster>
 
     @Query("SELECT currency FROM master_table LIMIT 1")
-    fun getCurrency() : LiveData<String>
+    fun getCurrency() : Flow<String>
 
     @Query("SELECT COUNT(id) FROM master_table")
     fun getCount() : Int
