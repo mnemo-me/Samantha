@@ -9,15 +9,6 @@ import java.io.File
 interface Repository {
 
 
-    val services: LiveData<List<Service>>
-
-
-
-    // Services
-    fun getService(serviceId: Long) : LiveData<Service>
-    suspend fun addService(service: Service)
-
-
     // Schedule
     fun getSchedule() : LiveData<ScheduleTemplate>
     suspend fun addSchedule(scheduleTemplate: ScheduleTemplate)

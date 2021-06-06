@@ -1,7 +1,6 @@
 package com.mnemo.samantha.data
 
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.*
@@ -11,7 +10,6 @@ import com.mnemo.samantha.data.file_storage.FileStorage
 import com.mnemo.samantha.domain.repositories.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 import javax.inject.Inject
 
 class SamanthaRepository : Repository{
@@ -46,28 +44,13 @@ class SamanthaRepository : Repository{
 
 
 
-    override val services: LiveData<List<Service>> = Transformations.map(database.serviceDAO.getAll()){
-        it.asDomainModel()
-    }
 
 
 
 
 
 
-    // Services
-    override fun getService(serviceId: Long) = Transformations.map(database.serviceDAO.get(serviceId)){
-        it.asDomainModel()
-    }
 
-    override suspend fun addService(service: Service) {
-        withContext(Dispatchers.IO){
-            database.serviceDAO.insert(service.asDatabaseModel())
-        }
-    }
-
-
-    // Schedule
     override fun getSchedule() = Transformations.map(database.scheduleTemplateDAO.get()){
         it.asDomainModel()
     }

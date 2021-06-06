@@ -1,8 +1,8 @@
 package com.mnemo.samantha.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mnemo.samantha.data.database.entities.DatabaseService
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ServiceDAO {
@@ -14,9 +14,9 @@ interface ServiceDAO {
     fun delete(databaseService: DatabaseService)
 
     @Query("SELECT * FROM service_table WHERE id = :serviceId")
-    fun get(serviceId: Long) : LiveData<DatabaseService>
+    fun get(serviceId: Long) : Flow<DatabaseService>
 
     @Query("SELECT * FROM service_table ORDER BY id ASC")
-    fun getAll() : LiveData<List<DatabaseService>>
+    fun getAll() : Flow<List<DatabaseService>>
 
 }

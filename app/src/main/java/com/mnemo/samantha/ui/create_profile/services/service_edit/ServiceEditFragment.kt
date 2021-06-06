@@ -45,7 +45,7 @@ class ServiceEditFragment : Fragment() {
 
 
         // Bind service
-        viewModel.databaseService.observe(viewLifecycleOwner, { service ->
+        viewModel.service.observe(viewLifecycleOwner, { service ->
             if (serviceId != 0L){
                 binding.serviceEditName.setText(service.name)
                 binding.serviceEditPrice.setText(service.price.toString())

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Service
-import com.mnemo.samantha.domain.repositories.Repository
 import com.mnemo.samantha.domain.usecases.GetCurrencyUseCase
+import com.mnemo.samantha.domain.usecases.GetServicesUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,12 +17,14 @@ import javax.inject.Inject
 class ServicesViewModel : ViewModel() {
 
     @Inject
-    lateinit var repository: Repository
+    lateinit var getServicesUseCase: GetServicesUseCase
 
     @Inject
     lateinit var getCurrencyUseCase : GetCurrencyUseCase
 
-    val services: LiveData<List<Service>>
+    private val _services = MutableLiveData<List<Service>>()
+    val services : LiveData<List<Service>>
+    get() = _services
 
     private var _currency = MutableLiveData<String>()
     val currency : LiveData<String>
@@ -34,9 +36,8 @@ class ServicesViewModel : ViewModel() {
     init {
         DaggerAppComponent.create().inject(this)
 
-        services = repository.services
-
         viewModelScope.launch {
+            getServicesUseCase.invoke().collect { _services.value = it }
             getCurrencyUseCase.invoke().collect { _currency.value = it }
         }
     }

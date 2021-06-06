@@ -6,14 +6,13 @@ import com.mnemo.samantha.data.database.SamanthaDatabase
 import com.mnemo.samantha.data.database.dao.AppointmentDAO
 import com.mnemo.samantha.data.database.dao.ClientDAO
 import com.mnemo.samantha.data.database.dao.MasterDAO
+import com.mnemo.samantha.data.database.dao.ServiceDAO
 import com.mnemo.samantha.data.file_storage.FileStorage
 import com.mnemo.samantha.data.repositories.AppointmentsRepositoryImpl
 import com.mnemo.samantha.data.repositories.ClientsRepositoryImpl
 import com.mnemo.samantha.data.repositories.MasterRepositoryImpl
-import com.mnemo.samantha.domain.repositories.AppointmentsRepository
-import com.mnemo.samantha.domain.repositories.ClientsRepository
-import com.mnemo.samantha.domain.repositories.MasterRepository
-import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.data.repositories.ServicesRepositoryImpl
+import com.mnemo.samantha.domain.repositories.*
 import com.mnemo.samantha.domain.usecases.*
 import dagger.Module
 import dagger.Provides
@@ -151,4 +150,27 @@ class AppModule {
     @Singleton
     @Provides
     fun getUpdateAppointmentStateUseCase() : UpdateAppointmentStateUseCase = UpdateAppointmentStateUseCase(getAppointmentsRepository())
+
+
+    // Services
+    @Singleton
+    @Provides
+    fun getServiceDAO() : ServiceDAO = getDatabase().serviceDAO
+
+    @Singleton
+    @Provides
+    fun getServicesRepository() : ServicesRepository = ServicesRepositoryImpl.getInstance(getServiceDAO())
+
+    @Singleton
+    @Provides
+    fun getAddServiceUseCase() : AddServiceUseCase = AddServiceUseCase(getServicesRepository())
+
+    @Singleton
+    @Provides
+    fun getGetServicesUseCase() : GetServicesUseCase = GetServicesUseCase(getServicesRepository())
+
+    @Singleton
+    @Provides
+    fun getGetServiceUseCase() : GetServiceUseCase = GetServiceUseCase(getServicesRepository())
+
 }
