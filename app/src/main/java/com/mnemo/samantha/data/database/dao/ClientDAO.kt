@@ -1,8 +1,8 @@
 package com.mnemo.samantha.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mnemo.samantha.data.database.entities.DatabaseClient
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ClientDAO {
@@ -14,15 +14,15 @@ interface ClientDAO {
     fun removeClient(id: Long)
 
     @Query("SELECT * FROM clients_table WHERE id = :id")
-    fun get(id: Long): LiveData<DatabaseClient>
+    fun get(id: Long): Flow<DatabaseClient>
 
     @Query("SELECT * FROM clients_table ORDER BY id ASC")
-    fun getAll(): LiveData<List<DatabaseClient>>
+    fun getAll(): Flow<List<DatabaseClient>>
 
     @Query("SELECT * FROM clients_table WHERE id = :id")
     fun getClient(id: Long): DatabaseClient
 
-    @Query("SELECT * FROM clients_table ORDER BY id DESC LIMIT 1")
-    fun getNewClient(): DatabaseClient
+    @Query("SELECT id FROM clients_table ORDER BY id DESC LIMIT 1")
+    fun getNewClientId(): Long
 
 }

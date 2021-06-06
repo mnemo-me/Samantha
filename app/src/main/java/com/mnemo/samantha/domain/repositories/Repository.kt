@@ -9,17 +9,8 @@ import java.io.File
 interface Repository {
 
 
-    val clients: LiveData<List<Client>>
     val services: LiveData<List<Service>>
 
-
-
-    // Clients
-    fun getClient(clientId: Long) : LiveData<Client>
-    suspend fun addClient(client: Client, clientAvatar: Bitmap?)
-    suspend fun removeClient(clientId: Long)
-    suspend fun saveClientAvatar(bitmap: Bitmap, clientId: Long)
-    fun getClientAvatarPath(clientId: Long) : File
 
 
     // Appointments

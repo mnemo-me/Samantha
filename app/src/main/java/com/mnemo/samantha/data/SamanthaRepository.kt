@@ -44,42 +44,12 @@ class SamanthaRepository : Repository{
         }
     }
 
-    override val clients: LiveData<List<Client>> = Transformations.map(database.clientDao.getAll()){
-        it.asDomainModel()
-    }
+
 
     override val services: LiveData<List<Service>> = Transformations.map(database.serviceDAO.getAll()){
         it.asDomainModel()
     }
 
-
-
-    // Clients
-    override fun getClient(clientId: Long) = Transformations.map(database.clientDao.get(clientId)){
-        it.asDomainModel()
-    }
-
-    override suspend fun addClient(client: Client, clientAvatar: Bitmap?){
-        withContext(Dispatchers.IO) {
-            database.clientDao.insert(client.asDatabaseModel())
-            val clientId = if (client.id == 0L) database.clientDao.getNewClient().id else client.id
-            if (clientAvatar != null) saveClientAvatar(clientAvatar, clientId)
-        }
-    }
-
-    override suspend fun removeClient(clientId: Long) {
-        withContext(Dispatchers.IO){
-            database.clientDao.removeClient(clientId)
-        }
-    }
-
-    override suspend fun saveClientAvatar(bitmap: Bitmap, clientId: Long){
-        withContext(Dispatchers.IO){
-            fileStorage.saveClientAvatar(bitmap, clientId)
-        }
-    }
-
-    override fun getClientAvatarPath(clientId: Long) = fileStorage.getClientAvatarPath(clientId)
 
 
     // Appointments
@@ -97,8 +67,8 @@ class SamanthaRepository : Repository{
 
     override suspend fun bookClient(appointmentId: Long, clientId: Long, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int){
         withContext(Dispatchers.IO){
-            val client = if (clientId != 0L) database.clientDao.getClient(clientId) else database.clientDao.getNewClient()
-            database.appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, services.asDatabaseModel(), serviceCost, serviceTimeToComplete, APPOINTMENT_STATE_BUSY)
+            //val client = if (clientId != 0L) database.clientDao.getClient(clientId) else database.clientDao.getNewClient()
+            //database.appointmentDAO.bookClient(appointmentId, client.id, client.name, client.phoneNumber, services.asDatabaseModel(), serviceCost, serviceTimeToComplete, APPOINTMENT_STATE_BUSY)
         }
     }
 

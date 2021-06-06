@@ -3,9 +3,12 @@ package com.mnemo.samantha.di
 import com.mnemo.samantha.SamanthaApplication
 import com.mnemo.samantha.data.SamanthaRepository
 import com.mnemo.samantha.data.database.SamanthaDatabase
+import com.mnemo.samantha.data.database.dao.ClientDAO
 import com.mnemo.samantha.data.database.dao.MasterDAO
 import com.mnemo.samantha.data.file_storage.FileStorage
+import com.mnemo.samantha.data.repositories.ClientsRepositoryImpl
 import com.mnemo.samantha.data.repositories.MasterRepositoryImpl
+import com.mnemo.samantha.domain.repositories.ClientsRepository
 import com.mnemo.samantha.domain.repositories.MasterRepository
 import com.mnemo.samantha.domain.repositories.Repository
 import com.mnemo.samantha.domain.usecases.*
@@ -71,5 +74,40 @@ class AppModule {
     fun getUpdateProfileRegionInfoUseCase() : UpdateProfileRegionInfoUseCase = UpdateProfileRegionInfoUseCase(getMasterRepository())
 
 
+    // Clients
+    @Singleton
+    @Provides
+    fun getClientDAO() : ClientDAO = getDatabase().clientDao
 
+    @Singleton
+    @Provides
+    fun getClientsRepository() : ClientsRepository = ClientsRepositoryImpl.getInstance(getClientDAO())
+
+    @Singleton
+    @Provides
+    fun getAddClientUseCase() : AddClientUseCase = AddClientUseCase(getClientsRepository(), getNewClientIdUseCase(), getSaveClientAvatarUseCase())
+
+    @Singleton
+    @Provides
+    fun getGetClientAvatarPathUseCase() : GetClientAvatarPathUseCase = GetClientAvatarPathUseCase(getFileStorage())
+
+    @Singleton
+    @Provides
+    fun getGetClientsUseCase() : GetClientsUseCase = GetClientsUseCase(getClientsRepository())
+
+    @Singleton
+    @Provides
+    fun getGetClientUseCase() : GetClientUseCase = GetClientUseCase(getClientsRepository())
+
+    @Singleton
+    @Provides
+    fun getNewClientIdUseCase() : GetNewClientIdUseCase = GetNewClientIdUseCase(getClientsRepository())
+
+    @Singleton
+    @Provides
+    fun getRemoveClientUseCase() : RemoveClientUseCase = RemoveClientUseCase(getClientsRepository())
+
+    @Singleton
+    @Provides
+    fun getSaveClientAvatarUseCase() : SaveClientAvatarUseCase = SaveClientAvatarUseCase(getFileStorage())
 }
