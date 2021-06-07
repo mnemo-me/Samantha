@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class GetCurrencyUseCase @Inject constructor(val masterRepository: MasterRepository) {
 
-    suspend fun invoke() = masterRepository.getCurrency()
+    suspend operator fun invoke() = masterRepository.getCurrency()
 }

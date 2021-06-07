@@ -3,14 +3,11 @@ package com.mnemo.samantha.ui.statistics
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Statistics
 import com.mnemo.samantha.domain.usecases.GetAnnualRevenueUseCase
 import com.mnemo.samantha.domain.usecases.GetStatisticsUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -27,25 +24,18 @@ class StatisticsViewModel : ViewModel() {
     val statistics : LiveData<List<Statistics>>
     get() = _statistics
 
-    private val _annualRevenue = MutableLiveData<Long>()
+    private var _annualRevenue = MutableLiveData<Long>()
     val annualRevenue : LiveData<Long>
     get() = _annualRevenue
-
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
             val calendar = Calendar.getInstance()
-            getAnnualRevenueUseCase.invoke(calendar.get(Calendar.YEAR)).collect { _annualRevenue.value = it }
-            _statistics.value = getStatisticsUseCase.invoke()
+            _annualRevenue.value = getAnnualRevenueUseCase(calendar.get(Calendar.YEAR))
+            _statistics.value = getStatisticsUseCase()
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 }

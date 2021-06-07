@@ -1,6 +1,7 @@
 package com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog
 
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,7 @@ class AddClientDialogFragment : BottomSheetDialogFragment() {
 
         // Create adapter for RecycleView
         val adapter = ClientsAdapter()
-        adapter.pictureFolder = viewModel.storagePath
+        adapter.pictureFolder = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
 
         adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener {
             parentFragment?.view?.findNavController()?.navigate(R.id.action_addClientDialogFragment_to_clientEditFragment, bundleOf("appointment_id" to appointmentId))

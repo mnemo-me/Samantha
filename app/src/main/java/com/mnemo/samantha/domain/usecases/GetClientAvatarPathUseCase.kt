@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class GetClientAvatarPathUseCase @Inject constructor(val fileStorage: FileStorage) {
 
-    fun invoke(clientId: Long) = fileStorage.getClientAvatarPath(clientId)
+    operator fun invoke(clientId: Long) = fileStorage.getClientAvatarPath(clientId)
 }

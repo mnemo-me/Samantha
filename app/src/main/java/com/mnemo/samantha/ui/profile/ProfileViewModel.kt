@@ -7,9 +7,6 @@ import com.mnemo.samantha.domain.entities.Service
 import com.mnemo.samantha.domain.usecases.GetMasterAvatarPathUseCase
 import com.mnemo.samantha.domain.usecases.GetMasterUseCase
 import com.mnemo.samantha.domain.usecases.GetServicesUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,22 +30,17 @@ class ProfileViewModel : ViewModel() {
     val services : LiveData<List<Service>>
     get() = _services
 
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     init {
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            getMasterUseCase.invoke().collect { _master.value = it }
-            getServicesUseCase.invoke().collect { _services.value = it }
+            getMasterUseCase().collect { _master.value = it }
+        }
+        viewModelScope.launch {
+            getServicesUseCase().collect { _services.value = it }
         }
     }
 
-    fun getMasterAvatarPath(masterId: Long) = getMasterAvatarPathUseCase.invoke(masterId)
+    fun getMasterAvatarPath(masterId: Long) = getMasterAvatarPathUseCase(masterId)
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 }

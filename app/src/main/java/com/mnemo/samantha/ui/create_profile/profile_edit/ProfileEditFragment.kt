@@ -102,12 +102,12 @@ class ProfileEditFragment : Fragment() {
                     }
                 }
             }
+            viewModel.saveMasterAvatar(avatarBitmap)
 
             if (masterId != 0L){
-                viewModel.updateProfileInfo(masterId, masterName, masterProfession, masterPhoneNumber, avatarBitmap)
+                viewModel.updateProfileInfo(masterId, masterName, masterProfession, masterPhoneNumber)
                 view.findNavController().navigateUp()
             }else {
-                viewModel.saveMasterAvatar(avatarBitmap)
                 view.findNavController().navigate(
                     R.id.action_profileEditFragmentCreateProfile_to_selectRegionFragmentCreateProfile,
                     bundleOf(

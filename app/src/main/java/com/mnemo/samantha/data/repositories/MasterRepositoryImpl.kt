@@ -33,7 +33,7 @@ class MasterRepositoryImpl @Inject constructor(val cache: MasterDAO) : MasterRep
     }
 
 
-    override fun getMaster() : Flow<Master> = cache.get().map { it.asDomainModel() }
+    override suspend fun getMaster() : Flow<Master> = cache.get().map { it.asDomainModel() }
 
     override suspend fun checkProfile() : Boolean{
         var shouldCreateProfile = false
@@ -62,5 +62,5 @@ class MasterRepositoryImpl @Inject constructor(val cache: MasterDAO) : MasterRep
         }
     }
 
-    override fun getCurrency() = cache.getCurrency()
+    override suspend fun getCurrency() = cache.getCurrency()
 }

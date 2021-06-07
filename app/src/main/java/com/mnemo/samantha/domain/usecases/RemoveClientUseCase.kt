@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class RemoveClientUseCase @Inject constructor(val clientsRepository: ClientsRepository) {
 
-    suspend fun invoke(clientId: Long) = clientsRepository.removeClient(clientId)
+    suspend operator fun invoke(clientId: Long) = clientsRepository.removeClient(clientId)
 }

@@ -1,68 +1,20 @@
-package com.mnemo.samantha.data
+package com.mnemo.samantha.domain.usecases
 
-
-import androidx.lifecycle.Transformations
-import com.mnemo.samantha.di.DaggerAppComponent
-import com.mnemo.samantha.domain.entities.*
-import com.mnemo.samantha.data.database.SamanthaDatabase
-import com.mnemo.samantha.data.database.entities.*
-import com.mnemo.samantha.data.file_storage.FileStorage
-import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.entities.APPOINTMENT_STATE_FREE
+import com.mnemo.samantha.domain.entities.Appointment
+import com.mnemo.samantha.domain.entities.ScheduleTemplate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
-class SamanthaRepository : Repository{
+class ApplyScheduleUseCase @Inject constructor(val addAppointmentsUseCase: AddAppointmentsUseCase) {
 
-    @Inject
-    lateinit var database : SamanthaDatabase
+    suspend operator fun invoke(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int){
 
-    @Inject
-    lateinit var fileStorage: FileStorage
+        withContext(Dispatchers.IO) {
+            val schedule = mutableListOf<Appointment>()
 
-    init {
-        DaggerAppComponent.create().inject(this)
-    }
-
-    companion object{
-
-        @Volatile
-        private lateinit var INSTANCE: SamanthaRepository
-
-        fun getInstance() : SamanthaRepository{
-
-            synchronized(this){
-
-                if (!::INSTANCE.isInitialized){
-                    INSTANCE = SamanthaRepository()
-                }
-
-                return INSTANCE
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-    override fun getSchedule() = Transformations.map(database.scheduleTemplateDAO.get()){
-        it.asDomainModel()
-    }
-
-    override suspend fun addSchedule(scheduleTemplate: ScheduleTemplate){
-        withContext(Dispatchers.IO){
-            database.scheduleTemplateDAO.insert(scheduleTemplate.asDatabaseModel())
-        }
-    }
-
-    override suspend fun applyScheduleTemplate(scheduleTemplate: ScheduleTemplate, days: Int, month: Int, year: Int){
-        /*withContext(Dispatchers.IO) {
             for (i in 1..days) {
 
                 val calendar = Calendar.getInstance()
@@ -73,7 +25,7 @@ class SamanthaRepository : Repository{
                     for (y in scheduleTemplate.workingTimeStart..scheduleTemplate.workingTimeEnd step scheduleTemplate.timeSector) {
                         if (scheduleTemplate.haveBreak) {
                             if (!(y >= scheduleTemplate.breakTimeStart!! && y <= scheduleTemplate.breakTimeEnd!!)) {
-                                addAppointment(
+                                schedule.add(
                                     Appointment(
                                         time = y,
                                         date = i,
@@ -89,7 +41,7 @@ class SamanthaRepository : Repository{
                             }
 
                         } else {
-                            addAppointment(
+                            schedule.add(
                                 Appointment(
                                     time = y,
                                     date = i,
@@ -106,11 +58,8 @@ class SamanthaRepository : Repository{
                     }
                 }
             }
-        }*/
+
+            addAppointmentsUseCase(schedule)
+        }
     }
-
-
-    // File storage
-    override fun getStoragePath() = fileStorage.storageDir
-
 }

@@ -1,6 +1,5 @@
 package com.mnemo.samantha.di
 
-import com.mnemo.samantha.data.SamanthaRepository
 import com.mnemo.samantha.ui.MainActivityViewModel
 import com.mnemo.samantha.ui.clients.ClientsViewModel
 import com.mnemo.samantha.ui.clients.client_edit.ClientEditVewModel
@@ -22,8 +21,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
-
-    fun inject(repository: SamanthaRepository)
 
     fun inject(mainActivityViewModel: MainActivityViewModel)
     fun inject(todayViewModel: TodayViewModel)

@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface ServiceDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(databaseService: DatabaseService)
+    suspend fun insert(databaseService: DatabaseService)
 
     @Delete
-    fun delete(databaseService: DatabaseService)
+    suspend fun delete(databaseService: DatabaseService)
 
     @Query("SELECT * FROM service_table WHERE id = :serviceId")
     fun get(serviceId: Long) : Flow<DatabaseService>

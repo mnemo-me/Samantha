@@ -3,6 +3,7 @@ package com.mnemo.samantha.ui.clients.client_info
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Appointment
 import com.mnemo.samantha.domain.entities.Client
@@ -36,28 +37,23 @@ class ClientInfoViewModel(val clientId: Long): ViewModel() {
     val clientAppointments : LiveData<List<Appointment>>
     get() = _clientAppointments
 
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     init {
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            getClientUseCase.invoke(clientId).collect { _client.value = it }
-            getClientAppointmentsUseCase.invoke(clientId)
+            getClientUseCase(clientId).collect { _client.value = it }
+        }
+        viewModelScope.launch {
+            getClientAppointmentsUseCase(clientId).collect{ _clientAppointments.value = it}
         }
     }
 
     fun removeClient(){
         viewModelScope.launch {
-            removeClientUseCase.invoke(clientId)
+            removeClientUseCase(clientId)
         }
     }
 
-    fun getClientAvatarPath(clientId: Long) = getClientAvatarPathUseCase.invoke(clientId)
+    fun getClientAvatarPath(clientId: Long) = getClientAvatarPathUseCase(clientId)
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 }

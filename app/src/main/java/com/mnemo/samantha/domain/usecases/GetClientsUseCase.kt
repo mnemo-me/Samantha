@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class GetClientsUseCase @Inject constructor(val clientsRepository: ClientsRepository) {
 
-    suspend fun invoke() = clientsRepository.getClients()
+    suspend operator fun invoke() = clientsRepository.getClients()
 }

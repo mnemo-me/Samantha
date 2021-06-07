@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class UpdateAppointmentStateUseCase @Inject constructor(val appointmentsRepository: AppointmentsRepository) {
 
-    suspend fun invoke(appointmentId: Long, appointmentState: Int) = appointmentsRepository.updateAppointmentState(appointmentId, appointmentState)
+    suspend operator fun invoke(appointmentId: Long, appointmentState: Int) = appointmentsRepository.updateAppointmentState(appointmentId, appointmentState)
 }

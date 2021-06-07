@@ -42,7 +42,7 @@
     <string name="take_a_photo">Сделать снимок</string>
     <string name="choose_from_gallery">Выбрать из галереи</string>
     <string name="choose_services">Выбрать услуги</string>
-    <string name="services_total_cost">Суммарная стоимость; %d %s</string>
+    <string name="services_total_cost">Суммарная стоимость: %d %s</string>
     <string name="services_total_time">Время на выполнение: %d</string>
     <string name="edit_profile_info">Информация о профиле</string>
     <string name="edit_region">Выбрать регион</string>

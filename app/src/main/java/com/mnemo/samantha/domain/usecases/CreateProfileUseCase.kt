@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class CreateProfileUseCase @Inject constructor(val masterRepository: MasterRepository) {
 
-    suspend fun invoke(master: Master) = masterRepository.createProfile(master)
+    suspend operator fun invoke(master: Master) = masterRepository.createProfile(master)
 }

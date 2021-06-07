@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 class BookClientUseCase @Inject constructor(val appointmentsRepository: AppointmentsRepository, val clientsRepository: ClientsRepository, val getClientUseCase: GetClientUseCase) {
 
-    suspend fun invoke(appointmentId: Long, clientId: Long, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int){
+    suspend operator fun invoke(appointmentId: Long, clientId: Long, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int){
         withContext(Dispatchers.IO){
-            val client = if (clientId != 0L) getClientUseCase.invoke(clientId).first() else getClientUseCase.invoke(clientsRepository.getNewClientId()).first()
+            val client = if (clientId != 0L) getClientUseCase(clientId).first() else getClientUseCase(clientsRepository.getNewClientId()).first()
             appointmentsRepository.bookClient(appointmentId, client, services, serviceCost, serviceTimeToComplete)
         }
     }

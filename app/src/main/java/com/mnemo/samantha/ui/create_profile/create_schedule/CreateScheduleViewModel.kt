@@ -1,13 +1,12 @@
 package com.mnemo.samantha.ui.create_profile.create_schedule
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.ScheduleTemplate
-import com.mnemo.samantha.domain.repositories.Repository
+import com.mnemo.samantha.domain.usecases.AddScheduleUseCase
+import com.mnemo.samantha.domain.usecases.ApplyScheduleUseCase
 import com.mnemo.samantha.util.TimeTextConverter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,13 +15,12 @@ import javax.inject.Inject
 class CreateScheduleViewModel(private val scheduleId: Long) : ViewModel() {
 
     @Inject
-    lateinit var repository: Repository
+    lateinit var addScheduleUseCase: AddScheduleUseCase
+
+    @Inject
+    lateinit var applyScheduleUseCase: ApplyScheduleUseCase
 
     val daysOfWeek : List<Int>
-
-    // Coroutine
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         DaggerAppComponent.create().inject(this)
@@ -42,7 +40,7 @@ class CreateScheduleViewModel(private val scheduleId: Long) : ViewModel() {
 
         viewModelScope.launch {
 
-            repository.addSchedule(scheduleTemplate)
+            addScheduleUseCase(scheduleTemplate)
 
             applySchedule(scheduleTemplate)
         }
@@ -56,7 +54,7 @@ class CreateScheduleViewModel(private val scheduleId: Long) : ViewModel() {
         val currentMonth = calendar.get(Calendar.MONTH)
         val currentYear = calendar.get(Calendar.YEAR)
 
-        repository.applyScheduleTemplate(scheduleTemplate, currentDays, currentMonth, currentYear)
+        applyScheduleUseCase(scheduleTemplate, currentDays, currentMonth, currentYear)
 
         val nextMonth = if (currentMonth == 11) 0 else currentMonth + 1
         val nextMonthYear = if (nextMonth == 0) currentYear + 1 else currentYear
@@ -65,7 +63,7 @@ class CreateScheduleViewModel(private val scheduleId: Long) : ViewModel() {
 
         val nextMonthDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        repository.applyScheduleTemplate(scheduleTemplate, nextMonthYear, nextMonth, nextMonthDays)
+        applyScheduleUseCase(scheduleTemplate, nextMonthYear, nextMonth, nextMonthDays)
     }
 
     // Get time in String format
@@ -103,8 +101,4 @@ class CreateScheduleViewModel(private val scheduleId: Long) : ViewModel() {
         return daysOfWeek
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 }

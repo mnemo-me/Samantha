@@ -26,7 +26,8 @@
             android:padding="@dimen/three_quarters_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/outline_create_black_24"/>
+            android:src="@drawable/outline_create_black_24"
+            android:visibility="invisible"/>
 
         <CalendarView
             android:id="@+id/monthly_schedule_calendar"

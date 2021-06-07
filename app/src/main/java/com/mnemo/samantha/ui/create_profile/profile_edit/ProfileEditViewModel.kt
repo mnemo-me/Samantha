@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mnemo.samantha.R
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Master
@@ -36,29 +37,26 @@ class ProfileEditViewModel(val masterId: Long) : ViewModel() {
     val master : LiveData<Master>
     get() = _master
 
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     init {
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            if (masterId != 0L) getMasterUseCase.invoke().collect { _master.value = it }
+            if (masterId != 0L) getMasterUseCase().collect { _master.value = it }
         }
     }
 
-    fun updateProfileInfo(id: Long, name: String, profession: String, phoneNumber: String, masterAvatar: Bitmap?){
+    fun updateProfileInfo(id: Long, name: String, profession: String, phoneNumber: String){
         viewModelScope.launch {
-            updateProfileInfoUseCase.invoke(id, name, profession, phoneNumber, masterAvatar)
+            updateProfileInfoUseCase(id, name, profession, phoneNumber)
         }
     }
 
-    fun getMasterAvatarPath(masterId: Long) = getMasterAvatarPathUseCase.invoke(masterId)
+    fun getMasterAvatarPath(masterId: Long) = getMasterAvatarPathUseCase(masterId)
 
     fun saveMasterAvatar(masterAvatar: Bitmap?){
         if (masterAvatar != null) {
             viewModelScope.launch {
-                saveMasterAvatarUseCase.invoke(masterAvatar, 1)
+                saveMasterAvatarUseCase(masterAvatar, masterId)
             }
         }
     }
@@ -76,8 +74,4 @@ class ProfileEditViewModel(val masterId: Long) : ViewModel() {
         return BitmapFactory.decodeResource(context.resources, R.drawable.empty_profile)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelScope.cancel()
-    }
 }

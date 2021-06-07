@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface ClientDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(databaseClient: DatabaseClient)
+    suspend fun insert(databaseClient: DatabaseClient) : Long
 
     @Query("DELETE FROM clients_table WHERE id = :id")
-    fun removeClient(id: Long)
+    suspend fun removeClient(id: Long)
 
     @Query("SELECT * FROM clients_table WHERE id = :id")
     fun get(id: Long): Flow<DatabaseClient>
@@ -20,6 +20,6 @@ interface ClientDAO {
     fun getAll(): Flow<List<DatabaseClient>>
 
     @Query("SELECT id FROM clients_table ORDER BY id DESC LIMIT 1")
-    fun getNewClientId(): Long
+    suspend fun getNewClientId(): Long
 
 }

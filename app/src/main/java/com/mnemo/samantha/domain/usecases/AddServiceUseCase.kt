@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class AddServiceUseCase @Inject constructor(val servicesRepository: ServicesRepository) {
 
-    suspend fun invoke(service: Service) = servicesRepository.addService(service)
+    suspend operator fun invoke(service: Service) = servicesRepository.addService(service)
 }

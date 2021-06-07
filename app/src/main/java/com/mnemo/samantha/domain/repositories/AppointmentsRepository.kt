@@ -14,11 +14,10 @@ interface AppointmentsRepository {
     suspend fun bookClient(appointmentId: Long, client: Client, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int)
     suspend fun getClientAppointments(clientId: Long) : Flow<List<Appointment>>
     suspend fun updateAppointmentState(appointmentId: Long, appointmentState: Int)
-    suspend fun getStatistics() : List<Statistics>
     suspend fun getWorkingYears() : List<Int>
     suspend fun getWorkingMonths(year: Int) : List<Int>
     suspend fun getWorkingDaysCount(month: Int, year: Int) : Int
     suspend fun getClientsCount(month: Int, year: Int) : Int
     suspend fun getMonthRevenue(month: Int, year: Int) : Long
-    suspend fun getAnnualRevenue(year: Int) : Flow<Long>
+    suspend fun getAnnualRevenue(year: Int) : Long
 }

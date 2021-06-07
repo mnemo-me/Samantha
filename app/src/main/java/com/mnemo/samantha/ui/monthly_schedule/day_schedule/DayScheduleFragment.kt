@@ -1,6 +1,7 @@
 package com.mnemo.samantha.ui.monthly_schedule.day_schedule
 
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,7 @@ class DayScheduleFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = DayScheduleAdapter()
-        adapter.pictureFolder = viewModel.storagePath
+        adapter.pictureFolder = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         adapter.dateText = viewModel.dateText
         binding.dayScheduleSchedule.adapter = adapter
 

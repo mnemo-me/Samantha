@@ -6,5 +6,7 @@ import javax.inject.Inject
 
 class SaveClientAvatarUseCase @Inject constructor(val fileStorage: FileStorage) {
 
-    suspend fun invoke(bitmap: Bitmap, clientId: Long) = fileStorage.saveClientAvatar(bitmap, clientId)
+    suspend operator fun invoke(bitmap: Bitmap, clientId: Long) {
+            fileStorage.saveClientAvatar(bitmap, clientId)
+    }
 }

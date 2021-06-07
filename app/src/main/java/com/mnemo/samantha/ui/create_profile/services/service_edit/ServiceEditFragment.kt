@@ -40,7 +40,6 @@ class ServiceEditFragment : Fragment() {
 
         // Create ViewModel via Factory
         val viewModelFactory = ServiceEditViewModelFactory(serviceId)
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(ServiceEditViewModel::class.java)
 
 

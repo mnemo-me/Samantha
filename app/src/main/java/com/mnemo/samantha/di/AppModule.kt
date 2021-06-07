@@ -1,17 +1,10 @@
 package com.mnemo.samantha.di
 
 import com.mnemo.samantha.SamanthaApplication
-import com.mnemo.samantha.data.SamanthaRepository
 import com.mnemo.samantha.data.database.SamanthaDatabase
-import com.mnemo.samantha.data.database.dao.AppointmentDAO
-import com.mnemo.samantha.data.database.dao.ClientDAO
-import com.mnemo.samantha.data.database.dao.MasterDAO
-import com.mnemo.samantha.data.database.dao.ServiceDAO
+import com.mnemo.samantha.data.database.dao.*
 import com.mnemo.samantha.data.file_storage.FileStorage
-import com.mnemo.samantha.data.repositories.AppointmentsRepositoryImpl
-import com.mnemo.samantha.data.repositories.ClientsRepositoryImpl
-import com.mnemo.samantha.data.repositories.MasterRepositoryImpl
-import com.mnemo.samantha.data.repositories.ServicesRepositoryImpl
+import com.mnemo.samantha.data.repositories.*
 import com.mnemo.samantha.domain.repositories.*
 import com.mnemo.samantha.domain.usecases.*
 import dagger.Module
@@ -21,9 +14,6 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
-    @Singleton
-    @Provides
-    fun getRepository() : Repository = SamanthaRepository.getInstance()
 
     @Singleton
     @Provides
@@ -69,7 +59,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun getUpdateProfileInfoUseCase() : UpdateProfileInfoUseCase = UpdateProfileInfoUseCase(getMasterRepository(), getSaveMasterAvatarUseCase())
+    fun getUpdateProfileInfoUseCase() : UpdateProfileInfoUseCase = UpdateProfileInfoUseCase(getMasterRepository())
 
     @Singleton
     @Provides
@@ -87,7 +77,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun getAddClientUseCase() : AddClientUseCase = AddClientUseCase(getClientsRepository(), getSaveClientAvatarUseCase())
+    fun getAddClientUseCase() : AddClientUseCase = AddClientUseCase(getClientsRepository())
 
     @Singleton
     @Provides
@@ -172,5 +162,27 @@ class AppModule {
     @Singleton
     @Provides
     fun getGetServiceUseCase() : GetServiceUseCase = GetServiceUseCase(getServicesRepository())
+
+
+    // Schedule
+    @Singleton
+    @Provides
+    fun getScheduleTemplateDAO() : ScheduleTemplateDAO = getDatabase().scheduleTemplateDAO
+
+    @Singleton
+    @Provides
+    fun getScheduleTemplateRepository() : ScheduleTemplateRepository = ScheduleTemplateRepositoryImpl.getInstance(getScheduleTemplateDAO())
+
+    @Singleton
+    @Provides
+    fun getAddScheduleUseCase() : AddScheduleUseCase = AddScheduleUseCase(getScheduleTemplateRepository())
+
+    @Singleton
+    @Provides
+    fun getGetScheduleUseCase() : GetScheduleUseCase = GetScheduleUseCase(getScheduleTemplateRepository())
+
+    @Singleton
+    @Provides
+    fun getApplyScheduleUseCase() : ApplyScheduleUseCase = ApplyScheduleUseCase(getAddAppointmentsUseCase())
 
 }

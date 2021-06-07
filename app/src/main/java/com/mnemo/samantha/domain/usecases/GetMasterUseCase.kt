@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class GetMasterUseCase @Inject constructor(val masterRepository: MasterRepository) {
 
-    suspend fun invoke() = masterRepository.getMaster()
+    suspend operator fun invoke() = masterRepository.getMaster()
 }

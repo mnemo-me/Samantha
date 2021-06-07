@@ -1,6 +1,7 @@
 package com.mnemo.samantha.ui.clients
 
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,7 @@ class ClientsFragment : Fragment() {
         // Create adapter for RecycleView
         val adapter = ClientsAdapter()
 
-        adapter.pictureFolder = viewModel.storagePath
+        adapter.pictureFolder = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
 
         adapter.addNewClientClickListener = ClientsAdapter.AddNewClientClickListener { ->
             view.findNavController().navigate(R.id.action_navigation_clients_to_clientEditFragment)

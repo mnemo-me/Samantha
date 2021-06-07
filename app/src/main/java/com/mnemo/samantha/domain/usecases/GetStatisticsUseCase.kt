@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetStatisticsUseCase @Inject constructor(val appointmentsRepository: AppointmentsRepository) {
 
-    suspend fun invoke() : List<Statistics>{
+    suspend operator fun invoke() : List<Statistics>{
 
         val statistics = mutableListOf<Statistics>()
 

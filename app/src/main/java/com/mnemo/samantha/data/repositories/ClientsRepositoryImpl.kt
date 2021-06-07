@@ -37,11 +37,7 @@ class ClientsRepositoryImpl @Inject constructor(val cache : ClientDAO) : Clients
 
     override suspend fun getClient(clientId: Long) = cache.get(clientId).map { it.asDomainModel() }
 
-    override suspend fun addClient(client: Client){
-        withContext(Dispatchers.IO) {
-            cache.insert(client.asDatabaseModel())
-        }
-    }
+    override suspend fun addClient(client: Client) : Long = cache.insert(client.asDatabaseModel())
 
     override suspend fun getNewClientId(): Long = cache.getNewClientId()
 

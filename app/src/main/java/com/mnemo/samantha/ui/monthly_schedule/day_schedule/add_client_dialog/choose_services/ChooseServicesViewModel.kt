@@ -3,13 +3,11 @@ package com.mnemo.samantha.ui.monthly_schedule.day_schedule.add_client_dialog.ch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mnemo.samantha.di.DaggerAppComponent
 import com.mnemo.samantha.domain.entities.Service
 import com.mnemo.samantha.domain.usecases.BookClientUseCase
 import com.mnemo.samantha.domain.usecases.GetServicesUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,14 +29,11 @@ class ChooseServicesViewModel(val appointmentId: Long, val clientId: Long) : Vie
     var totalCost = 0L
     var totalTime = 0
 
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     init {
         DaggerAppComponent.create().inject(this)
 
         viewModelScope.launch {
-            getServicesUseCase.invoke().collect { _services.value = it }
+            getServicesUseCase().collect { _services.value = it }
         }
     }
 
@@ -56,12 +51,8 @@ class ChooseServicesViewModel(val appointmentId: Long, val clientId: Long) : Vie
 
     fun bookClient(){
         viewModelScope.launch {
-            bookClientUseCase.invoke(appointmentId, clientId, checkedServicesList, totalCost, totalTime)
+            bookClientUseCase(appointmentId, clientId, checkedServicesList, totalCost, totalTime)
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 }

@@ -29,9 +29,7 @@ class StatisticsFragment : Fragment() {
         // Create adapter for RecycleView
         val adapter = StatisticsAdapter()
         viewModel.annualRevenue.observe(viewLifecycleOwner){annualRevenue ->
-            if (annualRevenue != null) {
-                adapter.annualRevenue = annualRevenue
-            }
+            adapter.annualRevenue = annualRevenue
         }
         binding.statistics.adapter = adapter
 

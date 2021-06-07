@@ -36,7 +36,6 @@ class AppointmentsRepositoryImpl @Inject constructor(val cache: AppointmentDAO) 
 
     override suspend fun addAppointments(appointments: List<Appointment>) = cache.insertAll(appointments.map { it.asDatabaseModel() })
 
-
     override suspend fun bookClient(appointmentId: Long, client: Client, services: List<Service>, serviceCost: Long, serviceTimeToComplete: Int){
         withContext(Dispatchers.IO){
             val databaseClient = client.asDatabaseModel()
@@ -52,30 +51,6 @@ class AppointmentsRepositoryImpl @Inject constructor(val cache: AppointmentDAO) 
         }
     }
 
-    override suspend fun getStatistics() : List<Statistics> {
-
-        val statistics = mutableListOf<Statistics>()
-
-        withContext(Dispatchers.IO) {
-            val workingYears = cache.getWorkingYears()
-
-            workingYears.forEach { year ->
-                val workingMonths = cache.getWorkingMonths(year)
-
-                workingMonths.forEach { month ->
-
-                    val workingDaysCount = cache.getWorkingDaysCount(month, year)
-                    val clientsCount = cache.getClientsCount(month, year)
-                    val revenue = cache.getMonthRevenue(month, year)
-
-                    statistics.add(Statistics(month, year, workingDaysCount, clientsCount, revenue))
-                }
-            }
-        }
-
-        return statistics
-    }
-
     override suspend fun getWorkingYears() = cache.getWorkingYears()
 
     override suspend fun getWorkingMonths(year: Int) = cache.getWorkingMonths(year)
@@ -86,5 +61,9 @@ class AppointmentsRepositoryImpl @Inject constructor(val cache: AppointmentDAO) 
 
     override suspend fun getMonthRevenue(month: Int, year: Int) = cache.getMonthRevenue(month, year)
 
-    override suspend fun getAnnualRevenue(year: Int) = cache.getAnnualRevenue(year)
+    override suspend fun getAnnualRevenue(year: Int) : Long {
+        return withContext(Dispatchers.IO){
+             cache.getAnnualRevenue(year)
+        }
+    }
 }

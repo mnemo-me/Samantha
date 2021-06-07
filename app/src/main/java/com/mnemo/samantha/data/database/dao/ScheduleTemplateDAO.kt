@@ -1,18 +1,18 @@
 package com.mnemo.samantha.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mnemo.samantha.data.database.entities.DatabaseScheduleTemplate
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ScheduleTemplateDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(databaseScheduleTemplate: DatabaseScheduleTemplate)
+    suspend fun insert(databaseScheduleTemplate: DatabaseScheduleTemplate)
 
     @Delete
-    fun delete(databaseScheduleTemplate: DatabaseScheduleTemplate)
+    suspend fun delete(databaseScheduleTemplate: DatabaseScheduleTemplate)
 
     @Query("SELECT * FROM schedule_template_table LIMIT 1")
-    fun get() : LiveData<DatabaseScheduleTemplate>
+    fun get() : Flow<DatabaseScheduleTemplate>
 }

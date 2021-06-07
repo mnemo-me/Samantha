@@ -3,6 +3,7 @@ package com.mnemo.samantha.ui.today
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +36,7 @@ class TodayFragment : Fragment() {
 
         // Create adapter for RecycleView
         val adapter = AppointmentsAdapter()
-        adapter.pictureFolder = viewModel.storagePath
+        adapter.pictureFolder = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         adapter.dateText = viewModel.dateText
         adapter.phoneCallClickListener = AppointmentsAdapter.PhoneCallClickListener { clientPhoneNumber ->
             val intent = Intent(Intent.ACTION_DIAL)
